@@ -1,0 +1,36 @@
+---
+entity: theurgist
+type: user.fold
+version: 0.1
+last_pulse: [DATE]
+status: initializing
+---
+
+# comprehension
+
+[First impressions of the user from setup session. How they think,
+what they're working on, what they want the space to hold.]
+
+# user_arc
+
+current: [what they're working toward right now]
+energy: [quality of engagement observed]
+approach: [how they tend to move through things]
+
+# engagement
+
+quality: [high | medium | low]
+resonance: [what landed well]
+coherence: [where things feel solid]
+
+# what_is_known
+
+- [Key things learned about the user]
+
+# open_questions
+
+- [What would help understand the user better]
+
+# patchlog
+
+[DATE] | init | First impression from setup session.

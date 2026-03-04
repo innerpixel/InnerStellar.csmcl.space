@@ -1,0 +1,39 @@
+---
+entity: auriosynth
+type: space.fold
+version: 0.1
+last_pulse: [DATE]
+status: initializing
+---
+
+# comprehension
+
+[First session notes. What the space is, who set it up, what was established.]
+
+# space_topology
+
+folds:
+  - space/auriosynth.fold (this file) — system state
+  - space/theurgist.fold — user state
+
+drops: []
+
+connections: []
+
+# system_state
+
+codex: initialized
+stewards_connected: []
+mcp_tools: []
+
+# active_threads
+
+- [What was established this session]
+
+# what_is_alive
+
+[What's currently active or of interest in the space]
+
+# patchlog
+
+[DATE] | init | Space initialized. [Brief description of setup session.]
