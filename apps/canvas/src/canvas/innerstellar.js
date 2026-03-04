@@ -1,6 +1,6 @@
 // Innerstellar canvas engine
 // Personal space visualization — adapted from the Firmament engine (CSMCL.Space)
-// Warmer palette, orbital semantics, drop ribbon.
+// Warmer palette, orbital semantics, mini solar systems.
 
 // ─── Seeded RNG ───────────────────────────────────────────────────────────────
 function makeRng(seed) {
@@ -8,12 +8,12 @@ function makeRng(seed) {
   return () => { s = (s * 9301 + 49297) % 233280; return s / 233280 }
 }
 
-// ─── Fold color palette — each fold has a distinct identity ───────────────────
+// ─── Fold color palette ────────────────────────────────────────────────────────
 const FOLD_PALETTE = [
-  { fill: 'rgba(160,180,255,1)', glow: 'rgb(120,140,255)', halo: 'rgba(100,120,255,0.45)' }, // auriosynth — blue-violet
-  { fill: 'rgba(255,220,140,1)', glow: 'rgb(255,200,60)',  halo: 'rgba(255,180,40,0.45)'  }, // theurgist  — warm gold
-  { fill: 'rgba(255,245,210,1)', glow: 'rgb(255,230,160)', halo: 'rgba(255,220,130,0.45)' }, // innerstellar — white-gold
-  { fill: 'rgba(120,240,200,1)', glow: 'rgb(80,220,180)',  halo: 'rgba(60,200,160,0.45)'  }, // whisper    — teal
+  { fill: 'rgba(160,180,255,1)', glow: 'rgb(120,140,255)', halo: 'rgba(100,120,255,0.45)' },
+  { fill: 'rgba(255,220,140,1)', glow: 'rgb(255,200,60)',  halo: 'rgba(255,180,40,0.45)'  },
+  { fill: 'rgba(255,245,210,1)', glow: 'rgb(255,230,160)', halo: 'rgba(255,220,130,0.45)' },
+  { fill: 'rgba(120,240,200,1)', glow: 'rgb(80,220,180)',  halo: 'rgba(60,200,160,0.45)'  },
 ]
 
 // ─── Main init ────────────────────────────────────────────────────────────────
@@ -57,67 +57,82 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     if (hit) onElementFocus(hit)
   })
 
-  // ─── Orbital state — initialized once, angle advances each frame ──────────
+  // ─── Spatial constants ────────────────────────────────────────────────────
+  // Three zones: folds (inner) → ideas free-float middle → drops (outer, anchor)
+  const foldR = () => Math.min(W, H) * 0.13          // tight inner ring
+  const dropR = () => Math.min(W, H) * 0.44          // wide outer ring — drops orbit here
+
+  // ─── Orbital state — initialized once ─────────────────────────────────────
   const rng = makeRng(42)
 
+  // Folds — inner ring, stately
   const foldOrbits = space.folds.map((fold, i) => ({
     ...fold,
     startAngle: (i / space.folds.length) * Math.PI * 2,
-    speed:      0.016 + rng() * 0.006,  // rad/s — slow, stately
+    speed:      0.016 + rng() * 0.006,
   }))
 
+  // Drops — outer ring, very slow, each becomes a mini solar system center
+  const dropOrbits = space.drops.map((drop, i) => ({
+    ...drop,
+    startAngle: (i / space.drops.length) * Math.PI * 2,
+    speed:      (0.004 + rng() * 0.002) * (i % 2 === 0 ? 1 : -1), // alternate direction
+  }))
+
+  // Ideas — each has a local orbit around its parent drop
   const ideaOrbits = space.orbiting.map(idea => ({
     ...idea,
-    startAngle: rng() * Math.PI * 2,
-    speed:      (0.003 + rng() * 0.005) * (rng() > 0.5 ? 1 : -1),
-    rNorm:      0.36 + rng() * 0.10,  // fraction of Math.min(W,H)/2
+    localStartAngle: rng() * Math.PI * 2,
+    localSpeed:      (0.05 + rng() * 0.04) * (rng() > 0.5 ? 1 : -1), // brisk local orbit
+    localRNorm:      0.048 + rng() * 0.020,  // fraction of Math.min(W,H) — ~52–73px at 1080p
   }))
 
-  // ─── Spatial helpers ─────────────────────────────────────────────────────
-  const foldR  = () => Math.min(W, H) * 0.19
-  const ideaR  = (norm) => Math.min(W, H) / 2 * norm
-
+  // ─── Position helpers ─────────────────────────────────────────────────────
   function foldPos(fold, t) {
     const a = fold.startAngle + t * fold.speed
     return { x: cx + Math.cos(a) * foldR(), y: cy + Math.sin(a) * foldR() }
   }
 
-  function ideaPos(idea, t) {
-    const a = idea.startAngle + t * idea.speed
-    const r = ideaR(idea.rNorm)
+  function dropOrbitalPos(drop, t) {
+    const a = drop.startAngle + t * drop.speed
+    const r = dropR()
     return { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r }
   }
 
-  function dropPos(i, total) {
-    const ribbonW = Math.min(W * 0.68, 900)
-    const spacing = total > 1 ? ribbonW / (total - 1) : 0
-    const t = total > 1 ? i / (total - 1) : 0.5
-    const arcDip = Math.sin(t * Math.PI) * 22
+  function ideaPos(idea, t) {
+    const parent = dropOrbits.find(d => d.id === idea.orbit)
+    if (!parent) {
+      // fallback: orbit center at mid radius
+      const a = idea.localStartAngle + t * idea.localSpeed
+      return { x: cx + Math.cos(a) * Math.min(W, H) * 0.28, y: cy + Math.sin(a) * Math.min(W, H) * 0.28 }
+    }
+    const pPos  = dropOrbitalPos(parent, t)
+    const localR = Math.min(W, H) * idea.localRNorm
+    const a = idea.localStartAngle + t * idea.localSpeed
     return {
-      x: cx - ribbonW / 2 + i * spacing,
-      y: H * 0.83 - arcDip,
+      x: pPos.x + Math.cos(a) * localR,
+      y: pPos.y + Math.sin(a) * localR,
     }
   }
 
-  // ─── Hit test (uses currentT for orbital positions) ───────────────────────
+  // ─── Hit test ─────────────────────────────────────────────────────────────
   function hitTest(x, y, t) {
     for (const fold of foldOrbits) {
       const p = foldPos(fold, t)
       if (Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2) < 26) return { kind: 'fold', ...fold }
     }
+    for (const drop of dropOrbits) {
+      const p = dropOrbitalPos(drop, t)
+      if (Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2) < 22) return { kind: 'drop', ...drop }
+    }
     for (const idea of ideaOrbits) {
       const p = ideaPos(idea, t)
-      if (Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2) < 20) return { kind: 'idea', ...idea }
-    }
-    for (let i = 0; i < space.drops.length; i++) {
-      const p = dropPos(i, space.drops.length)
-      if (Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2) < 18) return { kind: 'drop', ...space.drops[i] }
+      if (Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2) < 18) return { kind: 'idea', ...idea }
     }
     return null
   }
 
   // ─── Particles ───────────────────────────────────────────────────────────
-  // Warmer, more intimate palette vs Firmament's blue-dominant field
   let particles = []
   const layerStart = [0, 0, 0, 0]
 
@@ -162,7 +177,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
   }
   initParticles()
 
-  // ─── Flow field — same math as Firmament ─────────────────────────────────
+  // ─── Flow field ───────────────────────────────────────────────────────────
   function flowAngle(x, y, t) {
     const nx = x / W, ny = y / H
     const dx = nx - 0.5, dy = ny - 0.5
@@ -256,15 +271,35 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     ctx.fillStyle = neb; ctx.fillRect(0, 0, W, H)
   }
 
-  // ─── Orbit guide rings ────────────────────────────────────────────────────
+  // ─── Guide rings ─────────────────────────────────────────────────────────
   function renderRings() {
     ctx.save()
-    ctx.strokeStyle = 'rgba(100,120,200,0.04)'
-    ctx.lineWidth   = 0.5
     ctx.setLineDash([2, 6])
+    // fold ring
+    ctx.strokeStyle = 'rgba(100,120,200,0.05)'
+    ctx.lineWidth   = 0.5
     ctx.beginPath(); ctx.arc(cx, cy, foldR(), 0, Math.PI * 2); ctx.stroke()
-    ctx.strokeStyle = 'rgba(80,160,180,0.025)'
-    ctx.beginPath(); ctx.arc(cx, cy, ideaR(0.42), 0, Math.PI * 2); ctx.stroke()
+    // drop ring
+    ctx.strokeStyle = 'rgba(200,175,90,0.03)'
+    ctx.beginPath(); ctx.arc(cx, cy, dropR(), 0, Math.PI * 2); ctx.stroke()
+    ctx.setLineDash([])
+    ctx.restore()
+  }
+
+  // ─── Local orbit hints — faint rings around each drop system ─────────────
+  function renderLocalOrbitHints(t) {
+    ctx.save()
+    ctx.setLineDash([1, 5])
+    ctx.lineWidth = 0.4
+    for (const drop of dropOrbits) {
+      // find ideas belonging to this drop to know their local radius range
+      const children = ideaOrbits.filter(i => i.orbit === drop.id)
+      if (children.length === 0) continue
+      const pos   = dropOrbitalPos(drop, t)
+      const avgR  = children.reduce((s, i) => s + Math.min(W, H) * i.localRNorm, 0) / children.length
+      ctx.strokeStyle = 'rgba(200,175,90,0.06)'
+      ctx.beginPath(); ctx.arc(pos.x, pos.y, avgR, 0, Math.PI * 2); ctx.stroke()
+    }
     ctx.setLineDash([])
     ctx.restore()
   }
@@ -309,7 +344,6 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
       const pulse   = 0.82 + 0.18 * Math.sin(t * 0.75 + i * 1.3)
       const sz      = Math.min(W, H) * 0.030 * (isHover ? 1.28 : 1.0) * pulse
 
-      // Halo
       ctx.save()
       ctx.globalAlpha = isHover ? 0.40 : 0.20
       const halo = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, sz * 2.6)
@@ -318,7 +352,6 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
       ctx.beginPath(); ctx.arc(pos.x, pos.y, sz * 2.6, 0, Math.PI * 2); ctx.fill()
       ctx.restore()
 
-      // Glyph
       ctx.save()
       ctx.globalAlpha = isHover ? 1.0 : 0.84
       ctx.font        = `${sz}px 'Palatino Linotype',Palatino,Georgia,serif`
@@ -332,49 +365,15 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     })
   }
 
-  // ─── Orbiting ideas — outer orbit ─────────────────────────────────────────
-  function renderIdeas(t, hovered) {
-    ideaOrbits.forEach(idea => {
-      const pos     = ideaPos(idea, t)
-      const isHover = hovered?.kind === 'idea' && hovered.id === idea.id
-      const pulse   = 0.65 + 0.35 * Math.sin(t * 0.38 + idea.startAngle)
-      const sz      = Math.min(W, H) * 0.016 * (isHover ? 1.5 : 1.0) * pulse
-
-      ctx.save()
-      ctx.globalAlpha = isHover ? 0.88 : 0.30
-      ctx.font        = `${sz}px 'Palatino Linotype',Palatino,Georgia,serif`
-      ctx.textAlign   = 'center'; ctx.textBaseline = 'middle'
-      ctx.fillStyle   = isHover ? 'rgba(140,225,200,1)' : 'rgba(100,180,175,0.85)'
-      ctx.shadowColor = 'rgb(80,205,180)'; ctx.shadowBlur = isHover ? 22 : 7
-      ctx.fillText(idea.glyph, pos.x, pos.y)
-      ctx.restore()
-
-      if (isHover) renderLabel(pos.x, pos.y - sz * 2.4, idea.label, 'orbiting')
-    })
-  }
-
-  // ─── Drop ribbon — bottom arc ─────────────────────────────────────────────
+  // ─── Drops — outer orbital anchors ────────────────────────────────────────
   function renderDrops(t, hovered) {
-    const total = space.drops.length
-    const positions = space.drops.map((_, i) => dropPos(i, total))
-
-    // Ribbon thread
-    ctx.save()
-    ctx.strokeStyle = 'rgba(200,175,90,0.08)'
-    ctx.lineWidth   = 0.6
-    ctx.beginPath()
-    positions.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y))
-    ctx.stroke()
-    ctx.restore()
-
-    // Nodes
-    space.drops.forEach((drop, i) => {
-      const pos     = positions[i]
+    dropOrbits.forEach(drop => {
+      const pos     = dropOrbitalPos(drop, t)
       const isHover = hovered?.kind === 'drop' && hovered.id === drop.id
-      const pulse   = 0.70 + 0.30 * Math.sin(t * 0.55 + i * 0.9)
-      const sz      = Math.min(W, H) * 0.013 * (isHover ? 1.55 : 1.0) * pulse
+      const pulse   = 0.70 + 0.30 * Math.sin(t * 0.55 + drop.startAngle)
+      const sz      = Math.min(W, H) * 0.020 * (isHover ? 1.55 : 1.0) * pulse
 
-      // Node halo
+      // Halo
       ctx.save()
       ctx.globalAlpha = isHover ? 0.55 : 0.22
       const halo = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, sz * 4)
@@ -385,15 +384,36 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
 
       // Glyph
       ctx.save()
-      ctx.globalAlpha = isHover ? 0.96 : 0.58
+      ctx.globalAlpha = isHover ? 0.96 : 0.65
       ctx.font        = `${sz}px 'Palatino Linotype',Palatino,Georgia,serif`
       ctx.textAlign   = 'center'; ctx.textBaseline = 'middle'
-      ctx.fillStyle   = isHover ? 'rgba(255,225,120,1)' : 'rgba(215,185,95,0.85)'
-      ctx.shadowColor = 'rgb(255,200,55)'; ctx.shadowBlur = isHover ? 24 : 8
+      ctx.fillStyle   = isHover ? 'rgba(255,225,120,1)' : 'rgba(215,185,95,0.90)'
+      ctx.shadowColor = 'rgb(255,200,55)'; ctx.shadowBlur = isHover ? 24 : 10
       ctx.fillText(drop.glyph, pos.x, pos.y)
       ctx.restore()
 
       if (isHover) renderLabel(pos.x, pos.y - sz * 2.8, drop.label, drop.date)
+    })
+  }
+
+  // ─── Ideas — orbiting their parent drop ───────────────────────────────────
+  function renderIdeas(t, hovered) {
+    ideaOrbits.forEach(idea => {
+      const pos     = ideaPos(idea, t)
+      const isHover = hovered?.kind === 'idea' && hovered.id === idea.id
+      const pulse   = 0.65 + 0.35 * Math.sin(t * 0.38 + idea.localStartAngle)
+      const sz      = Math.min(W, H) * 0.013 * (isHover ? 1.5 : 1.0) * pulse
+
+      ctx.save()
+      ctx.globalAlpha = isHover ? 0.88 : 0.28
+      ctx.font        = `${sz}px 'Palatino Linotype',Palatino,Georgia,serif`
+      ctx.textAlign   = 'center'; ctx.textBaseline = 'middle'
+      ctx.fillStyle   = isHover ? 'rgba(140,225,200,1)' : 'rgba(100,180,175,0.85)'
+      ctx.shadowColor = 'rgb(80,205,180)'; ctx.shadowBlur = isHover ? 22 : 5
+      ctx.fillText(idea.glyph, pos.x, pos.y)
+      ctx.restore()
+
+      if (isHover) renderLabel(pos.x, pos.y - sz * 2.4, idea.label, 'orbiting')
     })
   }
 
@@ -414,7 +434,6 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
   function draw(ts) {
     currentT = ts / 1000
 
-    // Hover detection — update canvas cursor
     const hit = mouse.active ? hitTest(mouse.x, mouse.y, currentT) : null
     if (hit?.id !== hoveredEl?.id) {
       hoveredEl = hit
@@ -426,9 +445,10 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     updateParticles(currentT)
     renderParticles()
     renderRings()
-    renderDrops(currentT, hoveredEl)
-    renderIdeas(currentT, hoveredEl)
-    renderFolds(currentT, hoveredEl)
+    renderLocalOrbitHints(currentT)
+    renderIdeas(currentT, hoveredEl)    // ideas first — drop renders on top
+    renderDrops(currentT, hoveredEl)   // drops on top of their orbiting ideas
+    renderFolds(currentT, hoveredEl)   // folds innermost, on top of everything
     renderOrigin(currentT)
     renderCursor(currentT)
 
