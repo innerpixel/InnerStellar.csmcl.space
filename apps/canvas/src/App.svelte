@@ -1,6 +1,7 @@
 <script>
   import { onMount, onDestroy } from 'svelte'
   import { initInnerstellar } from './canvas/innerstellar.js'
+  import { subscribe, distributeEvent } from './lib/eventDistributor.js'
   import { space } from './data/space.js'
 
   let canvasEl  = $state(null)
@@ -8,22 +9,68 @@
   let focusedEl = $state(null)
   let engine
 
+  // ── Query state ───────────────────────────────────────────────────────────
+  // Wire QUERY_ENDPOINT to nexus-backend when CORS is set up:
+  //   e.g. 'https://nexus.csmcl.space/api/oracle/consult'
+  //   or use a Vite proxy: '/api/oracle/consult'
+  const QUERY_ENDPOINT = null   // null = disabled (events still fire)
+  let querying      = $state(false)
+  let queryResponse = $state(null)
+
+  async function queryEntity(entity) {
+    if (!QUERY_ENDPOINT || !entity) return
+    querying = true
+    queryResponse = null
+    try {
+      const res = await fetch(QUERY_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          traveler_id: 'innerstellar-traveler',
+          question: `Tell me about: ${entity.label}`,
+          context: [entity.description, entity.role, entity.pointer]
+            .filter(Boolean).join(' · '),
+        }),
+      })
+      if (res.ok) queryResponse = await res.json()
+    } catch (_) {
+      queryResponse = null
+    }
+    querying = false
+  }
+
+  // ── Event subscriptions ───────────────────────────────────────────────────
+  let unsubs = []
+
   onMount(() => {
     engine = initInnerstellar(canvasEl, space, {
       onElementHover(el) { hoveredEl = el },
       onElementFocus(el) { focusedEl = el === focusedEl ? null : el },
     })
+
+    // Canvas focus → query
+    unsubs.push(subscribe(['canvas.element.focused'], e => {
+      queryEntity(e.payload)
+    }))
+
+    // Canvas dismissed → clear query
+    unsubs.push(subscribe(['canvas.element.dismissed'], () => {
+      queryResponse = null
+    }))
   })
 
-  onDestroy(() => engine?.destroy())
+  onDestroy(() => {
+    engine?.destroy()
+    unsubs.forEach(fn => fn())
+  })
 
-  // ── State strip stats ────────────────────────────────────────────────────
-  const totalDrops       = space.drops.length
-  const totalFolds       = space.folds.length
-  const crystallizing    = [...space.drops, ...space.orbiting].filter(e => e.crystallizing).length
-  const lastDate         = space.drops.map(d => d.date).filter(Boolean).sort().pop() ?? '—'
+  // ── State strip stats ─────────────────────────────────────────────────────
+  const totalDrops    = space.drops.length
+  const totalFolds    = space.folds.length
+  const crystallizing = [...space.drops, ...space.orbiting].filter(e => e.crystallizing).length
+  const lastDate      = space.drops.map(d => d.date).filter(Boolean).sort().pop() ?? '—'
 
-  // ── Panel color class by type ────────────────────────────────────────────
+  // ── Panel color class by type ─────────────────────────────────────────────
   function panelKind(el) {
     if (!el) return ''
     if (el.crystallizing) return 'amber'
@@ -45,7 +92,7 @@
   <div class="focus-panel {panelKind(focusedEl)}" role="dialog" aria-modal="true">
     <div class="fp-header">
       <span class="fp-kind">{focusedEl.crystallizing ? 'crystallizing' : focusedEl.type ?? focusedEl.kind}</span>
-      <button class="fp-close" onclick={() => focusedEl = null} aria-label="close">×</button>
+      <button class="fp-close" onclick={() => { focusedEl = null; queryResponse = null; distributeEvent({ type: 'canvas.element.dismissed' }) }} aria-label="close">×</button>
     </div>
     <div class="fp-glyph">{focusedEl.glyph}</div>
     <div class="fp-title">{focusedEl.label}</div>
@@ -73,6 +120,20 @@
       <div class="fp-status">
         <span class="status-dot" class:alive={focusedEl.status === 'alive' || focusedEl.status === 'active'}></span>
         {focusedEl.status}
+      </div>
+    {/if}
+
+    <!-- Query response — live voice from nexus when QUERY_ENDPOINT is set -->
+    {#if querying}
+      <div class="fp-query-loading">
+        <span class="query-pulse">·</span> listening to the space
+      </div>
+    {/if}
+
+    {#if queryResponse?.guidance}
+      <div class="fp-query-response">
+        <div class="qr-divider"></div>
+        <div class="qr-voice">{queryResponse.guidance}</div>
       </div>
     {/if}
   </div>
@@ -114,7 +175,7 @@
     text-align: center;
     font-family: 'Palatino Linotype', Palatino, Georgia, serif;
     color: rgba(200, 215, 255, 0.80);
-    min-width: 240px; max-width: 380px;
+    min-width: 240px; max-width: 420px;
     animation: panelIn 0.35s ease;
   }
   /* Type-colored left border */
@@ -197,6 +258,23 @@
     animation: statusPulse 2.8s ease-in-out infinite;
   }
 
+  /* ── Query response ────────────────────────────────────────────────── */
+  .fp-query-loading {
+    margin-top: 1.0rem; font-size: 0.58rem; letter-spacing: 0.18em;
+    color: rgba(120, 160, 200, 0.40); font-style: italic;
+    animation: breathe 1.8s ease-in-out infinite;
+  }
+  .fp-query-response { margin-top: 1.0rem; }
+  .qr-divider {
+    width: 40px; height: 1px; margin: 0 auto 0.8rem;
+    background: rgba(100, 120, 200, 0.15);
+  }
+  .qr-voice {
+    font-size: 0.70rem; line-height: 1.65; letter-spacing: 0.04em;
+    color: rgba(180, 195, 230, 0.72); font-style: italic;
+    text-align: left;
+  }
+
   /* ── State strip ──────────────────────────────────────────────────── */
   .state-strip {
     position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
@@ -231,5 +309,8 @@
   }
   @keyframes statusPulse {
     0%, 100% { opacity: 1; } 50% { opacity: 0.45; }
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 0.4; } 50% { opacity: 0.9; }
   }
 </style>

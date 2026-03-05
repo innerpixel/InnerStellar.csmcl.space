@@ -80,6 +80,9 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
 
   const { onElementHover = () => {}, onElementFocus = () => {} } = callbacks
 
+  // Emit via global event bus if available (wired in App.svelte)
+  const emit = (type, payload) => window.ed?.distributeEvent({ type, payload })
+
   // ─── Resize ──────────────────────────────────────────────────────────────
   function resize() {
     dpr = window.devicePixelRatio || 1
@@ -109,7 +112,12 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
   canvas.addEventListener('mouseleave', () => { mouse.active = false })
   canvas.addEventListener('click', e => {
     const hit = hitTest(e.clientX, e.clientY, currentT)
-    if (hit) onElementFocus(hit)
+    if (hit) {
+      onElementFocus(hit)
+      emit('canvas.element.focused', hit)
+    } else {
+      emit('canvas.element.dismissed', null)
+    }
   })
 
   // ─── Spatial constants ────────────────────────────────────────────────────
@@ -570,6 +578,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     if (hit?.id !== hoveredEl?.id) {
       hoveredEl = hit
       onElementHover(hit)
+      emit('canvas.element.hover', hit ? { id: hit.id, kind: hit.kind, label: hit.label, type: hit.type } : null)
       canvas.style.cursor = hit ? 'pointer' : 'none'
     }
 
