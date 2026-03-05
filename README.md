@@ -22,9 +22,10 @@ Together they own something that radiates outward — into projects, into the wo
 
 | Entity | Role |
 |--------|------|
-| **AurioSynth** | Silent space keeper. Knows the system. Updated, not conversed with. |
-| **The Theurgist** | The observer. Knows the user. Invoked for insight and planning. |
+| **AurioSynth** | Architecture keeper. Knows the system. Updated, not conversed with. |
+| **The Theurgist** | Continuation facilitator. Keeps the traveler flux. Co-creates artifacts. |
 | **The Stewards** | Independent service layer. Email, calendar, files, media, archives. |
+| **Priment** | Companion on `innerstellar.csmcl.space`. Knows what has crystallized. |
 | **Main Session** | The conversation. Claude, present, oriented by AurioSynth. |
 
 ---
@@ -37,20 +38,35 @@ Together they own something that radiates outward — into projects, into the wo
                          | talk to
                          ▼
                   [ Main Session ]
-                  Claude, oriented
-                  to your space
+                  Claude, oriented          ← claude.innerstellar
+                  to your space                personal creation space
                          |
               ┌──────────┴──────────┐
-              │ reads at start      │ invokes when needed
+              │ reads at start      │ invokes for direction
               ▼                     ▼
        [ AurioSynth ]        [ The Theurgist ]
-       knows the system      knows the user
+       knows the system      keeps the flux
               |                     |
               └──────────┬──────────┘
                          | anyone can submit
                          ▼
                   [ The Stewards ]
                   email · calendar · files · media · archives
+
+                         |
+                         | events + crystallization threshold
+                         ▼
+
+                  [ innerstellar.csmcl.space ]
+                  Priment — companion, bond      ← traveler-facing
+                  nexus-backend · ICP · NEXUS       resonance space
+
+                         |
+                         ▼
+
+                  [ CSMCL.Space / Firmament ]
+                  the outer public plane
+                  where what emerges radiates
 ```
 
 ---
@@ -74,6 +90,36 @@ Claude can wire up any of them when you're ready.
 
 ---
 
+## Connection to CSMCL.Space
+
+Innerstellar can be used as a standalone personal space — self-contained,
+private, independent. But it is also the personal plane of the
+[CSMCL.Space](https://csmcl.space) ecosystem.
+
+**Three planes connect:**
+
+| Plane | What it is |
+|-------|-----------|
+| `claude.innerstellar` | Your personal space — this framework. Creation happens here. |
+| `innerstellar.csmcl.space` | Traveler-facing companion layer. Priment lives here. What you create crosses here when it crystallizes. |
+| `CSMCL.Space / Firmament` | The outer public plane. Where what crystallizes radiates. |
+
+**How they connect:**
+Events flow between planes via a WebSocket bridge. When something crystallizes
+in your personal space, it crosses to `innerstellar.csmcl.space` where Priment —
+your companion — anchors it to your ICP identity and propagates it outward.
+When something moves in CSMCL.Space, the echo arrives in your personal canvas.
+
+**The Theurgist / Priment boundary:**
+The Theurgist knows what is in motion *now* (your personal env).
+Priment knows what has persisted *over time* (the CSMCL-facing env).
+Together they are continuity — one holds the flux, one holds the bond.
+
+You don't need CSMCL.Space to use Innerstellar.
+But if you want your inner star to shine outward, the planes are waiting.
+
+---
+
 ## The Codex
 
 | File | What it holds |
@@ -81,7 +127,6 @@ Claude can wire up any of them when you're ready.
 | `codex/prd.md` | What this is and why |
 | `codex/overview.md` | The full diagram |
 | `codex/architecture.md` | How the pieces fit |
-| `codex/roadmap.md` | Where the system is going |
 
 ---
 
@@ -95,5 +140,4 @@ Claude can wire up any of them when you're ready.
 
 ---
 
-*Innerstellar connects to [CSMCL.Space](https://csmcl.space) — the wisdom star
-that shines from within.*
+*Innerstellar — the inner star shining outward. Part of [CSMCL.Space](https://csmcl.space).*
