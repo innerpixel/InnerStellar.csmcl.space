@@ -323,7 +323,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
   // Faint arcs beyond the drop ring show the connected planes.
   // Labels in the upper-right gap (the future zone of the timeline arc).
   function renderPlaneRings() {
-    const fs     = Math.min(W, H) * 0.0110
+    const fs     = Math.min(W, H) * 0.018
     const labelA = -Math.PI / 5     // upper-right — future gap area
     const r2     = plane2R()
     const r3     = plane3R()
@@ -333,34 +333,34 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     ctx.textAlign = 'left'
 
     // Plane 1 label (drop ring)
-    ctx.globalAlpha = 0.22
+    ctx.globalAlpha = 0.55
     ctx.fillStyle   = 'rgba(140, 190, 215, 1)'
     ctx.fillText('claude.innerstellar',
-      cx + Math.cos(labelA) * (dropR() + 6),
-      cy + Math.sin(labelA) * (dropR() + 6))
+      cx + Math.cos(labelA) * (dropR() + 8),
+      cy + Math.sin(labelA) * (dropR() + 8))
 
     // Plane 2 arc + label
     ctx.setLineDash([1, 10])
-    ctx.lineWidth   = 0.5
-    ctx.strokeStyle = 'rgba(80, 200, 220, 0.055)'
+    ctx.lineWidth   = 1.0
+    ctx.strokeStyle = 'rgba(80, 200, 220, 0.20)'
     ctx.beginPath(); ctx.arc(cx, cy, r2, 0, Math.PI * 2); ctx.stroke()
     ctx.setLineDash([])
-    ctx.globalAlpha = 0.22
+    ctx.globalAlpha = 0.55
     ctx.fillStyle   = 'rgba(80, 200, 220, 1)'
     ctx.fillText('innerstellar.csmcl.space',
-      cx + Math.cos(labelA) * (r2 + 6),
-      cy + Math.sin(labelA) * (r2 + 6))
+      cx + Math.cos(labelA) * (r2 + 8),
+      cy + Math.sin(labelA) * (r2 + 8))
 
     // Plane 3 arc + label
     ctx.setLineDash([1, 10])
-    ctx.strokeStyle = 'rgba(255, 185, 55, 0.035)'
+    ctx.strokeStyle = 'rgba(255, 185, 55, 0.14)'
     ctx.beginPath(); ctx.arc(cx, cy, r3, 0, Math.PI * 2); ctx.stroke()
     ctx.setLineDash([])
-    ctx.globalAlpha = 0.18
+    ctx.globalAlpha = 0.50
     ctx.fillStyle   = 'rgba(255, 185, 55, 1)'
     ctx.fillText('csmcl.space',
-      cx + Math.cos(labelA) * (r3 + 6),
-      cy + Math.sin(labelA) * (r3 + 6))
+      cx + Math.cos(labelA) * (r3 + 8),
+      cy + Math.sin(labelA) * (r3 + 8))
 
     ctx.restore()
   }
@@ -369,9 +369,9 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
   function renderRings() {
     ctx.save()
     ctx.setLineDash([2, 6])
-    ctx.strokeStyle = 'rgba(80, 200, 150, 0.05)'; ctx.lineWidth = 0.5
+    ctx.strokeStyle = 'rgba(80, 200, 150, 0.18)'; ctx.lineWidth = 1.0
     ctx.beginPath(); ctx.arc(cx, cy, foldR(), 0, Math.PI * 2); ctx.stroke()
-    ctx.strokeStyle = 'rgba(80, 200, 235, 0.04)'
+    ctx.strokeStyle = 'rgba(80, 200, 235, 0.16)'
     ctx.beginPath(); ctx.arc(cx, cy, dropR(), 0, Math.PI * 2); ctx.stroke()
     ctx.setLineDash([])
     ctx.restore()
@@ -383,7 +383,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     const x     = cx + Math.cos(-Math.PI / 2) * r
     const y     = cy + Math.sin(-Math.PI / 2) * r
     const pulse = 0.5 + 0.5 * Math.sin(t * 1.0)
-    const fs    = Math.min(W, H) * 0.0110
+    const fs    = Math.min(W, H) * 0.018
 
     ctx.save()
     ctx.globalAlpha = 0.30 + 0.20 * pulse
@@ -395,15 +395,15 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     ctx.font        = `${fs}px 'Palatino Linotype', Palatino, Georgia, serif`
     ctx.textAlign   = 'center'
     ctx.fillStyle   = TYPE_COLORS.crystallizing.fill
-    ctx.globalAlpha = 0.55 + 0.25 * pulse
-    ctx.fillText('now', x, y - 10)
+    ctx.globalAlpha = 0.75 + 0.25 * pulse
+    ctx.fillText('now', x, y - 12)
     ctx.restore()
   }
 
   // ─── Local orbit hints ────────────────────────────────────────────────────
   function renderLocalOrbitHints(t) {
     ctx.save()
-    ctx.setLineDash([1, 5]); ctx.lineWidth = 0.4
+    ctx.setLineDash([1, 5]); ctx.lineWidth = 0.8
     for (const drop of dropOrbits) {
       const children = ideaOrbits.filter(i => i.orbit === drop.id)
       if (children.length === 0) continue
@@ -420,7 +420,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
   // ─── Origin jewel ─────────────────────────────────────────────────────────
   function renderOrigin(t) {
     const v  = 0.4 + 0.6 * Math.sin(t * 0.18)
-    const sz = Math.min(W, H) * 0.028
+    const sz = Math.min(W, H) * 0.042
     ctx.save()
     ctx.globalAlpha = 0.10 + 0.10 * v
     ctx.font        = `${sz}px 'Palatino Linotype',Palatino,Georgia,serif`
@@ -433,7 +433,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
 
   // ─── Hover label — title · role/date · description · idea count ───────────
   function renderHoverLabel(x, y, entity) {
-    const fs  = Math.min(W, H) * 0.0175
+    const fs  = Math.min(W, H) * 0.026
     const col = typeColor(entity)
 
     ctx.save()
@@ -481,7 +481,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
       const isHover = hovered?.kind === 'fold' && hovered.id === fold.id
       const col     = typeColor(fold)
       const pulse   = 0.82 + 0.18 * Math.sin(t * 0.75 + i * 1.3)
-      const sz      = Math.min(W, H) * 0.030 * (isHover ? 1.28 : 1.0) * pulse
+      const sz      = Math.min(W, H) * 0.044 * (isHover ? 1.28 : 1.0) * pulse
 
       ctx.save()
       ctx.globalAlpha = isHover ? 0.38 : 0.18
@@ -512,7 +512,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
       const col     = typeColor(drop)
       const pRate   = drop.crystallizing ? 1.4 : 0.55
       const pulse   = 0.70 + 0.30 * Math.sin(t * pRate + drop.startAngle)
-      const sz      = Math.min(W, H) * 0.020 * (isHover ? 1.55 : 1.0) * pulse
+      const sz      = Math.min(W, H) * 0.032 * (isHover ? 1.55 : 1.0) * pulse
 
       ctx.save()
       ctx.globalAlpha = isHover ? 0.55 : 0.20
@@ -542,7 +542,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
       const isHover = hovered?.kind === 'idea' && hovered.id === idea.id
       const col     = typeColor(idea)
       const pulse   = 0.65 + 0.35 * Math.sin(t * 0.38 + idea.localStartAngle)
-      const sz      = Math.min(W, H) * 0.013 * (isHover ? 1.5 : 1.0) * pulse
+      const sz      = Math.min(W, H) * 0.022 * (isHover ? 1.5 : 1.0) * pulse
 
       ctx.save()
       ctx.globalAlpha = isHover ? 0.88 : 0.26
