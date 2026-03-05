@@ -2,12 +2,13 @@
   import { onMount, onDestroy } from 'svelte'
   import { initInnerstellar } from './canvas/innerstellar.js'
   import { subscribe, distributeEvent } from './lib/eventDistributor.js'
-  import { space } from './data/space.js'
+  import { space as seedSpace } from './data/space.js'
 
   let canvasEl  = $state(null)
   let hoveredEl = $state(null)
   let focusedEl = $state(null)
   let engine
+  let space     = $state(seedSpace)
 
   // ── Query state ───────────────────────────────────────────────────────────
   // Wire QUERY_ENDPOINT to nexus-backend when CORS is set up:
@@ -42,7 +43,14 @@
   // ── Event subscriptions ───────────────────────────────────────────────────
   let unsubs = []
 
-  onMount(() => {
+  onMount(async () => {
+    try {
+      const res  = await fetch('/api/space')
+      if (res.ok) space = await res.json()
+    } catch (_) {
+      // no api — use seed
+    }
+
     engine = initInnerstellar(canvasEl, space, {
       onElementHover(el) { hoveredEl = el },
       onElementFocus(el) { focusedEl = el === focusedEl ? null : el },
@@ -65,10 +73,10 @@
   })
 
   // ── State strip stats ─────────────────────────────────────────────────────
-  const totalDrops    = space.drops.length
-  const totalFolds    = space.folds.length
-  const crystallizing = [...space.drops, ...space.orbiting].filter(e => e.crystallizing).length
-  const lastDate      = space.drops.map(d => d.date).filter(Boolean).sort().pop() ?? '—'
+  const totalDrops    = $derived(space.drops.length)
+  const totalFolds    = $derived(space.folds.length)
+  const crystallizing = $derived([...space.drops, ...space.orbiting].filter(e => e.crystallizing).length)
+  const lastDate      = $derived(space.drops.map(d => d.date).filter(Boolean).sort().pop() ?? '—')
 
   // ── Panel color class by type ─────────────────────────────────────────────
   function panelKind(el) {
