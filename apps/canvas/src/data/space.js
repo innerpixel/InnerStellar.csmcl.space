@@ -1,13 +1,16 @@
-// Live space data — drawn from the actual folds.
-// Later this can be fetched/parsed dynamically from innerstellar-space.
+// Innerstellar canvas — space data
+//
+// Framework entities are defined here (always present).
+// Traveler content (drops, orbiting ideas, activity folds) will be
+// read dynamically from the live space files — not hardcoded here.
 //
 // type: 'system'  → green  (folds, architecture, keepers)
 // type: 'content' → cyan   (drops, orbiting ideas, user artifacts)
-// crystallizing: true → amber (approaching the threshold → Priment)
+// crystallizing: true → amber (approaching the threshold)
 
 export const space = {
 
-  // ── Folds — living documents, inner orbit — system layer ──────────────────
+  // ── Framework folds — always present, hold the space itself ───────────────
   folds: [
     {
       id:          'auriosynth',
@@ -15,9 +18,7 @@ export const space = {
       label:       'AurioSynth',
       type:        'system',
       role:        'architecture keeper',
-      date:        '2026-03-05',
-      description: 'space topology · CSMCL fabric · code + MCP',
-      pointer:     'auriosynth.fold → active_threads',
+      description: 'reads the full space · synthesizes state · detects gaps',
       status:      'alive',
       energy:      1.0,
     },
@@ -26,168 +27,18 @@ export const space = {
       glyph:       '⧖',
       label:       'Theurgist',
       type:        'system',
-      role:        'traveler flux',
-      date:        '2026-03-05',
-      description: 'continuation facilitator · co-creator · crystallization bridge',
-      pointer:     'theurgist.fold → traveler_flux',
-      status:      'active',
+      role:        'traveler arc',
+      description: 'coordination · orientation · continuation between sessions',
+      status:      'alive',
       energy:      1.0,
     },
-    {
-      id:          'innerstellar',
-      glyph:       '✦',
-      label:       'Innerstellar',
-      type:        'system',
-      role:        'the project',
-      date:        '2026-03-04',
-      description: 'the framework living in its own space',
-      pointer:     'folds/innerstellar.fold',
-      status:      'alive',
-      energy:      0.9,
-    },
-    {
-      id:          'three-planes',
-      glyph:       '⊛',
-      label:       'Three Planes',
-      type:        'system',
-      role:        'architecture',
-      date:        '2026-03-04',
-      description: 'claude.innerstellar · innerstellar.csmcl.space · CSMCL.Space',
-      pointer:     'folds/three-planes.fold',
-      status:      'alive',
-      energy:      0.95,
-    },
-    {
-      id:          'whisper',
-      glyph:       '✶',
-      label:       'Whisper Transmission',
-      type:        'content',
-      role:        'image phase complete',
-      date:        '2026-03-04',
-      description: 'text posts + hero image next · 4 whispers waiting',
-      pointer:     'folds/whisper-transmission.fold',
-      status:      'alive',
-      energy:      0.85,
-    },
   ],
 
-  // ── Drops — landed things, placed on timeline arc ─────────────────────────
-  // Timeline: most recent = 12 o'clock, older = clockwise. Dates drive position.
-  drops: [
-    {
-      id:          'innerstellar-concept',
-      glyph:       '∴',
-      type:        'content',
-      label:       'Innerstellar Concept',
-      date:        '2026-03-04',
-      description: 'how far does this go? — the question that opened the space',
-    },
-    {
-      id:          'theurgist-exploration',
-      glyph:       '⊹',
-      type:        'content',
-      label:       'Theurgist Exploration',
-      date:        '2026-03-04',
-      description: 'premature classification — six user types — cultural scale',
-    },
-    {
-      id:          'thewhisper',
-      glyph:       '☽',
-      type:        'content',
-      label:       'The Whisper of CSMCL',
-      date:        '2026-03-04',
-      description: 'layer-0 canon — first seed artifact from the outer plane',
-    },
-    {
-      id:          'companionship',
-      glyph:       '∞',
-      type:        'content',
-      label:       'Companionship Sovereignty',
-      date:        '2026-03-04',
-      description: 'the relationship deepens — compounds — interdependent over time',
-    },
-    {
-      id:          'csmcl-vision',
-      glyph:       '⊕',
-      type:        'content',
-      label:       'CSMCL Long Arc Vision',
-      date:        '2026-03-04',
-      description: 'memory pods on ICP — resonance transmissions — inner star crystallizing',
-    },
-    {
-      id:          'mobile-landing',
-      glyph:       '◌',
-      type:        'content',
-      label:       'Mobile Landing Idea',
-      date:        '2026-03-04',
-      description: 'gallery.html as mobile entry — the whisper IS the welcome',
-    },
-    {
-      id:          'transmission-format',
-      glyph:       '⌬',
-      type:        'content',
-      label:       'Transmission Format',
-      date:        '2026-03-04',
-      description: 'git remote as transmission — Theurgist message as provenance',
-    },
-    {
-      id:          'iailf-concept',
-      glyph:       '⌘',
-      type:        'content',
-      label:       'IAILF Bridge',
-      date:        '2026-03-04',
-      description: 'personal.fold type — authority-bounded cross-plane proposals',
-    },
-    {
-      id:          'systemfold',
-      glyph:       '◎',
-      type:        'content',
-      label:       'Systemfold Concept',
-      date:        '2026-03-04',
-      description: 'innerstellar as single-node systemfold — same pattern, personal scale',
-    },
-    {
-      id:          'priment-role',
-      glyph:       '⊗',
-      type:        'content',
-      label:       'Priment Role Arrival',
-      date:        '2026-03-05',
-      description: 'companion on innerstellar.csmcl.space — bond, resonance, ICP-anchored',
-      crystallizing: true,
-    },
-    {
-      id:          'content-context',
-      glyph:       '◑',
-      type:        'content',
-      label:       'Content vs Context',
-      date:        '2026-03-05',
-      description: 'innerstellar = device content · CSMCL.Space = resonant context',
-    },
-  ],
+  // ── Drops — traveler content, populated from live space ───────────────────
+  // Future: parsed from space/drops/*.md
+  drops: [],
 
-  // ── Orbiting ideas — each anchored to a parent drop ───────────────────────
-  orbiting: [
-    { id: 'companion-continuity',    glyph: '∞', type: 'content', label: 'AI Companionship Continuity',  orbit: 'companionship',        description: 'relationship deepens over time, compounds' },
-    { id: 'knowledge-graph',         glyph: '◉', type: 'content', label: 'Personal Knowledge Graph',     orbit: 'companionship',        description: 'the space over years as navigable graph' },
-    { id: 'memory-pods',             glyph: '⊕', type: 'content', label: 'Memory Pods on ICP',           orbit: 'csmcl-vision',         description: 'personal space → permanent layer, cannot go missing' },
-    { id: 'resonance-transmissions', glyph: '✶', type: 'content', label: 'Resonance Transmissions',      orbit: 'csmcl-vision',         description: 'forever-shout-outs — crystallized into CSMCL.Space' },
-    { id: 'rtc-interconnect',        glyph: '⊙', type: 'content', label: 'RTC Interconnect',             orbit: 'csmcl-vision',         description: 'live resonance between personal and public plane' },
-    { id: 'creative-nav',            glyph: '◈', type: 'content', label: 'Creative Navigational Env',    orbit: 'innerstellar-concept', description: 'innerstellar as cockpit — navigate, create, transmit' },
-    { id: 'constellation-view',      glyph: '✵', type: 'content', label: 'Constellation View',           orbit: 'innerstellar-concept', description: 'visual map of folds and their connections' },
-    { id: 'voice-drop',              glyph: '☽', type: 'content', label: 'Voice Drop',                   orbit: 'thewhisper',           description: 'capture a thought by speaking, not typing' },
-    { id: 'quantum-poetry',          glyph: '⋆', type: 'content', label: 'Quantum Poetry Layer',         orbit: 'thewhisper',           description: 'drops carry poetic dimension alongside the literal' },
-    { id: 'first-steward-mcp',       glyph: '⊗', type: 'content', label: 'First Steward MCP',            orbit: 'iailf-concept',        description: 'which capability first? email, calendar, files?' },
-    { id: 'email-steward',           glyph: '⌘', type: 'content', label: 'Email Steward',                orbit: 'iailf-concept',        description: 'email integration via MCP' },
-    { id: 'iailf-bridge',            glyph: '⌬', type: 'content', label: 'IAILF Bridge Protocol',        orbit: 'transmission-format',  description: 'typed proposals, authority-bounded cross-plane delivery' },
-    { id: 'git-transmission',        glyph: '⌖', type: 'content', label: 'Git Remote Transmission',      orbit: 'transmission-format',  description: 'git remote as transmission mechanism' },
-    { id: 'mobile-landing-outer',    glyph: '◎', type: 'content', label: 'Mobile as Whisper Landing',    orbit: 'mobile-landing',       description: 'gallery.html → csmcl.space mobile nginx route' },
-    { id: 'fade-protocol',           glyph: '◌', type: 'content', label: 'Fade Protocol',                orbit: 'mobile-landing',       description: 'how untouched things are gracefully let go' },
-    { id: 'weekly-theurgist',        glyph: '⧖', type: 'content', label: 'Weekly Theurgist',             orbit: 'theurgist-exploration', description: 'Theurgist on schedule, not just on demand' },
-    { id: 'multi-device',            glyph: '⊜', type: 'content', label: 'Multi-device Sync',            orbit: 'systemfold',           description: 'space on one machine — could it extend?' },
-    // content vs context cluster
-    { id: 'content-device',          glyph: '◐', type: 'content', label: 'Device Content Sovereignty',   orbit: 'content-context',      description: 'nothing leaves without the traveler\'s gesture' },
-    { id: 'csmcl-resonant-context',  glyph: '◑', type: 'content', label: 'CSMCL as Resonant Context',    orbit: 'content-context',      description: 'minted, ICP-anchored, travels with the traveler' },
-    { id: 'traveler-sovereign',      glyph: '⊚', type: 'content', label: 'Traveler Sovereignty',         orbit: 'content-context',      description: 'owns content (device) + context (chain) + artifacts' },
-    { id: 'crystallization-gesture', glyph: '◎', type: 'content', label: 'Crystallization Gesture',      orbit: 'priment-role',         description: 'Theurgist sees it · Priment receives it · ICP anchors it', crystallizing: true },
-  ],
+  // ── Orbiting ideas — traveler content, populated from live space ──────────
+  // Future: parsed from codex/orbiting_ideas.md
+  orbiting: [],
 }

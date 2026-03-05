@@ -49,6 +49,8 @@ function computeTimelineAngles(drops) {
   const ARC_START = -Math.PI / 2
   const ARC_SPAN  = Math.PI * 1.5  // 270°
 
+  if (drops.length === 0) return {}
+
   const indexed = drops.map((d, i) => ({ id: d.id, date: d.date || '2000-01-01', i }))
   indexed.sort((a, b) => {
     const ta = new Date(a.date).getTime()
