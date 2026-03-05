@@ -315,7 +315,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
   // Faint arcs beyond the drop ring show the connected planes.
   // Labels in the upper-right gap (the future zone of the timeline arc).
   function renderPlaneRings() {
-    const fs     = Math.min(W, H) * 0.0085
+    const fs     = Math.min(W, H) * 0.0110
     const labelA = -Math.PI / 5     // upper-right — future gap area
     const r2     = plane2R()
     const r3     = plane3R()
@@ -325,7 +325,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     ctx.textAlign = 'left'
 
     // Plane 1 label (drop ring)
-    ctx.globalAlpha = 0.10
+    ctx.globalAlpha = 0.22
     ctx.fillStyle   = 'rgba(140, 190, 215, 1)'
     ctx.fillText('claude.innerstellar',
       cx + Math.cos(labelA) * (dropR() + 6),
@@ -337,7 +337,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     ctx.strokeStyle = 'rgba(80, 200, 220, 0.055)'
     ctx.beginPath(); ctx.arc(cx, cy, r2, 0, Math.PI * 2); ctx.stroke()
     ctx.setLineDash([])
-    ctx.globalAlpha = 0.10
+    ctx.globalAlpha = 0.22
     ctx.fillStyle   = 'rgba(80, 200, 220, 1)'
     ctx.fillText('innerstellar.csmcl.space',
       cx + Math.cos(labelA) * (r2 + 6),
@@ -348,7 +348,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     ctx.strokeStyle = 'rgba(255, 185, 55, 0.035)'
     ctx.beginPath(); ctx.arc(cx, cy, r3, 0, Math.PI * 2); ctx.stroke()
     ctx.setLineDash([])
-    ctx.globalAlpha = 0.08
+    ctx.globalAlpha = 0.18
     ctx.fillStyle   = 'rgba(255, 185, 55, 1)'
     ctx.fillText('csmcl.space',
       cx + Math.cos(labelA) * (r3 + 6),
@@ -375,18 +375,19 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     const x     = cx + Math.cos(-Math.PI / 2) * r
     const y     = cy + Math.sin(-Math.PI / 2) * r
     const pulse = 0.5 + 0.5 * Math.sin(t * 1.0)
-    const fs    = Math.min(W, H) * 0.0085
+    const fs    = Math.min(W, H) * 0.0110
 
     ctx.save()
-    ctx.globalAlpha = 0.18 + 0.12 * pulse
+    ctx.globalAlpha = 0.30 + 0.20 * pulse
     ctx.fillStyle   = TYPE_COLORS.crystallizing.fill
     ctx.shadowColor = TYPE_COLORS.crystallizing.glow
-    ctx.shadowBlur  = 10
-    ctx.beginPath(); ctx.arc(x, y, 2.2, 0, Math.PI * 2); ctx.fill()
-    ctx.shadowBlur  = 0
+    ctx.shadowBlur  = 12
+    ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI * 2); ctx.fill()
+    ctx.shadowBlur  = 6
     ctx.font        = `${fs}px 'Palatino Linotype', Palatino, Georgia, serif`
     ctx.textAlign   = 'center'
-    ctx.fillStyle   = TYPE_COLORS.crystallizing.dim
+    ctx.fillStyle   = TYPE_COLORS.crystallizing.fill
+    ctx.globalAlpha = 0.55 + 0.25 * pulse
     ctx.fillText('now', x, y - 10)
     ctx.restore()
   }
@@ -424,7 +425,7 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
 
   // ─── Hover label — title · role/date · description · idea count ───────────
   function renderHoverLabel(x, y, entity) {
-    const fs  = Math.min(W, H) * 0.0135
+    const fs  = Math.min(W, H) * 0.0175
     const col = typeColor(entity)
 
     ctx.save()
@@ -432,31 +433,34 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
 
     // Title
     ctx.font        = `${fs}px 'Palatino Linotype', Palatino, Georgia, serif`
-    ctx.fillStyle   = 'rgba(220, 230, 255, 0.92)'
-    ctx.shadowColor = col.glow; ctx.shadowBlur = 10
-    ctx.globalAlpha = 0.96
+    ctx.fillStyle   = 'rgba(230, 238, 255, 1.0)'
+    ctx.shadowColor = col.glow; ctx.shadowBlur = 14
+    ctx.globalAlpha = 1.0
     ctx.fillText(entity.label, x, y)
 
     // Role or date — type color
-    ctx.font        = `${fs * 0.68}px 'Palatino Linotype', Palatino, Georgia, serif`
-    ctx.fillStyle   = col.dim
-    ctx.shadowBlur  = 0
-    ctx.fillText(entity.role || entity.date || '', x, y + fs * 1.35)
+    ctx.font        = `${fs * 0.70}px 'Palatino Linotype', Palatino, Georgia, serif`
+    ctx.fillStyle   = col.fill
+    ctx.globalAlpha = 0.82
+    ctx.shadowBlur  = 6
+    ctx.fillText(entity.role || entity.date || '', x, y + fs * 1.40)
 
     // Description
     if (entity.description) {
-      ctx.font      = `${fs * 0.58}px 'Palatino Linotype', Palatino, Georgia, serif`
-      ctx.fillStyle = 'rgba(140, 155, 195, 0.50)'
-      ctx.globalAlpha = 0.88
-      ctx.fillText(entity.description, x, y + fs * 2.55)
+      ctx.font        = `${fs * 0.60}px 'Palatino Linotype', Palatino, Georgia, serif`
+      ctx.fillStyle   = 'rgba(175, 188, 220, 0.90)'
+      ctx.globalAlpha = 0.95
+      ctx.shadowBlur  = 0
+      ctx.fillText(entity.description, x, y + fs * 2.65)
     }
 
     // Idea count (drops only)
     const count = ideaCount[entity.id]
     if (count) {
-      ctx.font      = `${fs * 0.52}px 'Palatino Linotype', Palatino, Georgia, serif`
-      ctx.fillStyle = 'rgba(100, 160, 175, 0.38)'
-      ctx.fillText(`${count} ideas orbiting`, x, y + fs * 3.65)
+      ctx.font        = `${fs * 0.54}px 'Palatino Linotype', Palatino, Georgia, serif`
+      ctx.fillStyle   = 'rgba(120, 178, 195, 0.72)'
+      ctx.globalAlpha = 0.90
+      ctx.fillText(`${count} ideas orbiting`, x, y + fs * 3.80)
     }
 
     ctx.restore()
