@@ -81,7 +81,7 @@ can do now vs. what opens when the CSMCL.Space connection is active.
 
 1. Clone this repo
 2. Ask Claude: *"Set up my Innerstellar space"*
-3. Claude reads `setup/init.md` and creates your private `innerstellar-space` repo
+3. Claude reads `setup/init.md` and initializes your space
 4. Drop something in. The firmament is already there. The space is alive.
 
 See `setup/init.md` for the full setup guide.
@@ -118,7 +118,7 @@ The space belongs to you — your drops, your orbits, your identity, your accoun
 
 The canvas reads both layers at startup:
 - **Firmament** from `innerstellar/firmament/folds/` — 8 entities, always there
-- **Your space** from `innerstellar-space/space/` — your drops and orbits
+- **Your space** from `innerstellar/space/` — your drops and orbits
 
 Inner ring: firmament entities at fixed positions. Outer arc: your drops on a timeline.
 

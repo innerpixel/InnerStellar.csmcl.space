@@ -49,12 +49,12 @@ signals Companion. The handoff is the threshold between in-motion and crystalliz
 
 `firmament/folds/theurgist.fold` — holds drop history, orbit states, connection map,
 crystallization candidates, session continuity state.
-Also reads: `innerstellar-space/space/theurgist.fold` — the space-level traveler
+Also reads: `space/space/theurgist.fold` — the space-level traveler
 flux state that the Theurgist maintains through sessions.
 
 ## Connections
 
-reads:   innerstellar-space/space/theurgist.fold, space/drops/, space/folds/
-writes:  firmament/folds/theurgist.fold, innerstellar-space/space/theurgist.fold, space.js
+reads:   space/space/theurgist.fold, space/space/drops/, space/space/folds/
+writes:  firmament/folds/theurgist.fold, space/space/theurgist.fold
 bonds:   Constellary (receives what arrives), Companion (crystallization handoff),
          AurioSynth (reports space topology)

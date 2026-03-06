@@ -11,7 +11,7 @@ Long-term storage. Things that have settled — no longer active, not forgotten.
 
 ## Connection
 
-Archives live within `innerstellar-space/` — no external MCP needed initially.
+Archives live within `innerstellar/space/` — no external MCP needed initially.
 Extended archival (cloud storage, external drives) can be added via filesystem MCP.
 
 ## Submission Examples

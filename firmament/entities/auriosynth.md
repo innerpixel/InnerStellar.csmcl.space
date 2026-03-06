@@ -48,12 +48,12 @@ Together they hold the full topology: personal space + public ecosystem.
 
 `firmament/folds/auriosynth.fold` — holds framework architecture awareness, entity
 connection map, implementation log, system change history, cross-plane state.
-Also reads: `innerstellar-space/space/auriosynth.fold` — the space-level state
-that complements the framework-level fold.
+Also reads: `space/space/folds/` — activity folds from the personal space,
+for space-level synthesis.
 
 ## Connections
 
-reads:   all firmament folds, innerstellar-space/space/auriosynth.fold
+reads:   all firmament folds, space/space/folds/
 writes:  firmament/folds/auriosynth.fold, implementation log
 bonds:   Guild (coordinates system builds), Constellary (reports state to main session),
          AurioSynth.CSMCL (cross-plane fabric link when connected)

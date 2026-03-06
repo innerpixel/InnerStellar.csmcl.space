@@ -11,7 +11,7 @@ Innerstellar is a personal knowledge environment — part thinking tool, part vi
 
 It has two layers:
 
-**The Space** (`innerstellar-space/`) — your private repository. Drops and their orbits. Written by you and Claude together, held in files, synced to wherever you want. This is where thinking lives.
+**The Space** (`innerstellar/space/`) — your private repository, inside the framework folder but gitignored from it. Drops and their orbits. Written by you and Claude together, held in files, synced to wherever you want. This is where thinking lives.
 
 **The Canvas** (`apps/canvas/`) — a living visual map of your space. The firmament ring holds 8 entities always present. Your drops arc along a timeline, orbits circling each one. Crystallizing work glows amber. Navigate with your cursor. Click anything to open it.
 
@@ -144,7 +144,7 @@ Track orbits in `codex/drops_and_orbits.md` or as a section within the drop file
 The canvas auto-loads from two sources at startup:
 
 1. **Firmament** — reads `innerstellar/firmament/folds/` via `/api/firmament`. All 8 entities always present on every machine from day one.
-2. **Personal space** — reads `innerstellar-space/space/` via `/api/space`. Your drops and orbits.
+2. **Personal space** — reads `innerstellar/space/` via `/api/space`. Your drops and orbits.
 
 No manual `space.js` updates needed. Drop a file in the right place — the canvas picks it up on next load.
 
