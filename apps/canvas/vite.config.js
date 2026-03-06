@@ -5,7 +5,7 @@ import path from 'path'
 
 // ── Space + Firmament reader plugin ───────────────────────────────────────
 // /api/firmament — reads innerstellar/firmament/folds/ (framework, always present)
-// /api/space     — reads innerstellar-space/ (personal, traveler content)
+// /api/space     — reads innerstellar/space/ (personal, traveler content — gitignored)
 // Parses YAML front matter + uses filename and entity field for identity.
 
 function parseYamlFrontMatter(content) {
@@ -148,9 +148,9 @@ function readSpaceData(spaceRoot) {
 
 function spaceReaderPlugin() {
   // INNERSTELLAR_SPACE env var overrides — set it to point anywhere.
-  // Default: sibling of the repo root (../../../ from apps/canvas/).
+  // Default: innerstellar/space/ (inside framework folder, gitignored).
   const spaceRoot     = process.env.INNERSTELLAR_SPACE
-    ?? path.resolve(__dirname, '../../../innerstellar-space')
+    ?? path.resolve(__dirname, '../../space')
   // Firmament lives in the framework repo itself — always present.
   const firmamentRoot = path.resolve(__dirname, '../../firmament')
 

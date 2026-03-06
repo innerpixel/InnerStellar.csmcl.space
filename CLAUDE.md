@@ -13,21 +13,19 @@ delivering a **landing report**. Do this automatically — do not wait to be ask
 
 ### 1. Locate the space
 
-Default path: `../innerstellar-space`
+Default path: `./space` (inside the framework folder — gitignored from this repo)
 If not found there, check for an `INNERSTELLAR_SPACE` environment variable.
 If still not found, inform the user and offer to initialize a new space via
 `setup/init.md`.
 
 ### 2. Read these files (in order)
 
-- `space/auriosynth.fold` — space-level system state, what's alive, active threads
 - `space/theurgist.fold` — traveler flux, drops, orbits, open questions
-- `codex/orbiting_ideas.md` — what's in orbit, what's landing, what's drifted
+- `codex/drops_and_orbits.md` — what's in orbit, what's landing, what's drifted
 - `space/folds/` — scan for any activity folds, note their status and energy
 
 Optional (when deep entity context is needed):
-- `{framework}/firmament/folds/{entity}.fold` — entity machine state, skills, voice, connection status
-  Framework path: the `innerstellar/` repo (sibling of `innerstellar-space/`)
+- `firmament/folds/{entity}.fold` — entity machine state, skills, voice, connection status
 
 ### 3. Deliver the landing report
 
@@ -107,24 +105,27 @@ on the canvas inner ring. The canvas announces them via the eventDistributor.
 ## Space Structure
 
 ```
-innerstellar/                     ← framework (public)
+innerstellar/                     ← framework (public git repo)
   firmament/
     entities/                     — human-readable entity definitions
     folds/                        — entity machine state (AI reads these)
   apps/canvas/                    — the canvas SPA
-
-innerstellar-space/               ← personal space (private)
-  space/
-    auriosynth.fold               — space-level system state (read every session)
-    theurgist.fold                — traveler flux, drops, orbits (read every session)
-    drops/                        — the user's drops
-    folds/                        — activity folds per project or theme
-  codex/
-    orbiting_ideas.md             — the brickyard (ideas not yet dropped)
-    implementation.log.md         — append-only history
-  stewards/
-    queue/                        — submissions waiting for a Steward
+  setup/                          — init guide + fold templates
+  space/                          ← personal space (gitignored — own git repo)
+    space/
+      theurgist.fold              — traveler flux, drops, orbits (read every session)
+      drops/                      — the user's drops
+      folds/                      — activity folds per project or theme
+    codex/
+      drops_and_orbits.md         — orbiting ideas not yet dropped
+      session.log.md              — append-only session history
 ```
+
+The `space/` directory:
+- Lives inside the framework folder but is excluded from the framework git repo
+- Is its own git repository, initialized with the traveler's CSMCL.Space identity
+- Will eventually sync to `handle@csmcl.space` when the account is connected
+- Is where user API keys and account authentication will live as the system grows
 
 ---
 

@@ -88,25 +88,29 @@ See `setup/init.md` for the full setup guide.
 
 ---
 
-## Two Repositories
+## Two Layers, One Folder
 
 ```
-innerstellar/              ← this repo (framework, public)
+innerstellar/              ← framework repo (public git)
   firmament/
     entities/              ← human-readable entity definitions
     folds/                 ← machine state (AI reads these)
   apps/canvas/             ← Svelte 5 canvas SPA
-
-innerstellar-space/        ← your repo (private, yours alone)
-  space/
-    drops/                 ← landed artifacts
-    folds/                 ← activity folds
-    theurgist.fold         ← space-level state
-  codex/
+  setup/                   ← init guide + fold templates
+  space/                   ← your space (gitignored — own git repo)
+    space/
+      drops/               ← landed artifacts
+      folds/               ← activity folds
+      theurgist.fold       ← space-level state
+    codex/
 ```
 
-The firmament belongs to the system. It is always present from any machine.
-The space belongs to you. It is never part of the framework.
+The `space/` directory lives inside the framework folder but is excluded from the
+framework git repo. It is its own repository, initialized with your CSMCL.Space
+identity (`handle@csmcl.space`) as the git author.
+
+The firmament belongs to the system — always present on every machine.
+The space belongs to you — your drops, your orbits, your identity, your account.
 
 ---
 

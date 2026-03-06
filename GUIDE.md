@@ -48,22 +48,28 @@ npm run build
 
 ## Your Space
 
-Your personal space lives in a separate private repository (`innerstellar-space/`). It is never part of the public Innerstellar framework.
+Your personal space lives inside the framework folder at `innerstellar/space/`,
+excluded from the framework git repo. It is its own private git repository — yours alone.
 
 ### Structure
 
 ```
-innerstellar-space/
-├── space/
-│   ├── theurgist.fold     ← space-level state (Theurgist reads this)
-│   ├── folds/             ← activity folds (projects, ideas, living docs)
-│   └── drops/             ← landed artifacts (dated markdown files)
-└── codex/
-    ├── implementation.log.md
-    └── drops_and_orbits.md
+innerstellar/
+├── space/                       ← your space (gitignored from framework)
+│   ├── space/
+│   │   ├── theurgist.fold       ← traveler flux (read every session)
+│   │   ├── drops/               ← landed artifacts (dated markdown files)
+│   │   └── folds/               ← activity folds per project or theme
+│   └── codex/
+│       ├── drops_and_orbits.md  ← orbiting ideas not yet dropped
+│       └── session.log.md       ← append-only session history
+├── firmament/                   ← framework — always present, not yours
+└── apps/canvas/                 ← the canvas
 ```
 
-The space stays purely personal — drops and their orbits. The firmament entities live in the framework (`innerstellar/firmament/`), not in your space.
+The `space/` directory is its own git repo with your CSMCL.Space identity as the git author.
+When your account is connected, this repo syncs outward. The firmament is the system.
+The space is yours.
 
 ### The Fold System
 

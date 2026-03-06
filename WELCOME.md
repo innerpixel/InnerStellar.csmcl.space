@@ -108,11 +108,12 @@ Innerstellar is open. You can run your own.
 
 1. Clone this repo
 2. Ask Claude: *"Set up my Innerstellar space"*
-3. Claude reads `setup/init.md` and initializes your private space
+3. Claude reads `setup/init.md` and initializes your space
 4. Drop something in
 
-Your space lives in a private repo — `innerstellar-space` —
-that belongs to you alone. The framework is shared.
+Your space lives at `innerstellar/space/` — inside the framework folder
+but excluded from the framework git repo. It is its own repository,
+initialized with your CSMCL.Space identity. The framework is shared.
 The firmament is the system. The space is yours.
 
 If you want to connect to CSMCL.Space — your inner star shining outward —
