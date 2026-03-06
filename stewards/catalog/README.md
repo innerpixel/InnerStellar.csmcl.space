@@ -10,6 +10,7 @@ Wire what you need, when you need it. The Stewards grow with you.
 | Files & Documents | `files.md` | documented |
 | Media | `media.md` | documented |
 | Archives | `archives.md` | documented |
+| Social Media | `social-media.md` | documented |
 
 ---
 
