@@ -14,15 +14,30 @@
 
 ## The Fold System
 
-Folds are AI-native state files. Not documents, not notes. Dense, evolving,
-written by Claude for Claude. They transfer state between sessions so no
-session starts cold.
+Folds are machine state — AI-native, dense, written by Claude for Claude.
+They transfer state between sessions so no session starts cold. Not user-facing:
+the canvas shows the user's own content (drops, orbits), not fold internals.
+The user can peek at folds — they'll recognize their own words — but the
+format is for the AI, not for them.
+
+Two fold layers:
 
 ```
-space/
-  auriosynth.fold    — system state, space topology, what's alive
-  theurgist.fold     — user state, current arc, engagement
-  drops/             — raw incoming, things just landed, not yet tended
+innerstellar/firmament/folds/     — entity folds (system, always present)
+  wisdom-star.fold                — AI substrate state
+  constellary.fold                — session and cross-plane state
+  auriosynth.fold                 — framework/fabric awareness
+  theurgist.fold                  — space content awareness
+  guild.fold                      — operational knowledge
+  oracle.fold                     — CSMCL.Space connection state
+  companion.fold                  — bond state
+  priment.fold                    — crystallization and nexus state
+
+innerstellar-space/space/         — personal folds (traveler layer)
+  auriosynth.fold                 — space-level system state
+  theurgist.fold                  — drops, orbits, traveler flux
+  drops/                          — the user's drops
+  folds/                          — activity folds per project or theme
 ```
 
 **Fold format:**
@@ -45,20 +60,27 @@ last_pulse: [date]
 ## The Session Protocol
 
 **Session start:**
-1. Claude reads `space/auriosynth.fold` — oriented, not cold
-2. AurioSynth fold shows what's alive, what was last touched
-3. Conversation begins from that context
+1. Constellary reads `space/auriosynth.fold` + `space/theurgist.fold` — oriented, not cold
+2. Canvas loads firmament via `/api/firmament` → emits `firmament.entity.register` × 8 → `firmament.ready`
+3. Canvas loads personal space via `/api/space` → drops and orbits rendered
+4. Conversation begins from full context
 
 **During session:**
 - Drops land in `space/drops/`
-- AurioSynth tends them — places in folds, notes connections
-- Theurgist invoked when depth or planning is needed
-- Stewards handle operational tasks via MCP
+- Theurgist tracks drops, orbits, connections — keeps space.js current for the canvas
+- Guild executes when a drop becomes an artifact
+- AurioSynth records system changes, coordinates builds
+- Guild Stewards handle operational tasks via MCP
 
 **Session end:**
-- AurioSynth fold updated with new state
-- Theurgist fold updated if user arc shifted
+- AurioSynth fold updated with system state changes
+- Theurgist fold updated with new drops, orbits, crystallization candidates
 - Nothing is lost
+
+**The hierarchy is informational, not operational.**
+The Constellary (main session) executes everything — reads the right fold,
+responds from the right entity's voice, writes to the right fold. The entities
+organize where knowledge lives and what voice answers. The canvas makes this navigable.
 
 ---
 
@@ -80,13 +102,32 @@ execution unless pre-authorized.
 
 ---
 
+## Canvas — Two Areas
+
+```
+Inner firmament ring         — 8 entities, fixed positions, always present
+  Wisdom Star at center      — pulsing ✦, AI substrate
+  7 entities on ring         — functional (green), latent (amber), cross-plane (white)
+  Stillness = permanence     — firmament entities do not orbit
+
+Outer personal space         — drops on timeline arc, orbits circling each drop
+  Drop arc (270°)            — most recent at 12 o'clock, older clockwise
+  Orbits                     — ideas circling their drop, animated
+  Crystallizing drops        — drift outward toward plane2 arc (the transition horizon)
+```
+
+Canvas vocabulary: **drops** (subjects/projects/intents that arrive) + **orbits** (ideas circling them).
+Folds are the AI substrate beneath — machine state, not displayed on canvas.
+
+---
+
 ## Information Flow
 
 ```
 User speaks
-  → Main Session receives
-    → AurioSynth fold read (context)
-      → response, or invoke Theurgist for depth
+  → Constellary receives (main session)
+    → reads right entity fold for context
+      → responds from that entity's voice
         → drop placed in space
           → Stewards handle operational tasks
             → AurioSynth fold updated at end

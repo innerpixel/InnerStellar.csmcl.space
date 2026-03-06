@@ -9,6 +9,7 @@
   let focusedEl = $state(null)
   let engine
   let space     = $state(seedSpace)
+  let firmament = $state([])
 
   // ── Query state ───────────────────────────────────────────────────────────
   // Wire QUERY_ENDPOINT to nexus-backend when CORS is set up:
@@ -44,14 +45,37 @@
   let unsubs = []
 
   onMount(async () => {
+    // ── Load firmament (system layer — always present) ──────────────────────
     try {
-      const res  = await fetch('/api/space')
-      if (res.ok) space = await res.json()
+      const res = await fetch('/api/firmament')
+      if (res.ok) {
+        const data = await res.json()
+        if (data.entities?.length) {
+          firmament = data.entities
+          // Announce each entity into the event fabric
+          firmament.forEach(e => distributeEvent({ type: 'firmament.entity.register', payload: e }))
+          distributeEvent({ type: 'firmament.ready', payload: { count: firmament.length } })
+        }
+      }
+    } catch (_) {
+      // no api — firmament stays empty (fresh machine without dev server)
+    }
+
+    // ── Load personal space (traveler content) ─────────────────────────────
+    try {
+      const res = await fetch('/api/space')
+      if (res.ok) {
+        const data = await res.json()
+        if (data.drops?.length) {
+          space = { drops: data.drops, orbits: data.orbiting ?? [] }
+          distributeEvent({ type: 'space.state.updated', payload: space })
+        }
+      }
     } catch (_) {
       // no api — use seed
     }
 
-    engine = initInnerstellar(canvasEl, space, {
+    engine = initInnerstellar(canvasEl, space, firmament, {
       onElementHover(el) { hoveredEl = el },
       onElementFocus(el) { focusedEl = el === focusedEl ? null : el },
     })
@@ -73,16 +97,19 @@
   })
 
   // ── State strip stats ─────────────────────────────────────────────────────
-  const totalDrops    = $derived(space.drops.length)
-  const totalFolds    = $derived(space.folds.length)
-  const crystallizing = $derived([...space.drops, ...space.orbiting].filter(e => e.crystallizing).length)
-  const lastDate      = $derived(space.drops.map(d => d.date).filter(Boolean).sort().pop() ?? '—')
+  const totalDrops    = $derived((space.drops ?? []).length)
+  const crystallizing = $derived([...(space.drops ?? []), ...(space.orbits ?? [])].filter(e => e.crystallizing).length)
+  const lastDate      = $derived((space.drops ?? []).map(d => d.date).filter(Boolean).sort().pop() ?? '—')
 
-  // ── Panel color class by type ─────────────────────────────────────────────
+  // ── Panel color class by type / connection_state ──────────────────────────
   function panelKind(el) {
     if (!el) return ''
     if (el.crystallizing) return 'amber'
-    if (el.type === 'system') return 'green'
+    if (el.type === 'firmament') {
+      if (el.connection_state === 'latent')       return 'amber'
+      if (el.connection_state === 'cross-plane')  return 'white'
+      return 'green'
+    }
     return 'cyan'
   }
 </script>
@@ -99,7 +126,7 @@
 {#if focusedEl}
   <div class="focus-panel {panelKind(focusedEl)}" role="dialog" aria-modal="true">
     <div class="fp-header">
-      <span class="fp-kind">{focusedEl.crystallizing ? 'crystallizing' : focusedEl.type ?? focusedEl.kind}</span>
+      <span class="fp-kind">{focusedEl.crystallizing ? 'crystallizing' : focusedEl.type === 'firmament' ? (focusedEl.connection_state ?? 'firmament') : focusedEl.type ?? focusedEl.kind}</span>
       <button class="fp-close" onclick={() => { focusedEl = null; queryResponse = null; distributeEvent({ type: 'canvas.element.dismissed' }) }} aria-label="close">×</button>
     </div>
     <div class="fp-glyph">{focusedEl.glyph}</div>
@@ -150,7 +177,6 @@
 <!-- State strip — where you are in your space -->
 <div class="state-strip">
   <span class="ss-num">{totalDrops}</span> drops
-  · <span class="ss-num">{totalFolds}</span> folds
   {#if crystallizing > 0}
     · <span class="ss-amber">{crystallizing} crystallizing</span>
   {/if}
@@ -190,6 +216,7 @@
   .focus-panel.green  { border-left: 2px solid rgba(80, 220, 155, 0.35); }
   .focus-panel.cyan   { border-left: 2px solid rgba(80, 200, 235, 0.28); }
   .focus-panel.amber  { border-left: 2px solid rgba(255, 185, 55, 0.45); }
+  .focus-panel.white  { border-left: 2px solid rgba(220, 230, 255, 0.40); }
 
   .fp-header {
     display: flex; justify-content: space-between; align-items: center;

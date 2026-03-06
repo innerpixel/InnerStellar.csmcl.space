@@ -3,8 +3,9 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 import fs from 'fs'
 import path from 'path'
 
-// ── Space reader plugin ────────────────────────────────────────────────────
-// Reads fold files from innerstellar-space/ and serves them as /api/space.
+// ── Space + Firmament reader plugin ───────────────────────────────────────
+// /api/firmament — reads innerstellar/firmament/folds/ (framework, always present)
+// /api/space     — reads innerstellar-space/ (personal, traveler content)
 // Parses YAML front matter + uses filename and entity field for identity.
 
 function parseYamlFrontMatter(content) {
@@ -20,10 +21,58 @@ function parseYamlFrontMatter(content) {
 
 function glyphFor(id) {
   const glyphs = {
-    auriosynth: '◈', theurgist: '⧖', innerstellar: '✦',
-    'three-planes': '⊛', traveler: '◎', priment: '⊗',
+    'wisdom-star': '✦', constellary: '❋',
+    auriosynth: '◈', theurgist: '⧖',
+    guild: '⬡', oracle: '⊕',
+    companion: '∞', priment: '◇',
+    innerstellar: '✦', 'three-planes': '⊛',
   }
   return glyphs[id] ?? '✶'
+}
+
+// ── Firmament reader ───────────────────────────────────────────────────────
+// Reads innerstellar/firmament/folds/ — the system's entity definitions.
+// These are framework bones: always present, independent of the personal space.
+
+const ENTITY_ORDER = ['wisdom-star', 'constellary', 'auriosynth', 'theurgist', 'guild', 'oracle', 'companion', 'priment']
+const CONNECTION_STATE_ENERGY = { functional: 1.0, 'cross-plane': 1.0, latent: 0.5 }
+
+function readFirmamentData(firmamentRoot) {
+  const foldsDir = path.join(firmamentRoot, 'folds')
+  if (!fs.existsSync(foldsDir)) return []
+
+  const entities = []
+  fs.readdirSync(foldsDir)
+    .filter(f => f.endsWith('.fold'))
+    .forEach(file => {
+      const content = fs.readFileSync(path.join(foldsDir, file), 'utf8')
+      const meta    = parseYamlFrontMatter(content)
+      const id      = meta.entity ?? file.replace('.fold', '')
+      const connState = meta.connection_state ?? 'functional'
+      entities.push({
+        id,
+        glyph:            meta.glyph ?? glyphFor(id),
+        color:            meta.color ?? '#ffffff',
+        label:            id === 'wisdom-star' ? 'Wisdom Star' :
+                          id.charAt(0).toUpperCase() + id.slice(1),
+        type:             'firmament',
+        connection_state: connState,
+        energy:           CONNECTION_STATE_ENERGY[connState] ?? 0.7,
+        ring:             id === 'wisdom-star' ? 'center' : 'inner',
+      })
+    })
+
+  // Sort by canonical order; unknown entities go at end
+  entities.sort((a, b) => {
+    const ai = ENTITY_ORDER.indexOf(a.id)
+    const bi = ENTITY_ORDER.indexOf(b.id)
+    if (ai === -1 && bi === -1) return 0
+    if (ai === -1) return 1
+    if (bi === -1) return -1
+    return ai - bi
+  })
+
+  return entities
 }
 
 function readSpaceData(spaceRoot) {
@@ -98,11 +147,27 @@ function readSpaceData(spaceRoot) {
 }
 
 function spaceReaderPlugin() {
-  const spaceRoot = path.resolve(__dirname, '../../innerstellar-space')
+  // INNERSTELLAR_SPACE env var overrides — set it to point anywhere.
+  // Default: sibling of the repo root (../../../ from apps/canvas/).
+  const spaceRoot     = process.env.INNERSTELLAR_SPACE
+    ?? path.resolve(__dirname, '../../../innerstellar-space')
+  // Firmament lives in the framework repo itself — always present.
+  const firmamentRoot = path.resolve(__dirname, '../../firmament')
 
   return {
     name: 'innerstellar-space-reader',
     configureServer(server) {
+      server.middlewares.use('/api/firmament', (_req, res) => {
+        try {
+          const entities = readFirmamentData(firmamentRoot)
+          res.setHeader('Content-Type', 'application/json')
+          res.end(JSON.stringify({ entities }))
+        } catch (err) {
+          res.statusCode = 500
+          res.end(JSON.stringify({ error: err.message }))
+        }
+      })
+
       server.middlewares.use('/api/space', (req, res) => {
         try {
           const data = readSpaceData(spaceRoot)

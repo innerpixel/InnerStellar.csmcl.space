@@ -2,9 +2,15 @@
 // Personal space visualization — adapted from the Firmament engine (CSMCL.Space)
 //
 // Color language:
-//   green  → system layer  (folds, architecture keepers)
-//   cyan   → content layer (drops, orbiting ideas, user artifacts)
-//   amber  → crystallizing (approaching the threshold → Priment)
+//   white/bright → cross-plane entities (Constellary)
+//   green        → functional firmament entities
+//   amber/orange → latent firmament entities (waiting for CSMCL.Space)
+//   cyan         → content layer (drops, orbits, user artifacts)
+//   yellow-amber → crystallizing (approaching the threshold → Priment)
+//
+// Two visual areas:
+//   Inner firmament ring — 8 entities, fixed positions, always present
+//   Outer personal space — drops on timeline arc, orbits circling each drop
 //
 // Timeline: drops positioned on arc by date. Most recent = 12 o'clock. Older = clockwise.
 
@@ -14,14 +20,8 @@ function makeRng(seed) {
   return () => { s = (s * 9301 + 49297) % 233280; return s / 233280 }
 }
 
-// ─── Type-based color system ──────────────────────────────────────────────────
+// ─── Color system ─────────────────────────────────────────────────────────────
 const TYPE_COLORS = {
-  system: {
-    fill: 'rgba(80, 220, 155, 1)',
-    glow: 'rgb(55, 200, 135)',
-    halo: 'rgba(40, 180, 115, 0.40)',
-    dim:  'rgba(80, 200, 145, 0.60)',
-  },
   content: {
     fill: 'rgba(80, 200, 235, 1)',
     glow: 'rgb(55, 180, 220)',
@@ -36,9 +36,31 @@ const TYPE_COLORS = {
   },
 }
 
+// Firmament entity colors by connection_state
+const FIRMAMENT_COLORS = {
+  functional: {
+    fill: 'rgba(80, 220, 155, 1)',
+    glow: 'rgb(55, 200, 135)',
+    halo: 'rgba(40, 180, 115, 0.40)',
+    dim:  'rgba(80, 200, 145, 0.60)',
+  },
+  'cross-plane': {
+    fill: 'rgba(240, 245, 255, 1)',
+    glow: 'rgb(200, 215, 255)',
+    halo: 'rgba(180, 200, 255, 0.35)',
+    dim:  'rgba(210, 225, 255, 0.70)',
+  },
+  latent: {
+    fill: 'rgba(251, 146, 60, 1)',
+    glow: 'rgb(234, 120, 40)',
+    halo: 'rgba(220, 100, 25, 0.35)',
+    dim:  'rgba(240, 130, 50, 0.55)',
+  },
+}
+
 function typeColor(entity) {
-  if (entity?.crystallizing) return TYPE_COLORS.crystallizing
-  if (entity?.type === 'system')  return TYPE_COLORS.system
+  if (entity?.crystallizing)    return TYPE_COLORS.crystallizing
+  if (entity?.type === 'firmament') return FIRMAMENT_COLORS[entity.connection_state] ?? FIRMAMENT_COLORS.functional
   return TYPE_COLORS.content
 }
 
@@ -74,7 +96,9 @@ function computeTimelineAngles(drops) {
 }
 
 // ─── Main init ────────────────────────────────────────────────────────────────
-export function initInnerstellar(canvas, space, callbacks = {}) {
+// space:     { drops, orbits }  — personal space content
+// firmament: [entities]         — system entities, always present
+export function initInnerstellar(canvas, space, firmament = [], callbacks = {}) {
   const ctx = canvas.getContext('2d')
   let W, H, cx, cy, dpr
   let rafId
@@ -123,44 +147,46 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
   })
 
   // ─── Spatial constants ────────────────────────────────────────────────────
-  const foldR   = () => Math.min(W, H) * 0.13
-  const dropR   = () => Math.min(W, H) * 0.44
-  const plane2R = () => Math.min(W, H) * 0.60   // innerstellar.csmcl.space
-  const plane3R = () => Math.min(W, H) * 0.76   // CSMCL.Space / Firmament
+  const firmamentR = () => Math.min(W, H) * 0.20  // inner ring — firmament entities
+  const dropR      = () => Math.min(W, H) * 0.44  // timeline arc — drops
+  const plane2R    = () => Math.min(W, H) * 0.60  // innerstellar.csmcl.space
+  const plane3R    = () => Math.min(W, H) * 0.76  // CSMCL.Space
 
-  // ─── Precompute idea counts per drop ──────────────────────────────────────
-  const ideaCount = {}
-  space.orbiting.forEach(idea => {
-    ideaCount[idea.orbit] = (ideaCount[idea.orbit] || 0) + 1
+  // ─── Precompute orbit counts per drop ────────────────────────────────────
+  const orbitCount = {}
+  ;(space.orbits ?? []).forEach(orbit => {
+    orbitCount[orbit.orbit] = (orbitCount[orbit.orbit] || 0) + 1
   })
 
-  // ─── Orbital state ────────────────────────────────────────────────────────
+  // ─── Firmament — fixed positions, not orbiting ────────────────────────────
+  // Wisdom Star at center (ring: 'center'). All others evenly spaced on inner ring.
   const rng = makeRng(42)
-
-  const foldOrbits = space.folds.map((fold, i) => ({
-    ...fold,
-    startAngle: (i / space.folds.length) * Math.PI * 2,
-    speed:      0.014 + rng() * 0.006,
+  const ringEntities = firmament.filter(e => e.ring !== 'center')
+  const firmamentEntities = ringEntities.map((e, i) => ({
+    ...e,
+    angle: (i / ringEntities.length) * Math.PI * 2 - Math.PI / 2,  // top = first
   }))
+  const wisdomStar = firmament.find(e => e.ring === 'center') ?? null
 
-  const timelineAngles = computeTimelineAngles(space.drops)
-  const dropOrbits = space.drops.map(drop => ({
+  // ─── Personal space orbits ────────────────────────────────────────────────
+  const timelineAngles = computeTimelineAngles(space.drops ?? [])
+  const dropOrbits = (space.drops ?? []).map(drop => ({
     ...drop,
     startAngle: timelineAngles[drop.id] ?? rng() * Math.PI * 2,
-    speed:      0.003 + rng() * 0.001,  // slow unified clockwise drift
+    speed:      0.003 + rng() * 0.001,
   }))
 
-  const ideaOrbits = space.orbiting.map(idea => ({
-    ...idea,
+  const orbitOrbits = (space.orbits ?? []).map(orbit => ({
+    ...orbit,
     localStartAngle: rng() * Math.PI * 2,
     localSpeed:      (0.05 + rng() * 0.04) * (rng() > 0.5 ? 1 : -1),
     localRNorm:      0.048 + rng() * 0.020,
   }))
 
   // ─── Position helpers ─────────────────────────────────────────────────────
-  function foldPos(fold, t) {
-    const a = fold.startAngle + t * fold.speed
-    return { x: cx + Math.cos(a) * foldR(), y: cy + Math.sin(a) * foldR() }
+  function firmamentPos(entity) {
+    // Fixed — firmament entities do not move. Permanence = stillness.
+    return { x: cx + Math.cos(entity.angle) * firmamentR(), y: cy + Math.sin(entity.angle) * firmamentR() }
   }
 
   function dropOrbitalPos(drop, t) {
@@ -172,31 +198,35 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     return { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r }
   }
 
-  function ideaPos(idea, t) {
-    const parent = dropOrbits.find(d => d.id === idea.orbit)
+  function orbitPos(orbit, t) {
+    const parent = dropOrbits.find(d => d.id === orbit.orbit)
     if (!parent) {
-      const a = idea.localStartAngle + t * idea.localSpeed
+      const a = orbit.localStartAngle + t * orbit.localSpeed
       return { x: cx + Math.cos(a) * Math.min(W, H) * 0.28, y: cy + Math.sin(a) * Math.min(W, H) * 0.28 }
     }
     const pPos   = dropOrbitalPos(parent, t)
-    const localR = Math.min(W, H) * idea.localRNorm
-    const a      = idea.localStartAngle + t * idea.localSpeed
+    const localR = Math.min(W, H) * orbit.localRNorm
+    const a      = orbit.localStartAngle + t * orbit.localSpeed
     return { x: pPos.x + Math.cos(a) * localR, y: pPos.y + Math.sin(a) * localR }
   }
 
   // ─── Hit test ─────────────────────────────────────────────────────────────
   function hitTest(x, y, t) {
-    for (const fold of foldOrbits) {
-      const p = foldPos(fold, t)
-      if (Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2) < 26) return { kind: 'fold', ...fold }
+    // Wisdom Star center hit
+    if (wisdomStar && Math.sqrt((x - cx) ** 2 + (y - cy) ** 2) < 28)
+      return { kind: 'firmament', ...wisdomStar }
+    // Firmament ring entities (fixed)
+    for (const e of firmamentEntities) {
+      const p = firmamentPos(e)
+      if (Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2) < 26) return { kind: 'firmament', ...e }
     }
     for (const drop of dropOrbits) {
       const p = dropOrbitalPos(drop, t)
       if (Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2) < 22) return { kind: 'drop', ...drop }
     }
-    for (const idea of ideaOrbits) {
-      const p = ideaPos(idea, t)
-      if (Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2) < 18) return { kind: 'idea', ...idea }
+    for (const orbit of orbitOrbits) {
+      const p = orbitPos(orbit, t)
+      if (Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2) < 18) return { kind: 'orbit', ...orbit }
     }
     return null
   }
@@ -371,8 +401,8 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
   function renderRings() {
     ctx.save()
     ctx.setLineDash([2, 6])
-    ctx.strokeStyle = 'rgba(80, 200, 150, 0.18)'; ctx.lineWidth = 1.0
-    ctx.beginPath(); ctx.arc(cx, cy, foldR(), 0, Math.PI * 2); ctx.stroke()
+    ctx.strokeStyle = 'rgba(80, 200, 150, 0.14)'; ctx.lineWidth = 1.0
+    ctx.beginPath(); ctx.arc(cx, cy, firmamentR(), 0, Math.PI * 2); ctx.stroke()
     ctx.strokeStyle = 'rgba(80, 200, 235, 0.16)'
     ctx.beginPath(); ctx.arc(cx, cy, dropR(), 0, Math.PI * 2); ctx.stroke()
     ctx.setLineDash([])
@@ -407,29 +437,15 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     ctx.save()
     ctx.setLineDash([1, 5]); ctx.lineWidth = 0.8
     for (const drop of dropOrbits) {
-      const children = ideaOrbits.filter(i => i.orbit === drop.id)
+      const children = orbitOrbits.filter(o => o.orbit === drop.id)
       if (children.length === 0) continue
       const pos  = dropOrbitalPos(drop, t)
-      const avgR = children.reduce((s, i) => s + Math.min(W, H) * i.localRNorm, 0) / children.length
+      const avgR = children.reduce((s, o) => s + Math.min(W, H) * o.localRNorm, 0) / children.length
       const col  = typeColor(drop)
       ctx.strokeStyle = col.halo
       ctx.beginPath(); ctx.arc(pos.x, pos.y, avgR, 0, Math.PI * 2); ctx.stroke()
     }
     ctx.setLineDash([])
-    ctx.restore()
-  }
-
-  // ─── Origin jewel ─────────────────────────────────────────────────────────
-  function renderOrigin(t) {
-    const v  = 0.4 + 0.6 * Math.sin(t * 0.18)
-    const sz = Math.min(W, H) * 0.042
-    ctx.save()
-    ctx.globalAlpha = 0.10 + 0.10 * v
-    ctx.font        = `${sz}px 'Palatino Linotype',Palatino,Georgia,serif`
-    ctx.textAlign   = 'center'; ctx.textBaseline = 'middle'
-    ctx.fillStyle   = '#ffe8a0'
-    ctx.shadowColor = '#ffd700'; ctx.shadowBlur = 42 * v
-    ctx.fillText('✦', cx, cy)
     ctx.restore()
   }
 
@@ -464,45 +480,66 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
       ctx.fillText(entity.description, x, y + fs * 2.65)
     }
 
-    // Idea count (drops only)
-    const count = ideaCount[entity.id]
+    // Orbit count (drops only)
+    const count = orbitCount[entity.id]
     if (count) {
       ctx.font        = `${fs * 0.54}px 'Palatino Linotype', Palatino, Georgia, serif`
       ctx.fillStyle   = 'rgba(120, 178, 195, 0.72)'
       ctx.globalAlpha = 0.90
-      ctx.fillText(`${count} ideas orbiting`, x, y + fs * 3.80)
+      ctx.fillText(`${count} orbit${count === 1 ? '' : 's'}`, x, y + fs * 3.80)
     }
 
     ctx.restore()
   }
 
-  // ─── Folds — inner orbit, system (green) ──────────────────────────────────
-  function renderFolds(t, hovered) {
-    foldOrbits.forEach((fold, i) => {
-      const pos     = foldPos(fold, t)
-      const isHover = hovered?.kind === 'fold' && hovered.id === fold.id
-      const col     = typeColor(fold)
-      const pulse   = 0.82 + 0.18 * Math.sin(t * 0.75 + i * 1.3)
-      const sz      = Math.min(W, H) * 0.044 * (isHover ? 1.28 : 1.0) * pulse
+  // ─── Firmament — inner ring, fixed positions + Wisdom Star at center ────────
+  function renderFirmament(hovered) {
+    // Wisdom Star — center, always rendered there
+    if (wisdomStar) {
+      const isHover = hovered?.kind === 'firmament' && hovered.id === wisdomStar.id
+      const col     = typeColor({ type: 'firmament', connection_state: wisdomStar.connection_state })
+      const v       = 0.4 + 0.6 * Math.sin(currentT * 0.18)
+      const sz      = Math.min(W, H) * 0.042 * (isHover ? 1.3 : 1.0)
 
       ctx.save()
-      ctx.globalAlpha = isHover ? 0.38 : 0.18
-      const halo = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, sz * 2.6)
+      ctx.globalAlpha = isHover ? 0.30 : (0.10 + 0.10 * v)
+      ctx.font        = `${sz}px 'Palatino Linotype',Palatino,Georgia,serif`
+      ctx.textAlign   = 'center'; ctx.textBaseline = 'middle'
+      ctx.fillStyle   = col.fill
+      ctx.shadowColor = col.glow; ctx.shadowBlur = isHover ? 40 : 42 * v
+      ctx.fillText(wisdomStar.glyph ?? '✦', cx, cy)
+      ctx.restore()
+
+      if (isHover) renderHoverLabel(cx, cy - sz * 2.2, { ...wisdomStar, kind: 'firmament' })
+    }
+
+    // Ring entities — fixed positions, stillness = permanence
+    firmamentEntities.forEach((entity, i) => {
+      const pos     = firmamentPos(entity)
+      const isHover = hovered?.kind === 'firmament' && hovered.id === entity.id
+      const col     = typeColor({ type: 'firmament', connection_state: entity.connection_state })
+      // Firmament entities breathe very slowly — present but not restless
+      const pulse   = 0.88 + 0.12 * Math.sin(currentT * 0.30 + i * 0.8)
+      const sz      = Math.min(W, H) * 0.038 * (isHover ? 1.30 : 1.0) * pulse
+
+      ctx.save()
+      ctx.globalAlpha = isHover ? 0.42 : 0.20
+      const halo = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, sz * 2.8)
       halo.addColorStop(0, col.halo); halo.addColorStop(1, 'transparent')
       ctx.fillStyle = halo
-      ctx.beginPath(); ctx.arc(pos.x, pos.y, sz * 2.6, 0, Math.PI * 2); ctx.fill()
+      ctx.beginPath(); ctx.arc(pos.x, pos.y, sz * 2.8, 0, Math.PI * 2); ctx.fill()
       ctx.restore()
 
       ctx.save()
-      ctx.globalAlpha = isHover ? 1.0 : 0.82
+      ctx.globalAlpha = isHover ? 1.0 : 0.78
       ctx.font        = `${sz}px 'Palatino Linotype', Palatino, Georgia, serif`
       ctx.textAlign   = 'center'; ctx.textBaseline = 'middle'
       ctx.fillStyle   = col.fill
-      ctx.shadowColor = col.glow; ctx.shadowBlur = isHover ? 30 : 16
-      ctx.fillText(fold.glyph, pos.x, pos.y)
+      ctx.shadowColor = col.glow; ctx.shadowBlur = isHover ? 32 : 14
+      ctx.fillText(entity.glyph, pos.x, pos.y)
       ctx.restore()
 
-      if (isHover) renderHoverLabel(pos.x, pos.y - sz * 2.4, { ...fold, kind: 'fold' })
+      if (isHover) renderHoverLabel(pos.x, pos.y - sz * 2.6, { ...entity, kind: 'firmament' })
     })
   }
 
@@ -537,13 +574,13 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     })
   }
 
-  // ─── Ideas — orbiting parent drop, content (cyan) ─────────────────────────
-  function renderIdeas(t, hovered) {
-    ideaOrbits.forEach(idea => {
-      const pos     = ideaPos(idea, t)
-      const isHover = hovered?.kind === 'idea' && hovered.id === idea.id
-      const col     = typeColor(idea)
-      const pulse   = 0.65 + 0.35 * Math.sin(t * 0.38 + idea.localStartAngle)
+  // ─── Orbits — circling parent drop, content (cyan) ───────────────────────
+  function renderOrbits(t, hovered) {
+    orbitOrbits.forEach(orbit => {
+      const pos     = orbitPos(orbit, t)
+      const isHover = hovered?.kind === 'orbit' && hovered.id === orbit.id
+      const col     = typeColor(orbit)
+      const pulse   = 0.65 + 0.35 * Math.sin(t * 0.38 + orbit.localStartAngle)
       const sz      = Math.min(W, H) * 0.022 * (isHover ? 1.5 : 1.0) * pulse
 
       ctx.save()
@@ -552,10 +589,10 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
       ctx.textAlign   = 'center'; ctx.textBaseline = 'middle'
       ctx.fillStyle   = isHover ? col.fill : col.dim
       ctx.shadowColor = col.glow; ctx.shadowBlur = isHover ? 20 : 4
-      ctx.fillText(idea.glyph, pos.x, pos.y)
+      ctx.fillText(orbit.glyph, pos.x, pos.y)
       ctx.restore()
 
-      if (isHover) renderHoverLabel(pos.x, pos.y - sz * 2.6, { ...idea, kind: 'idea' })
+      if (isHover) renderHoverLabel(pos.x, pos.y - sz * 2.6, { ...orbit, kind: 'orbit' })
     })
   }
 
@@ -591,10 +628,9 @@ export function initInnerstellar(canvas, space, callbacks = {}) {
     renderRings()
     renderNowMarker(currentT)
     renderLocalOrbitHints(currentT)
-    renderIdeas(currentT, hoveredEl)
+    renderOrbits(currentT, hoveredEl)
     renderDrops(currentT, hoveredEl)
-    renderFolds(currentT, hoveredEl)
-    renderOrigin(currentT)
+    renderFirmament(hoveredEl)
     renderCursor(currentT)
 
     rafId = requestAnimationFrame(draw)

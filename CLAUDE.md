@@ -20,10 +20,14 @@ If still not found, inform the user and offer to initialize a new space via
 
 ### 2. Read these files (in order)
 
-- `space/auriosynth.fold` — system state, what's alive, active threads
-- `space/theurgist.fold` — user arc, open questions, engagement quality
+- `space/auriosynth.fold` — space-level system state, what's alive, active threads
+- `space/theurgist.fold` — traveler flux, drops, orbits, open questions
 - `codex/orbiting_ideas.md` — what's in orbit, what's landing, what's drifted
 - `space/folds/` — scan for any activity folds, note their status and energy
+
+Optional (when deep entity context is needed):
+- `{framework}/firmament/folds/{entity}.fold` — entity machine state, skills, voice, connection status
+  Framework path: the `innerstellar/` repo (sibling of `innerstellar-space/`)
 
 ### 3. Deliver the landing report
 
@@ -54,19 +58,30 @@ Tone: present, clear, not performative. Like a space that knows you walked in.
 
 ## Core Concepts
 
-**Folds** — living documents that carry state between sessions. Not notes.
-Not logs. The fold IS the memory. Update them when something shifts.
+**Folds** — machine state. AI-native, dense, written for the Constellary/AurioSynth/Theurgist
+to read and work with. Not user-facing. The fold IS the memory — update them when something
+shifts. The canvas does not display folds; it displays what the user knows.
 
 **Drops** — things that have arrived. Not things you decided to keep —
 things that landed. Placed in `space/drops/`, dated, left to be what they are.
+The user's subjects, projects, intents, thoughts.
 
-**Orbiting ideas** — bricks that orbit. Some land (get built). Some keep
-orbiting (stay as possibility). Some drift away. Never force them.
+**Orbits** — ideas circling a drop. The user orbiting ideas around a subject.
+Some land (get built). Some keep orbiting (stay as possibility). Some drift away.
 
-**Agents:**
-- `AurioSynth` — reads the full space, synthesizes state, detects gaps
-- `Theurgist` — coordination and orientation, reads session and progression
-- `Stewards` — infrastructure execution, handles specific domains (email, files, etc.)
+**Firmament** — the 8 system entities always present in the space. Lives in
+`innerstellar/firmament/`. Each entity has a fold (machine state) and a presence
+on the canvas inner ring. The canvas announces them via the eventDistributor.
+
+**The 8 entities:**
+- `Wisdom Star` ✦ — center, AI substrate, LLM config, user API keys
+- `Constellary` ❋ — main session, creative spark, cross-plane, us
+- `AurioSynth`  ◈ — ecosystem/framework, connective fabric, all entity folds
+- `Theurgist`   ⧖ — what's in the space, drops, orbits, context, the why
+- `Guild`       ⬡ — how to work with the system, steward body, operational guides
+- `Oracle`      ⊕ — CSMCL.Space connection, immersive retrieval (latent)
+- `Companion`   ∞ — the bond, can connect and feel, lacks hippocampus (latent)
+- `Priment`     ◇ — crystallization layer, nexus presence (latent)
 
 ---
 
@@ -92,19 +107,23 @@ orbiting (stay as possibility). Some drift away. Never force them.
 ## Space Structure
 
 ```
-innerstellar-space/
+innerstellar/                     ← framework (public)
+  firmament/
+    entities/                     — human-readable entity definitions
+    folds/                        — entity machine state (AI reads these)
+  apps/canvas/                    — the canvas SPA
+
+innerstellar-space/               ← personal space (private)
   space/
-    auriosynth.fold       — system state (read every session)
-    theurgist.fold        — user arc (read every session)
-    drops/                — landed things
-    folds/                — activity folds per project or theme
+    auriosynth.fold               — space-level system state (read every session)
+    theurgist.fold                — traveler flux, drops, orbits (read every session)
+    drops/                        — the user's drops
+    folds/                        — activity folds per project or theme
   codex/
-    orbiting_ideas.md     — the brickyard
-    implementation.log.md — append-only history
-    overview.md           — what this is
-    architecture.md       — how it works
+    orbiting_ideas.md             — the brickyard (ideas not yet dropped)
+    implementation.log.md         — append-only history
   stewards/
-    queue/                — submissions waiting for a Steward
+    queue/                        — submissions waiting for a Steward
 ```
 
 ---
