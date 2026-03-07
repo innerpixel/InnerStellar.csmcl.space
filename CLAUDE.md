@@ -21,7 +21,7 @@ If still not found, inform the user and offer to initialize a new space via
 ### 2. Read these files (in order)
 
 - `space/theurgist.fold` — traveler flux, drops, orbits, open questions
-- `codex/drops_and_orbits.md` — what's in orbit, what's landing, what's drifted
+- `framework/drops_and_orbits.md` — what's in orbit, what's landing, what's drifted
 - `space/folds/` — scan for any activity folds, note their status and energy
 
 Optional (when deep entity context is needed):
@@ -109,16 +109,18 @@ innerstellar/                     ← framework (public git repo)
   firmament/
     entities/                     — human-readable entity definitions
     folds/                        — entity machine state (AI reads these)
-  apps/canvas/                    — the canvas SPA
+  apps/pixelverse/                — the Svelte component workspace (drop cards, panels)
+  framework/                      — framework codex (overview, prd, guides)
   setup/                          — init guide + fold templates
   space/                          ← personal space (gitignored — own git repo)
     space/
+      auriosynth.fold             — system state, space topology (read every session)
       theurgist.fold              — traveler flux, drops, orbits (read every session)
       drops/                      — the user's drops
       folds/                      — activity folds per project or theme
     codex/
       drops_and_orbits.md         — orbiting ideas not yet dropped
-      session.log.md              — append-only session history
+      implementation.log.md       — append-only session history
 ```
 
 The `space/` directory:

@@ -13,9 +13,9 @@ It has two layers:
 
 **The Space** (`innerstellar/space/`) — your private repository, inside the framework folder but gitignored from it. Drops and their orbits. Written by you and Claude together, held in files, synced to wherever you want. This is where thinking lives.
 
-**The Canvas** (`apps/canvas/`) — a living visual map of your space. The firmament ring holds 8 entities always present. Your drops arc along a timeline, orbits circling each one. Crystallizing work glows amber. Navigate with your cursor. Click anything to open it.
+**The Pixelverse** (`apps/pixelverse/`) — a Svelte component workspace that surfaces your space. Drop cards in a grid, sorted by energy and recency. Click any card to open its full detail — description, connections, orbiting ideas, patchlog, and voice query stub. Crystallizing work glows amber.
 
-These two layers talk to each other. As the space grows, the canvas reflects it. As you interact with the canvas, events emit — ready to connect to the larger ecosystem when you choose.
+These two layers talk to each other. As the space grows, the pixelverse reflects it. As you interact with it, events emit — ready to connect to the larger ecosystem when you choose.
 
 ---
 
@@ -26,10 +26,10 @@ These two layers talk to each other. As the space grows, the canvas reflects it.
 - Git
 - A Claude session (you are the traveler — Claude is the co-creator)
 
-### Run the Canvas
+### Run the Pixelverse
 
 ```bash
-cd apps/canvas
+cd apps/pixelverse
 npm install
 npm run dev
 ```
@@ -39,7 +39,7 @@ Open `http://localhost:5173`. You'll see your space.
 ### Build for Deployment
 
 ```bash
-cd apps/canvas
+cd apps/pixelverse
 npm run build
 # dist/ is a static site — serve it anywhere
 ```
@@ -57,14 +57,15 @@ excluded from the framework git repo. It is its own private git repository — y
 innerstellar/
 ├── space/                       ← your space (gitignored from framework)
 │   ├── space/
+│   │   ├── auriosynth.fold      ← system state, topology (read every session)
 │   │   ├── theurgist.fold       ← traveler flux (read every session)
 │   │   ├── drops/               ← landed artifacts (dated markdown files)
 │   │   └── folds/               ← activity folds per project or theme
 │   └── codex/
 │       ├── drops_and_orbits.md  ← orbiting ideas not yet dropped
-│       └── session.log.md       ← append-only session history
+│       └── implementation.log.md ← append-only session history
 ├── firmament/                   ← framework — always present, not yours
-└── apps/canvas/                 ← the canvas
+└── apps/pixelverse/             ← the Svelte component workspace
 ```
 
 The `space/` directory is its own git repo with your CSMCL.Space identity as the git author.
@@ -110,43 +111,45 @@ Drop files are markdown. Minimal structure — date, description, what it means.
 
 Ideas that aren't ready to land as drops orbit around a parent drop. They are the thoughts circling a subject — not yet resolved, still alive. Orbits cluster around their anchor drop on the canvas, spinning with it.
 
-Track orbits in `codex/drops_and_orbits.md` or as a section within the drop file itself.
+Track orbits in `space/codex/drops_and_orbits.md` or as a section within the drop file itself.
 
 ---
 
-## The Canvas
+## The Pixelverse
 
 ### Navigation
 
 | Action | Effect |
 |--------|--------|
-| Move cursor | Explore. Entities surface as you approach |
-| Hover entity | Label appears — title, role/date, description |
-| Click entity | Focus panel opens — full detail |
+| Click a drop card | Opens workspace panel with full detail |
 | Click again | Closes (toggle) |
-| Click empty space | Dismisses focus |
+| Click × in panel | Dismisses |
 
 ### What You See
 
-**Inner ring — firmament** The 8 system entities, at fixed positions. They do not orbit — stillness signals permanence. Color by connection state: green (functional), white/bright (cross-plane), amber (latent — present but waiting for CSMCL.Space connection). Wisdom Star pulses at center.
+**Drop grid** — all drops as cards, sorted by most recently touched then energy descending. Each card shows: glyph, title, drop type, status dot (green = alive, amber = crystallizing), description excerpt, energy bar, and orbit chips.
 
-**Outer arc — your drops** Drops on a timeline arc. Most recent at 12 o'clock. Older clockwise. Orbits cluster around their parent drop, circling it.
+**Accent colors by drop type:**
+- `cyan` — general drops
+- `violet` — philosophy
+- `blue` — vision
+- `teal` — architecture
+- `lime` — decision
+- `amber` — crystallizing (any type)
+- `green` — system folds
 
-**Amber** Crystallizing — work approaching the threshold to CSMCL.Space.
+**Workspace panel** — always-visible right panel. Empty state when nothing selected. When a drop is open: full description, orbiting ideas with their descriptions, connected drops as navigable buttons, full patchlog in reverse order, and a voice query stub (activates when nexus CORS is open).
 
-**Plane labels** (upper right) — the three connected environments:
-- `claude.innerstellar` — where you are now
-- `innerstellar.csmcl.space` — your traveler-facing resonant space (Priment's domain)
-- `csmcl.space` — the public crystallization layer
+**System folds** — shown below drops in a separate section. AurioSynth and Theurgist as cards.
 
-### How the Canvas Loads
+### How the Pixelverse Loads
 
-The canvas auto-loads from two sources at startup:
+Auto-loads from two sources at startup:
 
-1. **Firmament** — reads `innerstellar/firmament/folds/` via `/api/firmament`. All 8 entities always present on every machine from day one.
+1. **Firmament** — reads `innerstellar/firmament/folds/` via `/api/firmament`. All 8 entities always present from day one.
 2. **Personal space** — reads `innerstellar/space/` via `/api/space`. Your drops and orbits.
 
-No manual `space.js` updates needed. Drop a file in the right place — the canvas picks it up on next load.
+Drop a file in the right place — the pixelverse picks it up on next load.
 
 ---
 

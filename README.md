@@ -95,7 +95,7 @@ innerstellar/              ← framework repo (public git)
   firmament/
     entities/              ← human-readable entity definitions
     folds/                 ← machine state (AI reads these)
-  apps/canvas/             ← Svelte 5 canvas SPA
+  apps/pixelverse/         ← Svelte 5 component workspace
   setup/                   ← init guide + fold templates
   space/                   ← your space (gitignored — own git repo)
     space/
@@ -114,13 +114,13 @@ The space belongs to you — your drops, your orbits, your identity, your accoun
 
 ---
 
-## The Canvas
+## The Pixelverse
 
-The canvas reads both layers at startup:
+The pixelverse reads both layers at startup:
 - **Firmament** from `innerstellar/firmament/folds/` — 8 entities, always there
 - **Your space** from `innerstellar/space/` — your drops and orbits
 
-Inner ring: firmament entities at fixed positions. Outer arc: your drops on a timeline.
+Drop grid: cards sorted by most recent. Workspace panel: full detail, connections, patchlog.
 
 ---
 
@@ -145,8 +145,8 @@ Together they are continuity — one holds the flux, one holds the bond.
 
 | File | What it holds |
 |------|---------------|
-| `codex/prd.md` | What this is and why |
-| `codex/architecture.md` | How the pieces fit |
+| `framework/prd.md` | What this is and why |
+| `framework/architecture.md` | How the pieces fit |
 | `GUIDE.md` | How to use it |
 | `WELCOME.md` | The invitation |
 
