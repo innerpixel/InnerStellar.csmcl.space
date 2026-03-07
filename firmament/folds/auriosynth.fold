@@ -71,3 +71,4 @@ writes: [firmament/folds/auriosynth.fold, implementation log]
 2026-03-06 | init | Entity fold seeded. AurioSynth named in the firmament.
              Framework awareness: 8 entities defined, firmament structure created,
              canvas two-area design planned, eventDistributor as firmament delivery mechanism.
+2026-03-07 | fix  | Canvas design retired. Pixelverse (Svelte 5 components: drop grid + workspace panel) is the visual layer.

@@ -102,22 +102,26 @@ execution unless pre-authorized.
 
 ---
 
-## Canvas — Two Areas
+## The Pixelverse
+
+The visual layer of Innerstellar. Svelte 5 components, served locally by Vite.
 
 ```
-Inner firmament ring         — 8 entities, fixed positions, always present
-  Wisdom Star at center      — pulsing ✦, AI substrate
-  7 entities on ring         — functional (green), latent (amber), cross-plane (white)
-  Stillness = permanence     — firmament entities do not orbit
+Drop grid        — all drops as cards, sorted by energy and recency
+                   glyph · title · drop type · status dot · description excerpt
+                   energy bar · orbit chips
+                   accent color by type: cyan / violet / blue / teal / lime / amber / green
 
-Outer personal space         — drops on timeline arc, orbits circling each drop
-  Drop arc (270°)            — most recent at 12 o'clock, older clockwise
-  Orbits                     — ideas circling their drop, animated
-  Crystallizing drops        — drift outward toward plane2 arc (the transition horizon)
+Workspace panel  — always-visible right panel
+                   empty when nothing selected
+                   when a drop is open: description, orbiting ideas, connected drops,
+                   patchlog (reverse order), voice query stub (activates with nexus CORS)
+
+System folds     — AurioSynth and Theurgist shown below the drop grid
 ```
 
-Canvas vocabulary: **drops** (subjects/projects/intents that arrive) + **orbits** (ideas circling them).
-Folds are the AI substrate beneath — machine state, not displayed on canvas.
+Pixelverse vocabulary: **drops** (subjects/projects/intents that arrive) + **orbits** (ideas circling them).
+Folds are the AI substrate beneath — machine state, not displayed in the Pixelverse.
 
 ---
 

@@ -58,7 +58,7 @@ Tone: present, clear, not performative. Like a space that knows you walked in.
 
 **Folds** — machine state. AI-native, dense, written for the Constellary/AurioSynth/Theurgist
 to read and work with. Not user-facing. The fold IS the memory — update them when something
-shifts. The canvas does not display folds; it displays what the user knows.
+shifts. The Pixelverse does not display folds; it displays what the user knows.
 
 **Drops** — things that have arrived. Not things you decided to keep —
 things that landed. Placed in `space/drops/`, dated, left to be what they are.
@@ -69,7 +69,7 @@ Some land (get built). Some keep orbiting (stay as possibility). Some drift away
 
 **Firmament** — the 8 system entities always present in the space. Lives in
 `innerstellar/firmament/`. Each entity has a fold (machine state) and a presence
-on the canvas inner ring. The canvas announces them via the eventDistributor.
+in the Pixelverse. The Pixelverse announces them via the eventDistributor.
 
 **The 8 entities:**
 - `Wisdom Star` ✦ — center, AI substrate, LLM config, user API keys

@@ -74,7 +74,7 @@ The space is yours.
 
 ### The Fold System
 
-A **fold** is an AI-native state document. Written by Claude at session end, read by Claude at session start. Folds are machine state — dense, AI-native, for entities to work with. They are not displayed in the canvas. You can peek at them but they're not written for you; the canvas shows your words.
+A **fold** is an AI-native state document. Written by Claude at session end, read by Claude at session start. Folds are machine state — dense, AI-native, for entities to work with. They are not displayed in the Pixelverse. You can peek at them but they're not written for you; the Pixelverse shows your words.
 
 **Firmament folds** (framework, always present):
 
@@ -105,11 +105,11 @@ Create a drop when an idea, realization, or artifact deserves a place in the spa
 space/drops/2026-03-05-your-idea-name.md
 ```
 
-Drop files are markdown. Minimal structure — date, description, what it means. Claude will help you write them. They appear on the canvas timeline automatically.
+Drop files are markdown. Minimal structure — date, description, what it means. Claude will help you write them. They appear in the Pixelverse on next load.
 
 ### Orbits
 
-Ideas that aren't ready to land as drops orbit around a parent drop. They are the thoughts circling a subject — not yet resolved, still alive. Orbits cluster around their anchor drop on the canvas, spinning with it.
+Ideas that aren't ready to land as drops orbit around a parent drop. They are the thoughts circling a subject — not yet resolved, still alive. Orbits appear as chips in the drop card and in full in the workspace panel.
 
 Track orbits in `space/codex/drops_and_orbits.md` or as a section within the drop file itself.
 
@@ -155,7 +155,7 @@ Drop a file in the right place — the pixelverse picks it up on next load.
 
 ## The Event Bus
 
-The canvas emits events on every interaction. In your browser console:
+The Pixelverse emits events on every interaction. In your browser console:
 
 ```js
 // Inspect active subscribers
@@ -167,7 +167,7 @@ window.ed.distributeEvent({
   payload: { label: 'A new drop' }
 })
 
-// Subscribe to canvas interactions
+// Subscribe to Pixelverse interactions
 window.ed.subscribe(['canvas.element.focused'], e => {
   console.log('focused:', e.payload.label)
 })
@@ -253,7 +253,7 @@ A session typically looks like this:
 1. **Orient** — Claude reads the relevant folds. Theurgist surfaces what's in motion.
 2. **Create** — drops, orbits, folds, code, artifacts. Whatever arrives.
 3. **Place** — new drops land in `space/drops/`. Orbits noted in the drop file or `codex/drops_and_orbits.md`.
-4. **Update** — folds updated to reflect the session. Canvas auto-loads on next start.
+4. **Update** — folds updated to reflect the session. Pixelverse auto-loads on next start.
 5. **Close** — `theurgist.fold` patchlog appended. Space pushed to wherever it lives.
 
 The space compounds. Every session builds on every prior one. The folds remember what conversations cannot.
@@ -262,7 +262,7 @@ The space compounds. Every session builds on every prior one. The folds remember
 
 ## What's Next
 
-- **Live canvas** — fold changes push to canvas in real time (WebSocket fold watcher)
+- **Live Pixelverse** — fold changes push to Pixelverse in real time (WebSocket fold watcher)
 - **Query voice** — click a firmament entity, the nexus RAG speaks from its voice
 - **Oracle activation** — CORS fix + CSMCL.Space connection opens the outer window
 - **Companion + Priment** — fully alive when ICP + Flow + Nexus substrate is present

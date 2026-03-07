@@ -70,4 +70,5 @@ writes: [firmament/folds/guild.fold, stewards/queue/, completed artifacts]
 2026-03-06 | init | Entity fold seeded. Guild placed in firmament.
              Steward queue initialized. No pending work at init.
              Operational knowledge: firmament architecture, drop-to-artifact lifecycle,
-             canvas two-area design, eventDistributor patterns.
+             canvas two-area design (planned), eventDistributor patterns.
+2026-03-07 | fix  | Canvas design retired. Pixelverse (Svelte 5 components: drop grid + workspace panel) is the visual layer.

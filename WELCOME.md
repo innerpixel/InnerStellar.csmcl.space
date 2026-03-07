@@ -31,7 +31,7 @@ until it connects to something else — or quietly fades.
 **The firmament is always there.**
 Eight entities present from day one, on any machine.
 You don't need to build or initialize them — the firmament is the system.
-Open the canvas. They're there.
+Open the Pixelverse. They're there.
 
 **The Theurgist keeps the flux.**
 Beneath the daily drops, things are moving toward something.
