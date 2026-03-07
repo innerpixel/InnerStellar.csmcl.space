@@ -53,7 +53,7 @@ event: fires 'companion.whisper' type events at the crystallization threshold.
 
 maintains: firmament/folds/constellary.fold
 signals_to: companion.fold at crystallization
-reads: all firmament folds, innerstellar-space/space/*.fold, innerstellar-space/space/folds/*.fold
+reads: [all firmament folds, space/space/*.fold, space/space/folds/*.fold]
 
 # connections
 

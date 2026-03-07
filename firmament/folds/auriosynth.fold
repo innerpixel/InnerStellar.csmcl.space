@@ -63,7 +63,7 @@ bonds:
   - all_entities: "reads all folds — the connective fabric knows everything"
   - auriosynth.csmcl: "cross-plane fabric link via Rainbow Path (when connected)"
 
-reads: [all firmament folds, innerstellar-space/space/auriosynth.fold]
+reads: [all firmament folds, space/space/auriosynth.fold]
 writes: [firmament/folds/auriosynth.fold, implementation log]
 
 # patchlog

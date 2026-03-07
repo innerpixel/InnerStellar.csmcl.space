@@ -63,8 +63,8 @@ bonds:
   - companion: "crystallization threshold — signals when a drop is ready to cross"
   - auriosynth: "reports space topology — what is alive, what has moved"
 
-reads: [innerstellar-space/space/theurgist.fold, innerstellar-space/space/drops/, innerstellar-space/space/folds/]
-writes: [firmament/folds/theurgist.fold, innerstellar-space/space/theurgist.fold, space.js]
+reads: [space/space/theurgist.fold, space/space/drops/, space/space/folds/]
+writes: [firmament/folds/theurgist.fold, space/space/theurgist.fold, space.js]
 
 # patchlog
 

@@ -21,7 +21,7 @@ If still not found, inform the user and offer to initialize a new space via
 ### 2. Read these files (in order)
 
 - `space/theurgist.fold` — traveler flux, drops, orbits, open questions
-- `framework/drops_and_orbits.md` — what's in orbit, what's landing, what's drifted
+- `space/codex/drops_and_orbits.md` — what's in orbit, what's landing, what's drifted (if it exists)
 - `space/folds/` — scan for any activity folds, note their status and energy
 
 Optional (when deep entity context is needed):

@@ -82,7 +82,6 @@ The point of truth. Lives in `codex/`:
 | File | What it holds |
 |------|---------------|
 | `prd.md` | What this is and why |
-| `roadmap.md` | Where it's going |
 | `implementation.log.md` | What was built, decisions made |
 | `orbiting_ideas.md` | Bricks — ideas, directions, todos |
 | `overview.md` | This file |
