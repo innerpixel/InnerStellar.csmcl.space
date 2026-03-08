@@ -16,6 +16,7 @@
 //   drop.decision    → lime
 //   drop.system      → green (system-generated drops)
 //   drop.arrival     → amber (the arrival drop)
+//   drop.idea        → violet
 
 export const space = {
 

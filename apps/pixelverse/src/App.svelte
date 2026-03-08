@@ -5,7 +5,7 @@
   import DropField from './layout/DropField.svelte'
   import WorkspacePanel from './components/WorkspacePanel.svelte'
 
-  let space     = $state({ drops: seedSpace.drops, orbits: seedSpace.orbits, folds: seedSpace.folds ?? [] })
+  let space     = $state({ drops: seedSpace.drops, orbits: seedSpace.orbits, folds: seedSpace.folds ?? [], entities: [] })
   let loading   = $state(true)
 
   // ── Nexus query (wired when CORS is configured) ────────────────────────────
@@ -35,15 +35,27 @@
   }
 
   onMount(async () => {
+    // ── Load firmament entities ──────────────────────────────────────────────
+    let entities = []
+    try {
+      const res = await fetch('/api/firmament')
+      if (res.ok) {
+        const data = await res.json()
+        entities = data.entities ?? []
+      }
+    } catch (_) { /* firmament not available */ }
+
     // ── Load personal space (drops, folds, orbits) ──────────────────────────
     try {
       const res = await fetch('/api/space')
       if (res.ok) {
         const data = await res.json()
-        if (data.drops?.length) {
-          // Merge API drops with seed: seed has richer descriptions/glyphs
-          const seedDropMap = Object.fromEntries(seedSpace.drops.map(d => [d.id, d]))
-          const mergedDrops = data.drops.map(d => {
+
+        // Merge drops: API + seed-only (seed may have drops not yet in files)
+        const seedDropMap  = Object.fromEntries(seedSpace.drops.map(d => [d.id, d]))
+        const apiDropIds   = new Set((data.drops ?? []).map(d => d.id))
+        const mergedDrops  = [
+          ...(data.drops ?? []).map(d => {
             const seed = seedDropMap[d.id] ?? {}
             return {
               ...d,
@@ -51,27 +63,32 @@
               role:        d.role        || seed.role        || '',
               glyph:       d.glyph !== '∴' ? d.glyph : (seed.glyph ?? d.glyph),
             }
-          })
+          }),
+          // seed-only drops (not yet written as files)
+          ...seedSpace.drops.filter(d => !apiDropIds.has(d.id)),
+        ]
 
-          // Merge orbits: API entries enriched by seed descriptions,
-          // plus seed-only entries not yet in drop frontmatter
-          const apiOrbitIds  = new Set((data.orbiting ?? []).map(o => o.id))
-          const seedOrbitMap = Object.fromEntries(seedSpace.orbits.map(o => [o.id, o]))
-          const mergedOrbits = [
-            ...(data.orbiting ?? []).map(o => ({ ...seedOrbitMap[o.id], ...o })),
-            ...seedSpace.orbits.filter(o => !apiOrbitIds.has(o.id)),
-          ]
+        // Merge orbits: API entries enriched by seed, plus seed-only
+        const apiOrbitIds  = new Set((data.orbiting ?? []).map(o => o.id))
+        const seedOrbitMap = Object.fromEntries(seedSpace.orbits.map(o => [o.id, o]))
+        const mergedOrbits = [
+          ...(data.orbiting ?? []).map(o => ({ ...seedOrbitMap[o.id], ...o })),
+          ...seedSpace.orbits.filter(o => !apiOrbitIds.has(o.id)),
+        ]
 
-          space = {
-            drops:  mergedDrops,
-            orbits: mergedOrbits,
-            folds:  data.folds ?? [],
-          }
-          distributeEvent({ type: 'space.state.updated', payload: space })
+        space = {
+          drops:    mergedDrops,
+          orbits:   mergedOrbits,
+          folds:    data.folds ?? [],
+          entities,
         }
+        distributeEvent({ type: 'space.state.updated', payload: space })
+      } else {
+        space = { ...space, entities }
       }
     } catch (_) {
-      // no api — use seed data
+      // no api — use seed data + whatever firmament loaded
+      space = { ...space, entities }
     }
 
     loading = false

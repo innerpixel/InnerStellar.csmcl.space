@@ -17,7 +17,9 @@ export function dropKind(drop) {
     if (drop.connection_state === 'cross-plane') return 'white'
     return 'green'
   }
+  if (drop.drop_type === 'drop.arrival')      return 'amber'
   if (drop.drop_type === 'drop.philosophy')   return 'violet'
+  if (drop.drop_type === 'drop.idea')         return 'violet'
   if (drop.drop_type === 'drop.vision')       return 'blue'
   if (drop.drop_type === 'drop.architecture') return 'teal'
   if (drop.drop_type === 'drop.decision')     return 'lime'
