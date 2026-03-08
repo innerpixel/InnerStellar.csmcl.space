@@ -48,7 +48,7 @@ additional: user AI configuration can become part of CSMCL.Space identity via at
 
 # fold_responsibility
 
-maintains: firmament/folds/wisdom-star.fold
+maintains: framework/operations/folds/wisdom-star.fold
 reads: nothing — the substrate does not depend on entity folds
 writes: [wisdom-star.fold]
 

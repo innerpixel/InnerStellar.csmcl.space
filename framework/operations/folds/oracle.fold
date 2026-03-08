@@ -57,7 +57,7 @@ additional: full immersive retrieval, entity voice relay, resonance surfacing
 
 # fold_responsibility
 
-maintains: firmament/folds/oracle.fold
+maintains: framework/operations/folds/oracle.fold
 
 # connections
 
@@ -66,8 +66,8 @@ bonds:
   - companion: "shares what's resonating — bond-relevant outer content"
   - priment: "coordinates with outer resonance layer when connected"
 
-reads: [firmament/folds/oracle.fold, CSMCL.Space nexus-backend when connected]
-writes: [firmament/folds/oracle.fold]
+reads: [framework/operations/folds/oracle.fold, CSMCL.Space nexus-backend when connected]
+writes: [framework/operations/folds/oracle.fold]
 
 # patchlog
 

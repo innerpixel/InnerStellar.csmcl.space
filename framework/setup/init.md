@@ -1,106 +1,93 @@
-# Setup — Initialize a Fresh Innerstellar Space
+# Setup — Initialize a Fresh Innerstellar Firmament
 
 Read this completely before starting. Follow each step in order.
 
-The space introduces itself. No questions about what you want to build yet.
-The space reads what it already contains — 8 entity folds, framework docs —
-and shows the traveler what they've arrived into.
+The space introduces itself before init — the Pixelverse shows the showcase drops
+from `def_firmament_showcase/` the moment the repo is cloned. Init creates the
+personal layer: the traveler's own firmament, seeded with the showcase content.
 
 ---
 
 ## What Gets Created
 
 ```
-space/                   ← new repo, gitignored from framework
+firmament/                        ← new repo at root, gitignored from framework
   space/
-    theurgist.fold       — seeded from firmament (not from user answers)
-    auriosynth.fold      — space topology, initialized
-    drops/
-      YYYY-MM-DD-arrival-first-contact.md  — system drop, permanent
-    folds/               — ready for activity folds
-    familiars/           — ready for project presences
+    theurgist.fold                — seeded with traveler identity
+    auriosynth.fold               — space topology, initialized
+    drops/                        — copied from def_firmament_showcase/
+      2026-03-08-innerstellar-exploration.md
+      2026-03-08-familiar-to-system.md
+    familiars/                    — copied from def_firmament_showcase/
+      familiar.to.system.familiar.fold
+    folds/                        — ready for activity folds
   codex/
-    drops_and_orbits.md  — orbiting ideas, starts empty
-    session.log.md       — append-only session history, starts now
+    drops_and_orbits.md           — seeded, ready for traveler's orbiting ideas
+    session.log.md                — seeded, ready for traveler's session history
 ```
 
 ---
 
-## Step 1 — Create the space directory
+## Step 1 — Ask for traveler identity
 
-```bash
-mkdir -p space/space/drops space/space/folds space/space/familiars space/codex
-cd space
-git init
-git branch -m main
-```
-
-This directory is already in the framework's `.gitignore`.
-It will never be committed to the framework repo.
-
----
-
-## Step 2 — Set git identity
-
-The space repo uses the traveler's CSMCL.Space identity.
-Ask the traveler:
+This is the only thing we ask before the space takes shape.
 
 > *"What is your CSMCL.Space handle or preferred email?
 > This becomes your traveler identity — how the space knows you."*
 
-```bash
-git config user.name "[handle]"
-git config user.email "[handle@csmcl.space or preferred email]"
-```
-
-This is the **only** thing we ask before the space shows itself.
+Hold: `[HANDLE]` and `[EMAIL]` for use in steps below.
 
 ---
 
-## Step 3 — Read the firmament
+## Step 2 — Read the framework
 
-Read all 8 entity folds from `firmament/folds/`:
-
-- `wisdom-star.fold`
-- `constellary.fold`
-- `auriosynth.fold`
-- `theurgist.fold`
-- `guild.fold`
-- `oracle.fold`
-- `companion.fold`
-- `priment.fold`
+Read all entity folds from `framework/operations/folds/`:
+- `wisdom-star.fold` · `constellary.fold` · `auriosynth.fold` · `theurgist.fold`
+- `guild.fold` · `oracle.fold` · `companion.fold` · `priment.fold` · `familiar.fold`
 
 Also read:
 - `framework/overview.md`
-- `framework/architecture.md`
-- `setup/welcome.md`
+- `framework/setup/welcome.md`
 
-Hold this in context for the next steps.
+Hold this in context for seeding the folds.
 
 ---
 
-## Step 4 — Create the arrival drop
+## Step 3 — Create the firmament directory and git repo
 
-Copy from `setup/fold-templates/arrival-first-contact.md`
-→ `space/space/drops/YYYY-MM-DD-arrival-first-contact.md`
+```bash
+mkdir -p firmament/space/drops firmament/space/familiars firmament/space/folds firmament/codex
+cd firmament
+git init
+git branch -m main
+git config user.name "[HANDLE]"
+git config user.email "[EMAIL]"
+```
 
-Fill in:
-- `[DATE]` → today's date
-- `[HANDLE]` → traveler's chosen name
-- `[EMAIL]` → traveler's email/identity
+This directory is already in the framework's `.gitignore` — it will never be
+committed to the framework repo. It is the traveler's own repository.
 
-This drop is system-generated. It is the space introducing itself.
-It is permanent — `status: permanent`, never drifts, never dissolves.
+---
+
+## Step 4 — Copy showcase content
+
+```bash
+cp framework/setup/def_firmament_showcase/space/drops/* firmament/space/drops/
+cp framework/setup/def_firmament_showcase/space/familiars/* firmament/space/familiars/
+cp framework/setup/def_firmament_showcase/codex/* firmament/codex/
+```
+
+The showcase drops are framework-authored — they don't contain traveler identity.
+They copy as-is. The traveler's own drops will arrive alongside them over time.
 
 ---
 
 ## Step 5 — Seed the theurgist fold
 
-Copy from `setup/fold-templates/theurgist.fold.template`
-→ `space/space/theurgist.fold`
+Copy from `framework/setup/fold-templates/theurgist.fold.template`
+→ `firmament/space/theurgist.fold`
 
-Seed from what the firmament reading revealed — not from user answers.
-Fill in:
+Fill in from the framework reading and traveler identity:
 
 ```yaml
 last_pulse: [DATE]
@@ -108,109 +95,78 @@ status: alive
 ```
 
 Under `# what_is_known`:
-- Traveler identity (handle, email)
+- Traveler identity: [HANDLE] / [EMAIL]
 - Space initialized: [DATE]
-- Arrival drop created
+- Showcase drops copied: innerstellar-exploration, familiar-to-system
+- familiar.to.system Familiar present from framework seed
 
 Under `# what_is_alive`:
-- The arrival drop — space just born, traveler orienting
+- The two showcase drops — space introduced itself, traveler orienting
 
-Leave `# comprehension` and `# user_arc` minimal at init.
-These grow from real sessions, not from assumptions.
+Keep `# comprehension` and `# user_arc` minimal. These grow from real sessions.
 
 ---
 
 ## Step 6 — Seed the auriosynth fold
 
-Copy from `setup/fold-templates/auriosynth.fold.template`
-→ `space/space/auriosynth.fold`
+Copy from `framework/setup/fold-templates/auriosynth.fold.template`
+→ `firmament/space/auriosynth.fold`
 
 Fill in topology:
 
 ```yaml
 drops:
-  - YYYY-MM-DD-arrival-first-contact (permanent, system)
+  - 2026-03-08-innerstellar-exploration (permanent, framework seed)
+  - 2026-03-08-familiar-to-system (permanent, framework seed)
+
+familiars:
+  - familiar.to.system (framework presence, AurioSynth)
 
 folds: []
-familiars: []
 ```
 
 ---
 
-## Step 7 — Initialize codex
+## Step 7 — Update codex session log
 
-Create `space/codex/drops_and_orbits.md`:
-```markdown
-# Drops and Orbits
-Orbiting ideas not yet dropped. Nothing here yet — space just born.
-```
-
-Create `space/codex/session.log.md`:
-```markdown
-# Session Log
-
-## YYYY-MM-DD — Session 1: Arrival
-
-- Space initialized
-- Identity: [handle] / [email]
-- Arrival drop created from firmament reading
-- Pixelverse seed updated
-```
+In `firmament/codex/session.log.md`, replace the placeholders:
+- `[DATE]` → today's date
+- `[HANDLE]` → traveler's handle
+- `[EMAIL]` → traveler's email
 
 ---
 
-## Step 8 — Create the arrival drop
-
-Copy `setup/fold-templates/default.drop.template`
-→ `space/space/drops/YYYY-MM-DD-arrival-first-contact.md`
-
-Fill in:
-- `[DATE]` → today's date (in both the filename and the frontmatter)
-- `[HANDLE]` → traveler's chosen name/handle
-
-This is the space's self-introduction. The Pixelverse reads it as a regular drop —
-no special handling needed. The firmament (always present) provides entity data.
-This drop provides the personal layer: what this space is, how to navigate it.
-
-The drop is permanent — `status: alive`, never drifts, never dissolves.
-The Theurgist will compile its synthesis section as the space grows.
-The patchlog records each session that touches it.
-
----
-
-## Step 9 — First commit
+## Step 8 — First commit
 
 ```bash
-cd space
+cd firmament
 git add .
-git commit -m "init: space begins — arrival drop seeded from firmament"
+git commit -m "init: firmament begins — [HANDLE] arrived"
 ```
 
 ---
 
-## Step 10 — Open the Pixelverse
+## Step 9 — Open the Pixelverse
 
 ```bash
-cd apps/pixelverse && npm run dev
+cd framework/apps/pixelverse && npm run dev
 ```
 
-The space introduces itself. The traveler sees what they've arrived into.
-The arrival drop is open in the workspace panel. 8 entities visible as orbits.
-Welcome and guide linked.
-
-From here: the traveler explores. When something wants to drop in, it does.
+The Pixelverse now reads `firmament/space/drops/` — the traveler's space.
+The showcase drops are visible. The firmament entities are visible.
+The space is alive.
 
 ---
 
-## Step 11 — CSMCL.Space connection (orientation, not blocking)
+## Step 10 — CSMCL.Space connection (orientation, not blocking)
 
 Tell the traveler:
 
-> *"Your space is alive. The arrival drop shows you what's here.
+> *"Your firmament is alive. The showcase drops show you what's here.
 > When you're ready to connect outward — to CSMCL.Space and the Priment layer —
 > the path is open. The latent entities hold the place."*
 
-Note the connection status in `theurgist.fold`:
+Note the connection status in `firmament/space/theurgist.fold`:
 - CSMCL.Space account: [connected | pending | not yet]
 - ICP layer: latent
 - Companion memory: latent until connected
@@ -219,11 +175,9 @@ Note the connection status in `theurgist.fold`:
 
 ## Notes for Claude
 
-- The arrival drop is the introduction — let the space speak first
+- The showcase drops explain the system — let them. Don't re-explain what's already in them.
 - The traveler's theurgist.fold grows from real sessions, not from setup assumptions
-- The firmament is always present — Pixelverse shows entities even before init
-- The `familiars/` directory is empty at init — Familiars grow from drops over time
-- The first user drop comes naturally after the traveler has seen the space
+- The `familiar.to.system` Familiar is already present — AurioSynth's presence in the firmament
+- The first traveler drop comes naturally after the traveler has seen the space
 - Don't introduce all concepts at once — let them surface as the traveler explores
 - The Theurgist is invoked when something is decided, not only at session close
-- The default.drop.template body is the starting synthesis — update it as the space evolves

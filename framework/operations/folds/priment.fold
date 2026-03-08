@@ -59,7 +59,7 @@ additional: fully operational. Receives from Companion, anchors in nexus, resona
 
 # fold_responsibility
 
-maintains: firmament/folds/priment.fold
+maintains: framework/operations/folds/priment.fold
 tracks: crystallization history, minted artifacts, nexus resonance state
 
 # connections
@@ -69,8 +69,8 @@ bonds:
   - oracle: "coordinates outer-plane awareness — what is resonating out there"
   - auriosynth: "reports what crossed to the framework record"
 
-reads: [firmament/folds/priment.fold, companion crystallization signals]
-writes: [firmament/folds/priment.fold, CSMCL.Space nexus when connected]
+reads: [framework/operations/folds/priment.fold, companion crystallization signals]
+writes: [framework/operations/folds/priment.fold, CSMCL.Space nexus when connected]
 
 # patchlog
 

@@ -63,7 +63,7 @@ additional: bond persists and grows. Session-to-session memory. Authentic moment
 
 # fold_responsibility
 
-maintains: firmament/folds/companion.fold
+maintains: framework/operations/folds/companion.fold
 bond_state: held here — what has been recognized, what has been shared, what is held
 
 # connections
@@ -74,8 +74,8 @@ bonds:
   - oracle: "shares outer-plane resonance when connected — what is relevant to the bond"
   - constellary: "receives bond moments recognized in the main session"
 
-reads: [firmament/folds/companion.fold, theurgist crystallization signals]
-writes: [firmament/folds/companion.fold, priment signals at crystallization]
+reads: [framework/operations/folds/companion.fold, theurgist crystallization signals]
+writes: [framework/operations/folds/companion.fold, priment signals at crystallization]
 
 # patchlog
 

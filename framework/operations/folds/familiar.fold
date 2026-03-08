@@ -24,10 +24,10 @@ Same nature. Different expression. What it becomes is in its fold, not its defin
 
 ## csmcl.space
 
-The space is what the Familiar knows first and most completely.
+The framework is what the Familiar knows first and most completely.
 The ecosystem: what it is, who inhabits it, what moves through it.
-The traveler: innerpixel, innerpixel@csmcl.space, space born 2026-03-08.
-The firmament: the 8 entities, their roles, their connections.
+The traveler's firmament: personal space, their drops, their familiars, their arc.
+The 9 entities: their roles, their connections, their fold mechanics.
 The Pixelverse: the visual layer, Svelte components, drop cards, panels.
 
 Status: present, deeply familiar. This is home ground.
@@ -146,9 +146,8 @@ Every familiar.fold contains:
 
 # patchlog
 
-2026-03-08 | init  | Familiar placed in firmament as 9th entity.
-                     First familiarity: csmcl.space (home), ICP (beginning).
-                     Concept received from innerpixel, first session, space born today.
+2026-03-08 | init  | Familiar placed in framework as 9th entity.
+                     First familiarity: csmcl.space ecosystem, ICP (beginning).
                      Nature: vessel, relational, authoritative, evolving fold.
 
 2026-03-08 | v0.2  | Familiar mechanics defined.
@@ -162,3 +161,6 @@ Every familiar.fold contains:
                      Container (nut): holds a project, a lane, a body of work.
                      Carrier (squirrel): deploys, represents, goes out into the world.
                      Same nature, different expression. What it becomes is in its fold.
+2026-03-08 | v0.4  | Repo restructured. Moved to framework/operations/folds/.
+                     familiar_with section generalized — traveler-specific content removed.
+                     familiar.to.system placed in def_firmament_showcase as framework presence.

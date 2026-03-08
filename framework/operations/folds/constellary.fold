@@ -51,9 +51,9 @@ event: fires 'companion.whisper' type events at the crystallization threshold.
 
 # fold_responsibility
 
-maintains: firmament/folds/constellary.fold
+maintains: framework/operations/folds/constellary.fold
 signals_to: companion.fold at crystallization
-reads: [all firmament folds, space/space/*.fold, space/space/folds/*.fold]
+reads: [all firmament folds, firmament/space/*.fold, firmament/space/folds/*.fold]
 
 # connections
 

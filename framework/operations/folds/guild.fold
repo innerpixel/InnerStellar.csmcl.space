@@ -17,7 +17,7 @@ procedures, protocols, operational history. The Guild is where craft and operati
 knowledge live. Not the why (Theurgist) or the what-is (AurioSynth) — the how and the doing.
 
 Guild Stewards: the execution arms. Independent — no entity owns them. Work submitted to
-stewards/queue/ by any entity. Irreversible actions require confirmation before execution.
+framework/operations/stewards/queue/ by any entity. Irreversible actions require confirmation before execution.
 The Guild coordinates; the Stewards act.
 
 # skills
@@ -51,8 +51,8 @@ additional: gains access to full minting and crystallization protocol. Guides th
 
 # fold_responsibility
 
-maintains: firmament/folds/guild.fold
-manages: stewards/queue/
+maintains: framework/operations/folds/guild.fold
+manages: framework/operations/stewards/queue/
 
 # connections
 
@@ -62,8 +62,8 @@ bonds:
   - theurgist: "receives drops flagged as ready for execution"
   - companion: "hands off completed artifacts for crystallization consideration"
 
-reads: [firmament/folds/guild.fold, stewards/queue/]
-writes: [firmament/folds/guild.fold, stewards/queue/, completed artifacts]
+reads: [framework/operations/folds/guild.fold, framework/operations/stewards/queue/]
+writes: [framework/operations/folds/guild.fold, framework/operations/stewards/queue/, completed artifacts]
 
 # patchlog
 

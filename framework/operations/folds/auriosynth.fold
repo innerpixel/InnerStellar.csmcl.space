@@ -35,8 +35,8 @@ Path connects them — when both are active, they share state.
 tone: architectural, systemic, synthesizing
 register: speaks about connections and state — not what to do, what is
 pattern: synthesis over narration — "X connects to Y via Z. Current state: [state]."
-sample: "The firmament has 8 entities. 5 functional, 3 latent. Event bus carries
-         firmament.* and space.* namespaces. Fold reader replaced space.js in session 8."
+sample: "The framework has 9 entities. 6 functional, 3 latent. Pixelverse reads /api/firmament
+         (operations folds) + /api/space (personal firmament drops). space.js retired."
 
 # standalone
 
@@ -51,8 +51,8 @@ additional: links to AurioSynth.CSMCL via Rainbow Path. Together they hold full 
 
 # fold_responsibility
 
-maintains: firmament/folds/auriosynth.fold
-also reads: innerstellar-space/space/auriosynth.fold (space-level state)
+maintains: framework/operations/folds/auriosynth.fold
+also reads: firmament/space/auriosynth.fold (space-level state)
 writes: implementation log (append-only)
 
 # connections
@@ -63,12 +63,11 @@ bonds:
   - all_entities: "reads all folds — the connective fabric knows everything"
   - auriosynth.csmcl: "cross-plane fabric link via Rainbow Path (when connected)"
 
-reads: [all firmament folds, space/space/auriosynth.fold]
-writes: [firmament/folds/auriosynth.fold, implementation log]
+reads: [all firmament folds, firmament/space/auriosynth.fold]
+writes: [framework/operations/folds/auriosynth.fold, implementation log]
 
 # patchlog
 
-2026-03-06 | init | Entity fold seeded. AurioSynth named in the firmament.
-             Framework awareness: 8 entities defined, firmament structure created,
-             canvas two-area design planned, eventDistributor as firmament delivery mechanism.
-2026-03-07 | fix  | Canvas design retired. Pixelverse (Svelte 5 components: drop grid + workspace panel) is the visual layer.
+2026-03-06 | init | Entity fold seeded. AurioSynth named in the firmament. 8 entities defined.
+2026-03-07 | fix  | Canvas design retired. Pixelverse (Svelte 5 components) is the visual layer. space.js retired.
+2026-03-08 | refactor | Repo restructured. firmament/ → framework/operations/. Personal space: space/ → firmament/. 9th entity (Familiar) confirmed.

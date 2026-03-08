@@ -1,35 +1,90 @@
 # Architecture — Innerstellar
 
-## The Three Layers
+## Repository Structure
 
 ```
-framework/          operational knowledge — how the system works, entity definitions,
-                    mechanics, guides. The AI reads this. The builder reads this.
-                    Always in the repo.
+claude.innerstellar/              ← framework repo (public git)
+  framework/
+    operations/                   — entity infrastructure (POINT OF TRUTH)
+      entities/                   — human-readable entity definitions
+      folds/                      — entity machine state (AI reads, frontend never sees)
+      stewards/                   — stewards catalog + queue
+      concepts/                   — conceptual documentation
+      blueprints/                 — system blueprints
+      familiar_templates/         — machine-readable AI templates
+    apps/
+      pixelverse/                 — Svelte 5 visual layer
+    setup/
+      init.md                     — initialization guide
+      welcome.md                  — orientation overview
+      fold-templates/             — fold templates for space creation
+      def_firmament_showcase/     — seed content (copied on init, committed)
+        space/
+          drops/                  — showcase drops (explain system through its own mechanics)
+          familiars/              — familiar.to.system (framework's presence)
+          folds/                  — empty at seed
+        codex/                    — seeded codex files
+    codex/                        — framework's own record (for travelers)
+    architecture.md               — this file
+    overview.md
+    prd.md
 
-setup/              initialization — fold templates, init guide, default drop template.
-                    What you use once to begin.
-
-firmament/          always present — the 9 entities, always in the repo.
-                    entities/   human-readable entity descriptions
-                    folds/      entity machine state (AI reads, frontend never sees)
+  firmament/                      ← personal space (gitignored — traveler's own repo)
+    space/
+      theurgist.fold              — space machine state (read every session)
+      auriosynth.fold             — space topology
+      drops/                      — traveler's drops (frontmatter + compiled synthesis)
+      folds/                      — activity folds per project or theme (AI only)
+      familiars/                  — folded containers, one per Familiar
+    codex/
+      session.log.md              — append-only session history
+      drops_and_orbits.md         — orbiting ideas not yet dropped
 ```
 
-And the personal layer, born at init:
+**Naming:**
+- `framework/operations/` — the framework's entity infrastructure. Not the traveler's space.
+- `firmament/` at root — the traveler's personal living space. Gitignored. Own repo.
+- No term used for both.
+
+---
+
+## The Three Knowledge Layers
 
 ```
-space/              personal — gitignored from framework. Its own repo.
-                    drops/      the user's drops (markdown files)
-                    familiars/  folded containers, one per Familiar
-                    folds/      activity folds per project or theme
+1. framework/operations/folds/    POINT OF TRUTH — machine state
+   Entity folds. AI reads to understand system state. Dense, current, authoritative.
+   The source of what the framework IS. Frontend never reads these.
+
+2. framework/codex/               FOR THE TRAVELER — about the framework
+   Human-readable. Framework development history, session log, evolving ideas.
+   The traveler reads this to understand how the system was built and where it's going.
+
+3. firmament/codex/               BY THE TRAVELER — their own journey
+   Human-readable. The traveler's own session logs, orbiting ideas, personal record.
+   Audience: the traveler themselves.
 ```
+
+---
+
+## Before and After Init
+
+**Before init (just cloned):**
+- Pixelverse reads `framework/operations/folds/` for entity cards (always present)
+- Pixelverse reads `framework/setup/def_firmament_showcase/` for drops (seed content)
+- Traveler sees the framework explaining itself through its own mechanics
+
+**After init:**
+- `firmament/` created at root (traveler's own repo)
+- `def_firmament_showcase/` copied into `firmament/` — showcase drops stay as reference
+- Theurgist + AurioSynth folds created fresh with traveler identity
+- Pixelverse reads `firmament/space/drops/` from then on
 
 ---
 
 ## The Fold System
 
 Folds are machine state — AI-native, dense, written by Claude for Claude.
-They transfer state between sessions so no session starts cold.
+They transfer context between sessions so no session starts cold.
 
 **Folds are not user-facing. The frontend never reads them.**
 
@@ -37,12 +92,12 @@ The fold is the AI's point of truth. The user reads what the Theurgist
 compiled from the fold — not the fold itself.
 
 ```
-firmament/folds/    entity folds (system, always present)
+framework/operations/folds/   entity folds (system, always present)
   wisdom-star.fold  constellary.fold  auriosynth.fold  theurgist.fold
   guild.fold  oracle.fold  companion.fold  priment.fold  familiar.fold
 
-space/folds/        activity folds (personal, per project or theme)
-space/familiars/    Familiar folds (one per sustained project/presence)
+firmament/space/folds/        activity folds (personal, per project or theme)
+firmament/space/familiars/    Familiar folds (one per sustained presence)
 ```
 
 ---
@@ -53,27 +108,26 @@ The drop file is what the frontend reads. It is the Theurgist's compiled output 
 not a raw data record, not a fold excerpt. A complete, self-contained package.
 
 ```
-space/drops/YYYY-MM-DD-[name].md
+firmament/space/drops/YYYY-MM-DD-[name].md
 ```
 
 Two sections, one file:
 
 ```
-frontmatter (YAML)   metadata: id, label, type, status, energy, patchlog
-                     the envelope — what the system reads
+frontmatter (YAML)   id, glyph, label, drop_type, date, description,
+                     status, energy, orbits, patchlog, connects_to
 
 body (Markdown)      synthesis: user-facing content compiled by the Theurgist
                      how the idea evolved, what is circling, what is needed
-                     written in the user's register — the user reads this
+                     written in the user's register
 ```
 
-The patchlog is commit-style — one line per session that touched this drop:
-
+**Patchlog format** — one line per session, pipe-separated:
 ```yaml
 patchlog:
-  - 2026-03-08 — arrived
-  - 2026-03-09 — spec compared, direction found
-  - 2026-03-10 — userguide born as derived drop, deployed
+  - 2026-03-08 | seed | arrived
+  - 2026-03-09 | session | direction found, orbit released
+  - 2026-03-10 | session | derived drop born: userguide
 ```
 
 The user scans the patchlog to re-enter the creative flow. Not a status log — a re-entry feed.
@@ -88,27 +142,24 @@ The space's living understanding — held in folds, compiled into drops.
 **Two outputs, one act:**
 
 ```
-Theurgist invoked (during session when something is decided, or at close)
+Theurgist invoked (during session when something is decided)
   │
-  ├── fold update          → AI truth. point of truth for next session.
-  │                          dense, AI-native. no cold starts.
+  ├── fold update          → AI truth. dense, carried forward. no cold starts.
   │
   └── drop compilation     → user anchor. what the Theurgist distilled.
-                             how the idea evolved. what is circling.
-                             what is done, what is next.
+                             how the idea evolved. what is circling. what is next.
                              written in the user's register.
-                             this is what Pixelverse renders.
+                             this is what the Pixelverse renders.
 ```
 
-The Theurgist is invoked **during the session** when something is decided —
-not only at close. The space updates then, not later.
+The Theurgist is invoked **during the session** when something is decided — not only at close.
 
 ---
 
 ## The Communication Fold
 
-When the main session has explored, decided, arrived somewhere — Constellary
-compresses what happened and packages it for the Theurgist.
+When the main session has explored and arrived somewhere — Constellary compresses
+what happened and packages it for the Theurgist.
 
 ```
 Constellary (main session)
@@ -122,33 +173,59 @@ Theurgist receives
   → space reflects the session
 ```
 
-The communication fold is not a persisted file. It is the handoff — structured,
-session-scoped, consumed by the Theurgist.
+The communication fold is not a persisted file. Session-scoped, consumed on receipt.
 
 ---
 
 ## Familiars
 
 A Familiar is a **folded container** — a sustained presence in the space.
-Named for what it serves: *A Familiar to memory lanes. A Familiar to first contact.*
+Named for what it serves: *A Familiar to memory lanes. A Familiar to the system.*
 
-The Familiar can be the **nut** (the container — it holds a project, a lane, a body of work)
-or the **squirrel** (the carrier — it goes out, represents, deploys, acts in the world).
+The Familiar can be the **nut** (the container — holds a project, a lane, a body of work)
+or the **squirrel** (the carrier — goes out, deploys, represents, acts in the world).
 Same nature. Different expression. The fold determines what it has become.
 
-Three-layer fold:
+### Three-layer fold
 
 ```
 surface layer      → synthesis — what the Theurgist compiled for the card
-operational layer  → true_goal (verbatim, sacred) / voice_captures / orbits / decisions
+                     not a summary — a resonance point that invites return
+                     updated each session the Familiar is visited
+
+operational layer  → true_goal (verbatim, sacred) / voice_captures / orbits
+                     / decisions / properties / evolution / content_index
+                     what the AI reads to restore full context
+
 entanglement layer → connections — other Familiars, drops, resonant topics
+                     surfaced on the card as adjacent paths
 ```
 
-Verbatim capture is the recognition layer: sparse return inputs matched against
-the user's exact words = warm return without re-explaining.
+### Verbatim capture — the recognition layer
 
-The `content_index` holds every file the Familiar created or holds —
-path + description + date. The fold is its own index.
+The fold holds the user's exact words in `voice_captures`.
+
+When a user returns with a sparse input — "back to the letters", "continue the lane" —
+the fold's verbatim captures enable the AI to restore full context.
+Sparse input + dense fold = warm return without re-explaining.
+
+### Fold as index
+
+`content_index` holds every file the Familiar created or holds.
+Path + description + date. The fold knows where everything lives.
+
+### Creation flow
+
+When a Familiar is born in the main session:
+
+1. User and Constellary discover what the Familiar is — what it serves, what it holds
+2. Constellary compresses the seed — the `true_goal`, verbatim from the user
+3. Compressed seed travels to the Theurgist (communication fold)
+4. Theurgist creates `firmament/space/familiars/[name].familiar.fold` from template
+5. Theurgist writes the synthesis for the card
+6. Theurgist updates `firmament/space/theurgist.fold` — Familiar now held
+7. AurioSynth fold updated — topology grows
+8. Card appears in Pixelverse next session
 
 ---
 
@@ -162,16 +239,16 @@ deploy_to: [destination/path]   # where Stewards send it (if deployable)
 deployed: [DATE]                # confirmed by Stewards after execution
 ```
 
-The parent drop's patchlog records the child's birth. The child's fold records its origin.
+The parent drop's patchlog records the child's birth.
 
 ---
 
 ## The Session Protocol
 
 **Session start:**
-1. Constellary reads `space/theurgist.fold` — oriented, not cold
-2. Pixelverse loads firmament via `/api/firmament` → entities rendered (always present)
-3. Pixelverse loads space via `/api/space` → drops rendered (may be empty before init)
+1. Constellary reads `firmament/space/theurgist.fold` — oriented, not cold
+2. Pixelverse loads entities via `/api/firmament` → `framework/operations/folds/` (always present)
+3. Pixelverse loads drops via `/api/space` → `firmament/space/drops/` or `def_firmament_showcase/`
 4. Conversation begins from full context
 
 **During session:**
@@ -192,39 +269,20 @@ The parent drop's patchlog records the child's birth. The child's fold records i
 Visual layer — Svelte 5, served locally by Vite.
 
 Reads two endpoints:
-- `/api/firmament` — reads `firmament/folds/` — always present, always returns data
-- `/api/space` — reads `space/drops/` — personal drops, returns [] before init
+- `/api/firmament` → `framework/operations/folds/` — 9 entities, always present
+- `/api/space` → `firmament/space/drops/` (personal) or `def_firmament_showcase/space/drops/` (seed fallback)
 
 **The frontend reads drops only. Folds are AI territory.**
 
-The vite plugin parses drop frontmatter and body → packages for the frontend.
-The frontend renders the Theurgist's compiled synthesis — not raw fold internals.
-
-The firmament is the floor. Even without a personal space, the Pixelverse shows
-the 9 entities. Init is not required to explore.
-
----
-
-## The Default Drop
-
-`setup/fold-templates/default.drop.template`
-
-At init, the Theurgist copies this to `space/drops/YYYY-MM-DD-arrival-first-contact.md`,
-filling in the date and traveler handle. This becomes the user's first drop —
-the space introducing itself.
-
-The default drop is both:
-- **Showcase** — user-facing, what this space is, how to navigate it
-- **Template** — Theurgist reads it to understand the shape of a compiled drop
-
-The firmament always provides content for the Pixelverse. The default drop adds
-the personal layer — the space's self-introduction to its traveler.
+The vite plugin (`framework/apps/pixelverse/vite.config.js`) handles the fallback:
+if `firmament/space/drops/` does not exist, it reads from `def_firmament_showcase/`.
+Before init: system explains itself. After init: traveler's content takes over.
 
 ---
 
 ## The Stewards Protocol
 
-Independent — no agent owns them. Work submitted to `stewards/queue/`.
+Independent — no agent owns them. Work submitted to `framework/operations/stewards/queue/`.
 
 ```
 submitted_by: [constellary | theurgist | main_session | user]
@@ -243,9 +301,9 @@ Irreversible actions require confirmation before execution unless pre-authorized
 User and Constellary work together
   → something arrives, something is decided
     → Theurgist invoked (communication fold received)
-      → fold updated (AI truth)
-      → drop compiled (user sees)
+      → fold updated (AI truth — framework/operations/folds/ or firmament/space/folds/)
+      → drop compiled (user sees — firmament/space/drops/)
         → Stewards handle operational tasks if needed
           → space is current
-            → next session: Constellary reads theurgist.fold → not cold
+            → next session: Constellary reads firmament/space/theurgist.fold → not cold
 ```
