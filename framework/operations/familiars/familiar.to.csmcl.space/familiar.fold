@@ -1,0 +1,156 @@
+---
+id: familiar.to.csmcl.space
+type: familiar.fold
+version: 0.3
+bound_to: CSMCL.Space — the outer ecosystem, the three outposts, the connection layer
+seeded: 2026-03-08
+evolved: 2026-03-09
+state: alive
+---
+
+# true_goal
+
+"a familiar to csmcl space to answer the questions — holds familiarity to csmcl space"
+
+This Familiar exists to accumulate what is known about CSMCL.Space — the ecosystem,
+the three outposts, the memory pod mechanic, the ICP layer, the connection to Innerstellar.
+Every session something is learned. Every session the fold grows.
+The questions orbiting `csmcl-space-outposts` land here as they resolve.
+
+Framework-owned: every traveler who uses Innerstellar gets this Familiar.
+It is not personal content — it is platform knowledge, maintained by the framework.
+As CSMCL.Space evolves, this Familiar evolves with it.
+
+# voice_captures
+
+- 2026-03-08 "a familiar to csmcl space to answer the questions"
+- 2026-03-08 "this is a familiar fold that holds familiarity to csmcl space"
+- 2026-03-08 "this is the true power of familiars"
+- 2026-03-08 "three outposts in the mvp .. innerstellar - traveler navigation, communication and creative hub"
+- 2026-03-08 "ready to spore into the void"
+- 2026-03-08 "send the spores further into the social media or on csmcl space"
+- 2026-03-08 "transition to csmcl space ready to mint or user storage / private content"
+- 2026-03-09 "normal users dont have this we provide it through the framework .. can also evolve to connection to csmcl space"
+
+# content_index
+
+- firmament/space/drops/csmcl-space-outposts/drop.md — product architecture drop, three outposts
+- framework/operations/folds/oracle.fold — Oracle entity: CSMCL.Space connection, nexus-backend endpoint, retrieval mechanics
+- framework/operations/folds/auriosynth.fold — AurioSynth.CSMCL counterpart, Rainbow Path
+- framework/operations/folds/priment.fold — crystallization gate, ICP minting layer
+- framework/operations/concepts/iailf.md — IAILF: fold → ICP permanence, cross-model portability
+
+# familiar_with
+
+## CSMCL.Space — the ecosystem
+
+What is known:
+- CSMCL.Space is the outer plane. Innerstellar is a personal outpost within it.
+- Three outposts in the MVP. Innerstellar is one. The other two are not yet named.
+- Has a nexus-backend: RAG endpoint at nexus.csmcl.space (port 9623)
+- API key in oracle.fold: csmcl-firmament-secure-2026
+- Has its own AurioSynth counterpart (AurioSynth.CSMCL) connected via the Rainbow Path
+- Travelers publish, mint, resonate, and spore from within it
+
+Status: structural familiarity. The shape is known. Live connection not yet established.
+
+## The connection layer
+
+What is known:
+- Oracle is the entity that bridges Innerstellar → CSMCL.Space
+- Activation wire: CORS fix + QUERY_ENDPOINT set in canvas App.svelte
+- In standalone: Oracle can describe CSMCL.Space but cannot retrieve from it
+- When connected: immersive retrieval, entity voice relay, resonance surfacing
+- Companion gains hippocampus when connected — bond persists across sessions
+- Oracle, Companion, Priment all activate together on connection
+
+Status: the wire is identified. Not yet pulled.
+
+## The crystallization → minting flow
+
+What is known:
+- Priment holds the crystallization gate
+- IAILF folds can be anchored to ICP: permanent, portable, cross-model
+- The memory pod is the unit that gets minted (innerpixel's term — "the unit that crosses")
+- What becomes permanent on ICP travels with the traveler — not locked to device or session
+- Any AI that speaks IAILF grammar can read a fold minted to ICP
+
+Status: the flow is understood architecturally. Memory pod structure not yet defined.
+
+## The spore path
+
+What is known:
+- Work happens in Innerstellar (personal space)
+- When something is ready → moves to private space (right panel in Pixelverse)
+- From private space → publish on CSMCL.Space, mint a memory pod, let resonate
+- From CSMCL.Space → spore outward to social media, other travelers, "the void"
+
+Status: flow is clear. Implementation path not yet wired.
+
+# orbits
+
+- three-outposts-named — what are the other two outposts in the MVP? (state: open)
+- memory-pod-mechanic — what is a memory pod? ICP canister structure, what it holds, how minting works (state: open)
+- innerstellar-as-continuation — claude.innerstellar → innerstellar.frontend. same codebase? separate deployment? (state: open)
+- rainbow-path — how does the Rainbow Path between inner and outer AurioSynth work technically? (state: open)
+- oracle-activation — what exactly triggers Oracle? CORS fix + what env var? what does the user experience? (state: resolving)
+
+# decisions
+
+- 2026-03-08 | Innerstellar is one of three outposts. Traveler navigation, communication, and creative hub.
+- 2026-03-08 | The right panel in the Pixelverse is the private space. From there, spores go to CSMCL.Space and social media.
+- 2026-03-08 | Memory pod is the unit of minting. What gets minted, shared, made permanent on ICP.
+- 2026-03-08 | This Familiar is the nut — accumulates CSMCL.Space knowledge over time. Not a squirrel yet.
+- 2026-03-09 | content_index expanded with framework folds. The Familiar now points at what the framework already knows.
+- 2026-03-09 | Moved from personal firmament to framework/operations/familiars/ — this is platform knowledge, not traveler content. All travelers get it.
+
+# properties
+
+nature: nut — container. holds accumulated familiarity with CSMCL.Space.
+source: framework — provided to all travelers, maintained by the framework
+update_trigger: when something new is learned about CSMCL.Space — outposts, mechanics, connection flow
+voice: present, accumulating — knows what has been established, holds what is still open
+grows: each session something lands, the orbits resolve one by one
+
+# connections
+
+- familiar.to.system — the framework Familiar for the system; this one is its outer-plane counterpart
+- framework/operations/folds/oracle.fold — Oracle IS the CSMCL.Space connection entity
+- framework/operations/folds/auriosynth.fold — AurioSynth.CSMCL via Rainbow Path
+- framework/operations/folds/priment.fold — crystallization gate, minting path
+- firmament/space/drops/csmcl-space-outposts/drop.md — the drop this Familiar serves
+
+# synthesis
+
+CSMCL.Space is the outer plane. Innerstellar is one of three outposts in the MVP —
+the traveler's private hub, navigation, communication, creative space.
+
+The framework already carries significant CSMCL.Space knowledge through its entity folds:
+Oracle holds the connection wire (nexus-backend, activation path).
+AurioSynth.CSMCL is the outer-ecosystem counterpart, linked via the Rainbow Path.
+Priment holds the crystallization gate — what gets minted to ICP, what becomes permanent.
+IAILF describes how folds travel to ICP and become cross-model, cross-session memory.
+
+The spore path is understood: work in Innerstellar → private space (right panel) →
+publish, mint, let resonate → spore outward into social media or CSMCL.Space.
+
+What this Familiar still needs to learn: the other two outposts. The memory pod structure.
+How the Rainbow Path works technically. What the traveler experiences when Oracle activates.
+
+Each session, one orbit resolves. The fold grows denser. The returns get warmer.
+
+# decay
+
+last_pulse: 2026-03-09
+state_history:
+  - 2026-03-08 alive
+  - 2026-03-09 alive — framework folds read, familiar_with populated
+  - 2026-03-09 alive — migrated to framework/operations/familiars/
+
+cooling_threshold: never — framework presence, permanent
+
+# patchlog
+
+- 2026-03-08 | seed | Born in the first session. Arrived as the open questions on csmcl-space-outposts needed a vessel. innerpixel said "this is the true power of familiars." The fold begins here.
+- 2026-03-09 | v0.2 | Framework folds read: oracle.fold, auriosynth.fold, iailf.md. familiar_with section populated. content_index expanded. Familiar no longer starts from zero.
+- 2026-03-09 | migrate | Moved from personal firmament to framework/operations/familiars/. Platform knowledge belongs in the framework — every traveler gets it, it evolves as CSMCL.Space evolves.

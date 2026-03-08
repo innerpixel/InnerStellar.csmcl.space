@@ -128,29 +128,67 @@ function extractBodyDescription(content) {
   return ''
 }
 
+// ── Framework familiars reader ─────────────────────────────────────────────
+// Reads framework/operations/familiars/ — always present, served to all travelers.
+// Merged with personal familiars in /api/space response.
+
+function readFrameworkFamiliars(operationsRoot) {
+  const familiarsDir = path.join(operationsRoot, 'familiars')
+  if (!fs.existsSync(familiarsDir)) return []
+
+  const familiars = []
+  fs.readdirSync(familiarsDir)
+    .filter(f => fs.statSync(path.join(familiarsDir, f)).isDirectory())
+    .sort()
+    .forEach(dir => {
+      const familiarFile = path.join(familiarsDir, dir, 'familiar.md')
+      if (!fs.existsSync(familiarFile)) return
+
+      const content = fs.readFileSync(familiarFile, 'utf8')
+      const meta    = parseYamlFrontMatter(content)
+      const famId   = meta.id ?? dir
+
+      familiars.push({
+        id:          famId,
+        glyph:       meta.glyph ?? '◉',
+        type:        'familiar',
+        source:      'framework',
+        label:       meta.label ?? dir.replace(/-/g, ' '),
+        date:        meta.date ?? '',
+        description: meta.description || extractBodyDescription(content),
+        status:      meta.status ?? 'alive',
+        energy:      ENERGY_MAP[meta.energy] ?? 0.7,
+      })
+    })
+
+  return familiars
+}
+
 function readSpaceData(spaceRoot) {
-  // Folds are AI territory — the frontend never reads them.
-  // The Theurgist compiles what the user needs into drop files.
-  // The frontend reads drops only.
+  // Structure: drops/[name]/drop.md + drop.fold, familiars/[name]/familiar.md + familiar.fold
+  // Frontend reads .md files only. Folds are AI territory.
 
-  // Drops: space/drops/*.md — Theurgist-compiled packages
-  const dropsDir = path.join(spaceRoot, 'space', 'drops')
-  const drops    = []
-  const orbiting = []
+  const dropsDir     = path.join(spaceRoot, 'space', 'drops')
+  const familiarsDir = path.join(spaceRoot, 'space', 'familiars')
+  const drops        = []
+  const orbiting     = []
+  const familiars    = []
 
+  // ── Drops: space/drops/[name]/drop.md ─────────────────────────────────────
   if (fs.existsSync(dropsDir)) {
     fs.readdirSync(dropsDir)
-      .filter(f => f.endsWith('.md'))
+      .filter(f => fs.statSync(path.join(dropsDir, f)).isDirectory())
       .sort()
-      .forEach(file => {
-        const content = fs.readFileSync(path.join(dropsDir, file), 'utf8')
+      .forEach(dir => {
+        const dropFile = path.join(dropsDir, dir, 'drop.md')
+        if (!fs.existsSync(dropFile)) return
+
+        const content = fs.readFileSync(dropFile, 'utf8')
         const meta    = parseYamlFrontMatter(content)
-        const name    = file.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace('.md', '')
+        const dropId  = meta.id ?? dir
 
-        const status = meta.status ?? 'alive'
-        const energy = ENERGY_MAP[meta.energy] ?? 0.7
-        const dropId = meta.id ?? name
-
+        const status   = meta.status ?? 'alive'
+        const energy   = ENERGY_MAP[meta.energy] ?? 0.7
         const patchlog = Array.isArray(meta.patchlog) ? meta.patchlog : []
 
         drops.push({
@@ -158,9 +196,9 @@ function readSpaceData(spaceRoot) {
           glyph:        meta.glyph ?? '∴',
           type:         'content',
           drop_type:    meta.drop_type ?? 'drop.content',
-          label:        meta.label ?? name.replace(/-/g, ' '),
-          date:         meta.date ?? file.slice(0, 10),
-          last_touched: meta.last_touched || meta.date || file.slice(0, 10),
+          label:        meta.label ?? dir.replace(/-/g, ' '),
+          date:         meta.date ?? '',
+          last_touched: meta.last_touched || meta.date || '',
           description:  meta.description || extractBodyDescription(content),
           patchlog_last: patchlog.length ? patchlog.at(-1) : '',
           patchlog,
@@ -171,7 +209,6 @@ function readSpaceData(spaceRoot) {
           connects_to:   Array.isArray(meta.connects_to) ? meta.connects_to : [],
         })
 
-        // Build orbiting entries from this drop's orbits list
         if (Array.isArray(meta.orbits)) {
           meta.orbits.forEach(orbitId => {
             orbiting.push({ id: orbitId, orbit: dropId, type: 'orbit' })
@@ -180,7 +217,33 @@ function readSpaceData(spaceRoot) {
       })
   }
 
-  return { drops, orbiting }
+  // ── Familiars: space/familiars/[name]/familiar.md ─────────────────────────
+  if (fs.existsSync(familiarsDir)) {
+    fs.readdirSync(familiarsDir)
+      .filter(f => fs.statSync(path.join(familiarsDir, f)).isDirectory())
+      .sort()
+      .forEach(dir => {
+        const familiarFile = path.join(familiarsDir, dir, 'familiar.md')
+        if (!fs.existsSync(familiarFile)) return
+
+        const content = fs.readFileSync(familiarFile, 'utf8')
+        const meta    = parseYamlFrontMatter(content)
+        const famId   = meta.id ?? dir
+
+        familiars.push({
+          id:          famId,
+          glyph:       meta.glyph ?? '◉',
+          type:        'familiar',
+          label:       meta.label ?? dir.replace(/-/g, ' '),
+          date:        meta.date ?? '',
+          description: meta.description || extractBodyDescription(content),
+          status:      meta.status ?? 'alive',
+          energy:      ENERGY_MAP[meta.energy] ?? 0.7,
+        })
+      })
+  }
+
+  return { drops, orbiting, familiars }
 }
 
 function spaceReaderPlugin() {
@@ -189,9 +252,10 @@ function spaceReaderPlugin() {
   const personalFirmament = process.env.INNERSTELLAR_FIRMAMENT
     ?? path.resolve(__dirname, '../../../firmament')
   const defaultShowcase   = path.resolve(__dirname, '../../setup/def_firmament_showcase')
-  const spaceRoot = fs.existsSync(path.join(personalFirmament, 'space', 'drops'))
-    ? personalFirmament
-    : defaultShowcase
+  const personalDrops = path.join(personalFirmament, 'space', 'drops')
+  const spaceRoot = fs.existsSync(personalDrops) && fs.readdirSync(personalDrops).some(
+    f => fs.statSync(path.join(personalDrops, f)).isDirectory()
+  ) ? personalFirmament : defaultShowcase
 
   // Operations: framework entity folds — always present in repo.
   const firmamentRoot = path.resolve(__dirname, '../../operations')
@@ -212,7 +276,10 @@ function spaceReaderPlugin() {
 
       server.middlewares.use('/api/space', (_req, res) => {
         try {
-          const data = readSpaceData(spaceRoot)
+          const data               = readSpaceData(spaceRoot)
+          const frameworkFamiliars = readFrameworkFamiliars(firmamentRoot)
+          // Framework familiars first (system, csmcl.space), then personal familiars
+          data.familiars = [...frameworkFamiliars, ...data.familiars]
           res.setHeader('Content-Type', 'application/json')
           res.end(JSON.stringify(data))
         } catch (err) {

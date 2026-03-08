@@ -1,10 +1,10 @@
 ---
 id: familiar.to.system
 type: familiar.fold
-version: 0.1
+version: 0.2
 bound_to: the framework — the system's self-knowledge, held for every traveler who arrives
 seeded: 2026-03-08
-evolved: 2026-03-08
+evolved: 2026-03-09
 state: alive
 ---
 
@@ -27,11 +27,12 @@ The framework speaks first, through its own mechanics.
 
 - framework/operations/folds/          — entity machine state, point of truth
 - framework/operations/entities/       — human-readable entity definitions
+- framework/operations/familiars/      — framework-owned familiars (this one lives here)
 - framework/setup/welcome.md           — orientation overview
 - framework/overview.md                — what Innerstellar is
 - framework/architecture.md           — layers, fold system, session protocol
 - framework/codex/                    — framework development record for travelers
-- framework/setup/def_firmament_showcase/space/drops/2026-03-08-familiar-to-system.md — this drop
+- framework/setup/def_firmament_showcase/space/drops/familiar-to-system/drop.md — the companion drop
 
 # orbits
 
@@ -46,6 +47,7 @@ The framework speaks first, through its own mechanics.
 - 2026-03-08 | The drop (familiar-to-system.md) is AurioSynth's compiled card. The fold is the held knowledge. Together: the system's self-introduction.
 - 2026-03-08 | content_index holds framework paths, not traveler paths — this Familiar knows the framework, not the traveler's space.
 - 2026-03-08 | framework/codex/ is the bridge: framework development history that travelers can read to understand how the system evolved.
+- 2026-03-09 | Moved from def_firmament_showcase seed to framework/operations/familiars/ — framework familiars are always present, served directly by the vite plugin alongside entity folds.
 
 # properties
 
@@ -58,6 +60,7 @@ voice: AurioSynth — architectural, synthesizing, present without directing
 
 - innerstellar-exploration — the companion drop; exploration is what arrives, this Familiar explains the system that holds it
 - framework/operations/folds/auriosynth.fold — AurioSynth's entity fold; this Familiar is its personal-space expression
+- familiar.to.csmcl.space — the outer-plane counterpart; where this one knows the system, that one knows CSMCL.Space
 
 # synthesis
 
@@ -80,12 +83,14 @@ this Familiar should be the first to reflect it.
 
 # decay
 
-last_pulse: 2026-03-08
+last_pulse: 2026-03-09
 state_history:
   - 2026-03-08 alive
+  - 2026-03-09 alive — migrated to framework/operations/familiars/
 
 cooling_threshold: never — framework presence, permanent
 
 # patchlog
 
 - 2026-03-08 | seed | Familiar placed in def_firmament_showcase. AurioSynth's presence in the traveler's firmament from init. Born from the session where innerpixel and Constellary designed the space-default architecture.
+- 2026-03-09 | migrate | Moved to framework/operations/familiars/. Framework familiars are now served directly by the vite plugin — always present, not dependent on init or personal firmament.

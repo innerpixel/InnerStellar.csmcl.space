@@ -1,10 +1,11 @@
 <script>
   import { onMount } from 'svelte'
   import { distributeEvent } from './lib/eventDistributor.js'
-  import DropField from './layout/DropField.svelte'
+  import DropList from './layout/DropList.svelte'
   import WorkspacePanel from './components/WorkspacePanel.svelte'
+  import ThresholdPanel from './layout/ThresholdPanel.svelte'
 
-  let space     = $state({ drops: [], orbits: [], entities: [] })
+  let space     = $state({ drops: [], orbits: [], entities: [], familiars: [] })
   let loading   = $state(true)
 
   // ── Nexus query (wired when CORS is configured) ────────────────────────────
@@ -51,8 +52,9 @@
         const data = await res.json()
 
         space = {
-          drops:   data.drops    ?? [],
-          orbits:  data.orbiting ?? [],
+          drops:     data.drops     ?? [],
+          orbits:    data.orbiting  ?? [],
+          familiars: data.familiars ?? [],
           entities,
         }
         distributeEvent({ type: 'space.state.updated', payload: space })
@@ -91,17 +93,20 @@
     </div>
   </header>
 
-  <!-- Main: field + panel -->
+  <!-- Main: three columns -->
   <div class="main-area">
-    <div class="field-area">
+
+    <!-- Left — drop list -->
+    <div class="list-area">
       {#if loading}
         <div class="loading-hint">· orienting</div>
       {:else}
-        <DropField {space} />
+        <DropList {space} />
       {/if}
     </div>
 
-    <div class="panel-area">
+    <!-- Middle — workspace (selected drop) -->
+    <div class="workspace-area">
       <WorkspacePanel
         {space}
         {querying}
@@ -109,6 +114,12 @@
         onQueryDrop={queryDrop}
       />
     </div>
+
+    <!-- Right — threshold / private space -->
+    <div class="threshold-area">
+      <ThresholdPanel {space} />
+    </div>
+
   </div>
 
 </div>
@@ -159,19 +170,16 @@
   .stat-amber { color: rgba(251, 191, 36, 0.65); }
   .stat-date  { color: rgba(130, 128, 165, 0.38); }
 
-  /* ── Main area ────────────────────────────────────────────────────── */
+  /* ── Main area — three columns ────────────────────────────────────── */
   .main-area {
     display: grid;
-    grid-template-columns: 1fr 380px;
+    grid-template-columns: 260px 1fr 280px;
     flex: 1; overflow: hidden;
   }
 
-  .field-area {
-    overflow: hidden;
-    border-right: 1px solid rgba(200, 190, 255, 0.06);
-  }
-
-  .panel-area { overflow: hidden; }
+  .list-area      { overflow: hidden; }
+  .workspace-area { overflow: hidden; border-left: 1px solid rgba(200, 190, 255, 0.06); }
+  .threshold-area { overflow: hidden; }
 
   /* Loading */
   .loading-hint {
