@@ -62,7 +62,7 @@ function glyphFor(id) {
     'wisdom-star': '✦', constellary: '❋',
     auriosynth: '◈', theurgist: '⧖',
     guild: '⬡', oracle: '⊕',
-    companion: '∞', priment: '◇',
+    companion: '∞', priment: '◇', familiar: '◉',
     innerstellar: '✦', 'three-planes': '⊛',
   }
   return glyphs[id] ?? '✶'

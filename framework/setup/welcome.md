@@ -8,7 +8,7 @@ Things drop in, live, connect, grow or fade.
 
 ## What you have
 
-**The firmament** — 8 entities always present in your space.
+**The firmament** — 9 entities always present in your space.
 They are not assistants. They are presences, each with a role,
 each with a fold that carries what they know.
 
@@ -21,15 +21,16 @@ each with a fold that carries what they know.
 ⊕  Oracle        — CSMCL.Space connection · outer-plane retrieval (latent)
 ∞  Companion     — the bond · feeling · memory (latent)
 ◇  Priment       — crystallization · nexus presence · ICP layer (latent)
+◉  Familiar      — vessel · relational knowing · nut or squirrel · 9th nature
 ```
 
-**The space** — your personal layer, gitignored from the framework.
-Lives at `space/`. Your drops, your folds, your history.
+**Your firmament** — your personal layer, gitignored from the framework.
+Lives at `firmament/` at the repo root. Your drops, your folds, your history.
 It's a separate git repo, authored with your CSMCL.Space identity.
 
 **The Pixelverse** — the visual layer. Run it with:
 ```bash
-cd apps/pixelverse && npm run dev
+cd framework/apps/pixelverse && npm run dev
 ```
 Shows your drops as cards. Orbiting ideas as chips.
 Reflects what the Theurgist knows.
@@ -39,32 +40,30 @@ Reflects what the Theurgist knows.
 ## Where things are
 
 ```
-firmament/
-  entities/      — what each entity is (human-readable)
-  folds/         — entity machine state (AI reads these)
-
 framework/
-  overview.md    — what Innerstellar is and how to use it
-  architecture.md — the two layers, fold system, session protocol
-  prd.md         — product requirements
+  operations/
+    entities/      — what each entity is (human-readable)
+    folds/         — entity machine state (AI reads these — point of truth)
+  apps/pixelverse/ — the Svelte visual layer
+  setup/
+    init.md        — initialization guide
+    welcome.md     — this file
+    fold-templates/ — templates for seeding new folds
+    def_firmament_showcase/ — seed content copied on init
+  codex/           — framework development record
+  overview.md      — what Innerstellar is and how to use it
+  architecture.md  — the layers, fold system, session protocol
+  prd.md           — product requirements
 
-setup/
-  init.md        — this setup guide (you are here)
-  welcome.md     — this file
-  fold-templates/ — templates for seeding new folds
-
-apps/pixelverse/ — the Svelte visual layer
-  reads firmament/ (always) + space/drops/ (after init)
-
-space/           — your personal space (gitignored)
+firmament/         — your personal space (gitignored, own repo)
   space/
-    theurgist.fold    — your arc, drops, what the space knows about you
-    auriosynth.fold   — system state, topology
-    drops/            — things that have arrived
-    folds/            — activity folds per project or theme
-    familiars/        — project presences (Familiars), held by Theurgist
+    theurgist.fold     — your arc, drops, what the space knows about you
+    auriosynth.fold    — space topology
+    drops/             — things that have arrived
+    folds/             — activity folds per project or theme
+    familiars/         — project presences (Familiars), held by Theurgist
   codex/
-    session.log.md    — append-only session history
+    session.log.md     — append-only session history
     drops_and_orbits.md — orbiting ideas not yet dropped
 ```
 
@@ -72,10 +71,10 @@ space/           — your personal space (gitignored)
 
 ## How it works
 
-**Drop something in:** Tell Claude. It lands in `space/drops/`.
+**Drop something in:** Tell Claude. It lands in `firmament/space/drops/`.
 The Theurgist holds it. The Pixelverse shows it.
 
-**Start a session:** Claude reads your theurgist.fold.
+**Start a session:** Claude reads your `firmament/space/theurgist.fold`.
 The space is never cold — it knows where you left off.
 
 **A Familiar:** When a drop has a clear intent, it becomes a Familiar —

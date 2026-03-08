@@ -5,7 +5,6 @@ Audience: travelers who want to understand where the framework is going.
 
 ## Orbiting
 
-- **space-default init flow** — Option B vs A resolution pending (see plan-space-default.md)
-- **framework/codex as traveler-facing record** — framework sessions surfaced here over time
-- **Familiar to the System** — AurioSynth's self-introduction drop, in progress
-- **architecture.md sync** — needs full rewrite to reflect folds (in plan)
+- **Pixelverse — Familiar card rendering** — Familiar drops (`drop_type: drop.familiar`) may want a distinct card style from plain drops. Not blocking. Holds the place.
+- **CSMCL.Space connection** — when a traveler connects their account, Oracle, Companion, and Priment activate. The activation flow isn't implemented yet.
+- **Stewards queue** — the queue format is defined but no steward execution path exists yet. What does a submitted steward task actually trigger?
