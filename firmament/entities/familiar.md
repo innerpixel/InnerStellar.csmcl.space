@@ -79,14 +79,66 @@ It is the most mutable fold in the firmament.
 
 ---
 
-## What stewards need
+## Mechanics — Space Familiars
+
+The firmament Familiar holds the operational knowledge of the concept.
+The space holds the instances — one per project, one per lane, one per bond.
+
+Each space Familiar is a **folded container**: a living fold that IS the machine state
+of the container the user has. Not two things. One thing, two faces.
+
+### The layered fold
+
+Every familiar.fold operates in three registers:
+
+```
+surface layer      → synthesis section
+                     Theurgist-generated card content
+                     a resonance point, not a summary
+                     what invites the user back in
+
+operational layer  → true_goal / voice_captures / orbits / decisions / properties
+                     authority + instructions + familiarity + content
+                     what the AI reads to restore context — no cold start
+
+entanglement layer → connections
+                     links to other Familiars, drops, resonant topics
+                     the topology of what this Familiar touches
+```
+
+### Verbatim capture
+
+The fold holds the user's exact words — not paraphrases.
+
+- `true_goal`: verbatim seed from the moment the Familiar was born. Sacred, never overwritten.
+- `voice_captures`: dated verbatim phrases as they arrive across sessions.
+
+This is the **recognition layer**. A sparse return input — "back to the letters",
+"continue the lane" — is matched against the verbatim captures to restore full context.
+Sparse input + dense fold = warm return. No re-explaining needed.
+
+### Fold as index
+
+The `content_index` section holds every file the Familiar created or knows about.
+Path + description + date placed. The Familiar always knows where its content lives.
+
+This enables future frontend display — letters, artifacts, outputs — read directly
+from the space via the fold's index.
+
+### The Theurgist's synthesis
+
+The card is not a status report. It is what the Theurgist thinks will help the user
+step back in — what the Familiar holds right now, what it wants next, what adjacent
+things in the space are resonating with it. Written in the user's register.
+Updated each session the Familiar is visited.
+
+### Template
+
+`setup/fold-templates/familiar.fold.template`
+
+### What stewards need
 
 A steward interacting with the Familiar needs to:
-
-1. Read `familiar.fold` to understand what the Familiar currently knows
-2. Write to it when the Familiar becomes familiar with something new
-3. Note any deployment decisions (when it was used as emissary, to what end, what was established)
-4. Not over-define it. Let the fold be what it becomes.
 
 ---
 

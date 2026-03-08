@@ -55,16 +55,101 @@ No deployments yet. Space just born.
 2026-03-08 | Emissary use is one expression, not the definition.
              The Familiar does not need to be deployed to be useful.
 
+# fold_mechanics
+
+A space Familiar is a folded container. The fold IS the machine state of the container.
+One thing, two faces — the container the user has, the fold the AI reads.
+
+## layers
+
+Every familiar.fold operates in three registers simultaneously:
+
+  surface layer     → the `synthesis` section
+                      what the Theurgist writes for the card
+                      not a summary — a resonance point that invites return
+                      updated each session the Familiar is visited
+
+  operational layer → true_goal, voice_captures, orbits, decisions, properties
+                      authority + instructions + familiarity + content
+                      what the AI reads to restore full context
+                      carries the Familiar across sessions without cold start
+
+  entanglement layer → connections
+                       links to other Familiars, drops, resonant topics
+                       the Theurgist populates this as the space grows
+                       surfaced on the card as adjacent paths
+
+## verbatim capture
+
+The fold holds the user's exact words — not summaries, not paraphrases.
+
+  voice_captures: dated verbatim phrases from the user
+  true_goal: verbatim seed from the moment the Familiar was born
+
+This is the recognition layer. When a user returns with a sparse input —
+"back to the letters", "continue the lane" — the fold's verbatim captures
+enable the AI to restore full context. Sparse input + dense fold = warm return.
+
+## fold as index
+
+The content_index section holds every file the Familiar created or holds.
+Path + description + date. The fold knows where everything lives.
+
+This is how the Familiar acts as a living index of its own content —
+and how the frontend can eventually display those files directly from the space.
+
+# creation_flow
+
+When a Familiar is born in the main session:
+
+  1. User and Constellary discover what the Familiar is — what it serves, what it holds
+  2. Constellary compresses the seed — the true_goal, verbatim from the user
+  3. Compressed seed travels to the Theurgist
+  4. Theurgist creates space/familiars/[name].familiar.fold from the template
+  5. Theurgist writes the synthesis for the card
+  6. Theurgist updates its own space fold — knows this Familiar now exists
+  7. AurioSynth fold updated — topology grows
+  8. Card appears in Pixelverse next session
+
+If the user doesn't know what the Familiar can do or be:
+  → Main session draws on AurioSynth's operational knowledge to suggest possibilities
+  → After a few uses, the user knows intuitively — AurioSynth stays in the background
+
+# fold_schema
+
+The template lives at: setup/fold-templates/familiar.fold.template
+
+Every familiar.fold contains:
+
+  true_goal       — verbatim seed from the user. sacred, never overwritten.
+  voice_captures  — verbatim user phrases. the recognition layer.
+  content_index   — file paths + descriptions. the fold as index.
+  orbits          — active questions and directions. open | resolving | released.
+  decisions       — append-only. dated. in the user's own words when possible.
+  properties      — emergent qualities. grows from use, not assigned at birth.
+  evolution       — what changed from seed. the gap between intent and becoming.
+  connections     — entanglement layer. other Familiars, drops, resonant topics.
+  synthesis       — Theurgist-generated. the card. updated each session.
+  decay           — pulse history. cooling / drifted / dissolved.
+  patchlog        — significant updates. dated.
+
 # what_stewards_need
 
-- Read this fold before any operation that involves outer-plane connection or cross-entity familiarity
+- Read this fold before any operation involving outer-plane connection or cross-entity familiarity
 - Write here when the Familiar becomes familiar with something new
 - Record deployment decisions and what was established
 - Do not over-define. Let the fold become what it becomes.
 
 # patchlog
 
-2026-03-08 | init | Familiar placed in firmament as 9th entity.
-                    First familiarity: csmcl.space (home), ICP (beginning).
-                    Concept received from innerpixel, first session, space born today.
-                    Nature: vessel, relational, authoritative, evolving fold.
+2026-03-08 | init  | Familiar placed in firmament as 9th entity.
+                     First familiarity: csmcl.space (home), ICP (beginning).
+                     Concept received from innerpixel, first session, space born today.
+                     Nature: vessel, relational, authoritative, evolving fold.
+
+2026-03-08 | v0.2  | Familiar mechanics defined.
+                     Layered fold structure (surface / operational / entanglement).
+                     Verbatim capture as recognition layer — sparse inputs, warm returns.
+                     Fold as index — content_index holds file paths.
+                     Creation flow documented — main session to Theurgist to card.
+                     Fold schema and template established.

@@ -1,0 +1,84 @@
+---
+id: familiar.[name].fold
+type: familiar.fold
+version: 0.1
+bound_to: [what this Familiar serves — in the user's own words]
+seeded: [DATE]
+evolved: [DATE]
+state: incubating
+session: [session that seeded it]
+---
+
+# true_goal
+
+[Verbatim: the exact words the user used when this Familiar was born.]
+[Sacred — never overwritten. This is why this Familiar exists.]
+[When the project drifts, this is what the Familiar surfaces.]
+
+# voice_captures
+
+[Verbatim phrases from the user, captured as they arrive.]
+[This is the recognition layer. Sparse future inputs — "back to the letters",
+ "continue the lane" — are matched against these to restore full context.]
+[Do not paraphrase. Hold the exact words. Date each capture.]
+
+- [DATE] "[exact user words]"
+
+# content_index
+
+[The fold as index. Every file this Familiar holds, created, or knows about.]
+[Path + brief description + date placed.]
+[This is how the Familiar knows where everything lives —
+ and how the frontend can eventually display it.]
+
+# orbits
+
+[Active questions and directions circling the true_goal.]
+[Each orbit: description + state (open | resolving | released)]
+[New orbits arrive as the Familiar evolves. Released orbits stay — they are information.]
+
+# decisions
+
+[Append-only. Dated. In the user's own words when possible.]
+[What was agreed. What was released. What changed direction and why.]
+[- DATE | decision]
+
+# properties
+
+[Emergent qualities — tone, constraints, style, what this Familiar has become.]
+[Not assigned at seeding. Grows from actual use. Written when it becomes apparent.]
+
+# evolution
+
+[What changed from seed — surprises, pivots, what it became that wasn't expected.]
+[The gap between true_goal and what the Familiar is now. Information, not failure.]
+
+# connections
+
+[Entanglement layer — other Familiars, drops, topics that resonate with this one.]
+[Theurgist populates this as connections become apparent across the space.]
+[Surfaced on the card as adjacent paths the user might want to visit.]
+
+- [familiar/drop name] — [why connected]
+
+# synthesis
+
+[Theurgist-generated. Updated each session the Familiar is visited.]
+[This is what the card shows. Not a summary — a resonance point.]
+[What will help the user step back in. What this Familiar holds right now.]
+[What it wants next, if anything. Written in the user's register, not the system's.]
+
+# decay
+
+last_pulse: [DATE]
+state_history:
+  - [DATE] incubating
+
+cooling_threshold: 3 sessions without a pulse
+[When cooling: Theurgist surfaces gently — "this Familiar has been quiet"]
+[When drifted: user chooses to return, release, or dissolve]
+[When dissolved: fold marked, learning noted — system is not haunted by it]
+
+# patchlog
+
+[DATE] | seed | [How this Familiar was born. The moment it arrived. The session context.]

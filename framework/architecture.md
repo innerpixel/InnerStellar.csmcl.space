@@ -33,12 +33,69 @@ innerstellar/firmament/folds/     — entity folds (system, always present)
   oracle.fold                     — CSMCL.Space connection state
   companion.fold                  — bond state
   priment.fold                    — crystallization and nexus state
+  familiar.fold                   — operational knowledge of the Familiar concept
 
 innerstellar/space/space/         — personal folds (traveler layer)
   theurgist.fold                  — drops, orbits, traveler flux
+  auriosynth.fold                 — space topology
   drops/                          — the user's drops
   folds/                          — activity folds per project or theme
+  familiars/                      — space Familiars (folded containers)
+    [name].familiar.fold          — one per Familiar, held by the Theurgist
 ```
+
+---
+
+## Familiars
+
+A Familiar is a **folded container** — a living fold that holds a project, a lane,
+a bond, or any sustained presence the user wants to keep in the space.
+
+Named for what they serve: *A Familiar to memory lanes. A Familiar to first contact.*
+
+The fold IS the machine state of the container. One thing, two faces:
+
+```
+The container face   → what the user has (card in Pixelverse, files, content)
+The fold face        → what the AI reads (authority, context, history, index)
+```
+
+### Fold layers
+
+```
+surface layer      → synthesis — Theurgist-generated card, updated each session
+operational layer  → true_goal / voice_captures / orbits / decisions / properties
+entanglement layer → connections — links to other Familiars and drops in the space
+```
+
+### Verbatim capture
+
+The fold holds the user's exact words — not paraphrases. The `true_goal` is the
+verbatim seed from when the Familiar was born (sacred, never overwritten). The
+`voice_captures` section accumulates verbatim user phrases across sessions.
+
+This is the **recognition layer**: sparse return inputs matched against rich
+verbatim context = full restoration without re-explaining.
+
+### Fold as index
+
+`content_index` holds every file the Familiar created or holds (path + description + date).
+The Familiar always knows where its content lives. This enables future frontend display.
+
+### Lifecycle
+
+```
+seeded       → Theurgist creates the fold from the main session seed
+incubating   → fold exists, not yet visited
+active       → being worked, fold evolving
+cooling      → no pulse in 3+ sessions — Theurgist surfaces gently
+drifted      → user releases it — archived, fold preserved
+dissolved    → user decides it never needed to exist — learning noted
+```
+
+### Template
+
+`setup/fold-templates/familiar.fold.template`
 
 **Fold format:**
 ```yaml
