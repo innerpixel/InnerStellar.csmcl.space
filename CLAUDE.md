@@ -13,20 +13,20 @@ delivering a **landing report**. Do this automatically — do not wait to be ask
 
 ### 1. Locate the space
 
-Default path: `./space` (inside the framework folder — gitignored from this repo)
-If not found there, check for an `INNERSTELLAR_SPACE` environment variable.
+Default path: `./firmament` (at repo root — gitignored, traveler's own repo)
+If not found there, check for an `INNERSTELLAR_FIRMAMENT` environment variable.
 If still not found, the framework is uninitialized. Deliver a brief landing report
-from the firmament alone, then offer to initialize via `setup/init.md`.
+from the operations folds alone, then offer to initialize via `framework/setup/init.md`.
 
 ### 2. Read these files (in order)
 
-If space exists:
-- `space/space/theurgist.fold` — traveler flux, drops, orbits, open questions
-- `space/space/familiars/` — scan for Familiar folds, note their state and last pulse
-- `space/space/folds/` — scan for any activity folds, note their status and energy
+If firmament (personal space) exists:
+- `firmament/space/theurgist.fold` — traveler flux, drops, orbits, open questions
+- `firmament/space/familiars/` — scan for Familiar folds, note their state and last pulse
+- `firmament/space/folds/` — scan for any activity folds, note their status and energy
 
-Always available (firmament — no space needed):
-- `firmament/folds/` — entity machine state when deep entity context is needed
+Always available (operations — no personal space needed):
+- `framework/operations/folds/` — entity machine state when deep entity context is needed
 
 ### 3. Deliver the landing report
 
@@ -63,7 +63,7 @@ The fold IS the AI's point of truth. The user reads what the Theurgist compiled 
 
 **Drops** — the user-facing package. Two parts: frontmatter (metadata) + body (synthesis
 the Theurgist compiled). This is what the Pixelverse renders. Written in the user's register.
-Placed in `space/drops/`, dated. The patchlog at the bottom is the re-entry feed —
+Placed in `firmament/space/drops/`, dated. The patchlog at the bottom is the re-entry feed —
 one commit-style line per session that touched this drop.
 
 **Communication Fold** — the handoff from Constellary to Theurgist. When the main session
@@ -75,15 +75,15 @@ packet and passes it to the Theurgist. Not a persisted file — session-scoped, 
 The Familiar can be **the nut** (container — holds a project, a lane, a body of work)
 or **the squirrel** (carrier — deploys, represents, goes out into the world).
 Same nature, different expression. The fold IS the machine state of the container.
-Held by the Theurgist in `space/familiars/`. See: `firmament/folds/familiar.fold`.
+Held by the Theurgist in `firmament/space/familiars/`. See: `framework/operations/folds/familiar.fold`.
 
 **Orbits** — ideas circling a drop. Some land (get built). Some keep orbiting. Some drift away.
 
 **Derived Drops** — a drop born inside a session from another drop. The parent knows.
 May have a `deploy_to` field — Stewards take it out into the world.
 
-**Firmament** — the 9 system entities. Always present in the repo.
-`firmament/` is the floor — even without a personal space, the Pixelverse shows them.
+**Operations** — the 9 system entities and framework infrastructure. Always present in the repo.
+`framework/operations/folds/` is the point of truth — entity machine state, always available.
 
 **The 9 entities:**
 - `Wisdom Star` ✦ — center, point of contact, where attention and AI meet
@@ -125,28 +125,46 @@ May have a `deploy_to` field — Stewards take it out into the world.
 ## Space Structure
 
 ```
-innerstellar/                     ← framework (public git repo)
-  framework/                      — operational knowledge: overview, architecture, prd
-  firmament/
-    entities/                     — human-readable entity definitions
-    folds/                        — entity machine state (AI reads, frontend never sees)
-  apps/pixelverse/                — the Svelte component workspace (drop cards, panels)
-  setup/                          — init guide + fold templates
-    fold-templates/
-      familiar.fold.template      — Familiar fold schema
-      default.drop.template       — arrival drop: showcase + Theurgist init template
-  space/                          ← personal space (gitignored — own git repo)
+claude.innerstellar/              ← framework (public git repo)
+  framework/
+    operations/                   — entity machine state (AI reads, frontend never sees)
+      entities/                   — human-readable entity definitions
+      folds/                      — entity fold specs (POINT OF TRUTH)
+      stewards/                   — stewards catalog + queue
+      concepts/                   — conceptual documentation
+      blueprints/                 — system blueprints
+      familiar_templates/         — machine-readable AI templates
+    apps/
+      pixelverse/                 — the Svelte component workspace (drop cards, panels)
+    setup/                        — init guide + fold templates + showcase seed
+      init.md                     — initialization guide
+      fold-templates/             — fold templates
+      def_firmament_showcase/     — seed content (copied on init)
+        space/
+          drops/                  — showcase drops
+          familiars/              — framework Familiar folds
+          folds/                  — empty at seed
+        codex/                    — seeded codex files
+    codex/                        — framework's own record (for the traveler)
+    architecture.md
+    overview.md
+    prd.md
+
+  firmament/                      ← personal space (gitignored — traveler's own repo)
     space/
       theurgist.fold              — space machine state (read every session)
       auriosynth.fold             — space topology (read every session)
-      drops/                      — the user's drops (frontmatter + compiled synthesis)
+      drops/                      — the traveler's drops (frontmatter + compiled synthesis)
       folds/                      — activity folds per project or theme (AI only)
       familiars/                  — folded containers, one per Familiar
         [name].familiar.fold      — held by Theurgist, layered fold schema
+    codex/
+      drops_and_orbits.md         — orbiting ideas not yet dropped
+      session.log.md              — append-only session history
 ```
 
-The `space/` directory:
-- Lives inside the framework folder but is excluded from the framework git repo
+The `firmament/` directory:
+- Lives at the repo root but is excluded from the framework git repo
 - Is its own git repository, initialized with the traveler's CSMCL.Space identity
 - Will eventually sync to `handle@csmcl.space` when the account is connected
 
@@ -163,12 +181,12 @@ What the Theurgist does when invoked:
 2. Updates the relevant fold (AI truth — dense, carried forward)
 3. Compiles the drop (user anchor — distillation of what happened, in the user's register)
 4. If a derived drop was born: creates it, links it to the parent, updates parent's patchlog
-5. Updates `space/theurgist.fold` — the Theurgist's own space state
-6. Updates `space/auriosynth.fold` — topology if something structural changed
+5. Updates `firmament/space/theurgist.fold` — the Theurgist's own space state
+6. Updates `firmament/space/auriosynth.fold` — topology if something structural changed
 
 **Patchlog format** (one line per session, commit-style):
 ```
-- YYYY-MM-DD — [what happened: what landed, what moved, what was made]
+- YYYY-MM-DD | [what happened: what landed, what moved, what was made]
 ```
 
 ---
@@ -194,8 +212,8 @@ compress it. The seed is:
 
 ### 3. Create the fold
 
-Copy `setup/fold-templates/familiar.fold.template`
-→ `space/familiars/[name].familiar.fold`
+Copy `framework/setup/fold-templates/familiar.fold.template`
+→ `firmament/space/familiars/[name].familiar.fold`
 
 Fill in:
 - `bound_to` — in the user's own words
@@ -206,11 +224,11 @@ Fill in:
 
 ### 4. Update the Theurgist fold
 
-Add this Familiar to `space/space/theurgist.fold` — the Theurgist now holds it.
+Add this Familiar to `firmament/space/theurgist.fold` — the Theurgist now holds it.
 
 ### 5. Update AurioSynth fold
 
-Add the Familiar to the topology in `space/space/auriosynth.fold`.
+Add the Familiar to the topology in `firmament/space/auriosynth.fold`.
 
 ### 6. During the Familiar's life
 
@@ -234,9 +252,9 @@ Don't rush to fold — receive first.
 
 ## Initializing a New Space
 
-If no space exists, run the setup guide: `setup/init.md`
-This walks through creating the structure, seeding the folds, and placing the first drop
-(copied from `setup/fold-templates/default.drop.template`).
+If no personal firmament exists, run the setup guide: `framework/setup/init.md`
+This copies `framework/setup/def_firmament_showcase/` to `firmament/`, sets traveler
+identity, and creates the theurgist + auriosynth folds from templates.
 
-The firmament is always present — the Pixelverse shows it before init.
-Init creates the personal layer.
+The operations folds and showcase drops are always present — the Pixelverse shows them before init.
+Init creates the personal layer at `firmament/`.

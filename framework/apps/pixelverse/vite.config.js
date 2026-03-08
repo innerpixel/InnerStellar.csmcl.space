@@ -4,8 +4,8 @@ import fs from 'fs'
 import path from 'path'
 
 // ── Space + Firmament reader plugin ───────────────────────────────────────
-// /api/firmament — reads innerstellar/firmament/folds/ (framework, always present)
-// /api/space     — reads innerstellar/space/ (personal, traveler content — gitignored)
+// /api/firmament — reads framework/operations/folds/ (entity folds, always present)
+// /api/space     — reads firmament/ (personal, gitignored) or def_firmament_showcase/ (seed)
 // Parses YAML front matter including nested objects and arrays (drop.fold format).
 
 function parseYamlFrontMatter(content) {
@@ -185,12 +185,17 @@ function readSpaceData(spaceRoot) {
 }
 
 function spaceReaderPlugin() {
-  // INNERSTELLAR_SPACE env var overrides — set it to point anywhere.
-  // Default: innerstellar/space/ (inside framework folder, gitignored).
-  const spaceRoot     = process.env.INNERSTELLAR_SPACE
-    ?? path.resolve(__dirname, '../../space')
-  // Firmament lives in the framework repo itself — always present.
-  const firmamentRoot = path.resolve(__dirname, '../../firmament')
+  // Personal firmament: gitignored at repo root, traveler's own repo after init.
+  // Falls back to def_firmament_showcase/ (committed seed) before init.
+  const personalFirmament = process.env.INNERSTELLAR_FIRMAMENT
+    ?? path.resolve(__dirname, '../../../firmament')
+  const defaultShowcase   = path.resolve(__dirname, '../../setup/def_firmament_showcase')
+  const spaceRoot = fs.existsSync(path.join(personalFirmament, 'space', 'drops'))
+    ? personalFirmament
+    : defaultShowcase
+
+  // Operations: framework entity folds — always present in repo.
+  const firmamentRoot = path.resolve(__dirname, '../../operations')
 
   return {
     name: 'innerstellar-space-reader',

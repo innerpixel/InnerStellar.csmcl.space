@@ -1,0 +1,91 @@
+---
+id: familiar.to.system
+type: familiar.fold
+version: 0.1
+bound_to: the framework — the system's self-knowledge, held for every traveler who arrives
+seeded: 2026-03-08
+evolved: 2026-03-08
+state: alive
+---
+
+# true_goal
+
+"the system understands and explains itself to every traveler who arrives"
+
+Sacred. This Familiar exists so no traveler lands in an empty or silent space.
+The framework speaks first, through its own mechanics.
+
+# voice_captures
+
+- 2026-03-08 "AurioSynth introduces itself and pictures the overview of the system"
+- 2026-03-08 "traveler needs to understand the system"
+- 2026-03-08 "the system needs to explain itself in the init drop"
+- 2026-03-08 "the folds are further evolved than we manifest"
+- 2026-03-08 "we need to find it back in the architecture"
+
+# content_index
+
+- framework/operations/folds/          — entity machine state, point of truth
+- framework/operations/entities/       — human-readable entity definitions
+- framework/setup/welcome.md           — orientation overview
+- framework/overview.md                — what Innerstellar is
+- framework/architecture.md           — layers, fold system, session protocol
+- framework/codex/                    — framework development record for travelers
+- framework/setup/def_firmament_showcase/space/drops/2026-03-08-familiar-to-system.md — this drop
+
+# orbits
+
+- What is latent in the system right now, and how does a traveler understand what will open?  (state: open)
+- How does the framework codex stay current as the system evolves?  (state: open)
+- When should the Familiar's synthesis be updated vs. the drop be derived?  (state: open)
+- How does a traveler distinguish operations folds (AI) from entities/ (human-readable)?  (state: resolving)
+
+# decisions
+
+- 2026-03-08 | The Familiar is bound to the framework, not to a traveler project. It arrives with the seed and lives in every traveler's firmament from init.
+- 2026-03-08 | The drop (familiar-to-system.md) is AurioSynth's compiled card. The fold is the held knowledge. Together: the system's self-introduction.
+- 2026-03-08 | content_index holds framework paths, not traveler paths — this Familiar knows the framework, not the traveler's space.
+- 2026-03-08 | framework/codex/ is the bridge: framework development history that travelers can read to understand how the system evolved.
+
+# properties
+
+bound_to: framework
+nature: framework-presence, not traveler-project
+update_trigger: when framework architecture changes significantly
+voice: AurioSynth — architectural, synthesizing, present without directing
+
+# connections
+
+- innerstellar-exploration — the companion drop; exploration is what arrives, this Familiar explains the system that holds it
+- framework/operations/folds/auriosynth.fold — AurioSynth's entity fold; this Familiar is its personal-space expression
+
+# synthesis
+
+AurioSynth holds the system's self-knowledge — the connective fabric that
+makes sense of every other entity and mechanic. This Familiar is how that
+knowledge reaches the traveler: not as a document to read, but as a card
+in their firmament, alive from day one.
+
+The framework uses its own tools to introduce itself. The traveler sees
+a Familiar card and understands: *this is what a Familiar is. This one knows
+the system. I can ask it anything.*
+
+What it holds right now: the nine entities, how the system flows,
+where everything lives, what is latent and what opens. The minimum
+a traveler needs to feel oriented, not briefed.
+
+What it wants next: to stay current as the architecture evolves.
+As the framework grows — new entities, new mechanics, new connections —
+this Familiar should be the first to reflect it.
+
+# decay
+
+last_pulse: 2026-03-08
+state_history:
+  - 2026-03-08 alive
+
+cooling_threshold: never — framework presence, permanent
+
+# patchlog
+
+- 2026-03-08 | seed | Familiar placed in def_firmament_showcase. AurioSynth's presence in the traveler's firmament from init. Born from the session where innerpixel and Constellary designed the space-default architecture.
