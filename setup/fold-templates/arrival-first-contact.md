@@ -34,8 +34,8 @@ Cross-plane. Creative spark. The entity that drops things into your space on you
 Knows where everything lives and how it connects. Writes the system record.
 → `firmament/entities/auriosynth.md`
 
-**⧖ Theurgist** — Holds your drops. Your arc. The story of what arrived and why.
-Keeps space.js current so the Pixelverse reflects reality.
+**⧖ Theurgist** — IS the space machine state. Holds your drops, your arc, everything alive.
+Two outputs, one act: fold (AI truth) + compiled drop (what you see).
 The space is never cold because the Theurgist carries the thread.
 → `firmament/entities/theurgist.md`
 

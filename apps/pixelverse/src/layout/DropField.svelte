@@ -23,14 +23,12 @@
     })
   )
 
-  // System folds (keepers, architecture) — shown separately at bottom
-  const folds    = $derived((space.folds ?? []).filter(f => f.type === 'system'))
   const entities = $derived(space.entities ?? [])
 </script>
 
 <div class="drop-field">
 
-  <!-- Drops section -->
+  <!-- Drops section — Theurgist-compiled, user-facing -->
   {#if sortedDrops.length}
     <div class="field-section">
       <div class="section-header">
@@ -45,24 +43,9 @@
     </div>
   {/if}
 
-  <!-- System folds section -->
-  {#if folds.length}
-    <div class="field-section folds-section">
-      <div class="section-header">
-        <span class="section-label">folds</span>
-        <span class="section-count">{folds.length}</span>
-      </div>
-      <div class="drop-grid">
-        {#each folds as fold (fold.id)}
-          <DropCard drop={fold} orbits={[]} />
-        {/each}
-      </div>
-    </div>
-  {/if}
-
-  <!-- Firmament section — the 8 entities, always present -->
+  <!-- Firmament — the 9 entities, always present -->
   {#if entities.length}
-    <div class="field-section folds-section">
+    <div class="field-section firmament-section">
       <div class="section-header">
         <span class="section-label">firmament</span>
         <span class="section-count">{entities.length}</span>
@@ -75,10 +58,10 @@
     </div>
   {/if}
 
-  {#if !sortedDrops.length && !folds.length && !entities.length}
+  {#if !sortedDrops.length && !entities.length}
     <div class="field-empty">
       <div class="empty-glyph">∴</div>
-      <div class="empty-text">no drops yet</div>
+      <div class="empty-text">no drops yet · firmament loading</div>
     </div>
   {/if}
 
@@ -93,7 +76,7 @@
   }
 
   .field-section { margin-bottom: 2.2rem; }
-  .folds-section { margin-top: 0.5rem; }
+  .firmament-section { margin-top: 0.5rem; }
 
   .section-header {
     display: flex; align-items: center; gap: 0.55rem;

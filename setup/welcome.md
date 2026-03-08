@@ -54,7 +54,7 @@ setup/
   fold-templates/ — templates for seeding new folds
 
 apps/pixelverse/ — the Svelte visual layer
-  src/data/space.js — space data seed (Theurgist updates this)
+  reads firmament/ (always) + space/drops/ (after init)
 
 space/           — your personal space (gitignored)
   space/

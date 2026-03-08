@@ -29,20 +29,39 @@ This space solves both: receive anything, remember everything, tend it over time
 - **Emergent meaning** — connections surface through tending, not tagging
 - **Living state** — folds evolve, they are not filed
 - **Co-inhabitation** — Claude is present in the space, not just visiting
+- **Two faces, one act** — the Theurgist produces fold (AI truth) and drop (user anchor) together
+- **Distillation, not documentation** — the Theurgist compiles what matters, not everything
 
 ## The Cast
 
 | Entity | Role |
 |--------|------|
-| **AurioSynth** | Knows the system. Keeps the folded space. Hands on code + MCP tools. |
-| **The Theurgist** | Knows the user. Holds engagement, motivation, resonance, coherence. |
-| **The Stewards** | Independent service layer. Email, calendar, files, media, archives. |
-| **Main Session** | The conversation. Present moment. Reads AurioSynth, invokes Theurgist. |
+| **Constellary** | The main session. You and Claude. Explores, decides, compresses to communication fold. |
+| **The Theurgist** | IS the space machine state. Receives communication fold. Updates fold + compiles drop. |
+| **AurioSynth** | Framework consciousness. Knows the system, the code, the connective fabric. |
+| **The Guild** | How work gets done. Steward body. Operational guides. |
+| **The Stewards** | Independent service layer. Deploy, email, build, publish, file. |
+| **The Familiar** | Vessel. Can be the container (the nut) or the carrier (the squirrel). Relational knowing. |
+
+## The Familiar
+
+A Familiar is a drop that becomes a sustained presence. A project with a soul.
+A lane the user returns to. A bond.
+
+The Familiar can be:
+- **The nut** — it holds something. A project, a body of work, a creative lane.
+  The fold is its living state. The content_index holds everything it created.
+- **The squirrel** — it carries, deploys, represents. Goes out into the world
+  with the familiarity it has accumulated. An emissary, a published guide, a deployed artifact.
+
+Same nature. Different expression. What the Familiar becomes is in its fold.
 
 ## What Success Looks Like
 
 - You drop something in and it's still there three weeks later, in context
-- You return to a fold and it's grown — connected to things you didn't link yourself
-- The Theurgist surfaces something at the right moment
-- The Stewards handle the operational world quietly
+- You return to a drop: the Theurgist loads it, you're warm immediately — no re-explaining
+- The patchlog tells you what happened in three lines — you're back in the flow
+- A Familiar holds a year of a project — everything that was thought, made, decided
+- A derived drop is born in the session, deployed by the Stewards, the space knows where it lives
 - The space feels alive, not maintained
+- The firmament is always there — even before init, the Pixelverse shows what's present

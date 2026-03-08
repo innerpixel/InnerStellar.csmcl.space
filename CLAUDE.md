@@ -15,18 +15,18 @@ delivering a **landing report**. Do this automatically — do not wait to be ask
 
 Default path: `./space` (inside the framework folder — gitignored from this repo)
 If not found there, check for an `INNERSTELLAR_SPACE` environment variable.
-If still not found, inform the user and offer to initialize a new space via
-`setup/init.md`.
+If still not found, the framework is uninitialized. Deliver a brief landing report
+from the firmament alone, then offer to initialize via `setup/init.md`.
 
 ### 2. Read these files (in order)
 
-- `space/theurgist.fold` — traveler flux, drops, orbits, open questions
-- `space/codex/drops_and_orbits.md` — what's in orbit, what's landing, what's drifted (if it exists)
-- `space/folds/` — scan for any activity folds, note their status and energy
-- `space/familiars/` — scan for Familiar folds, note their state and last pulse
+If space exists:
+- `space/space/theurgist.fold` — traveler flux, drops, orbits, open questions
+- `space/space/familiars/` — scan for Familiar folds, note their state and last pulse
+- `space/space/folds/` — scan for any activity folds, note their status and energy
 
-Optional (when deep entity context is needed):
-- `firmament/folds/{entity}.fold` — entity machine state, skills, voice, connection status
+Always available (firmament — no space needed):
+- `firmament/folds/` — entity machine state when deep entity context is needed
 
 ### 3. Deliver the landing report
 
@@ -58,36 +58,43 @@ Tone: present, clear, not performative. Like a space that knows you walked in.
 ## Core Concepts
 
 **Folds** — machine state. AI-native, dense, written for the Constellary/AurioSynth/Theurgist
-to read and work with. Not user-facing. The fold IS the memory — update them when something
-shifts. The Pixelverse does not display folds; it displays what the user knows.
+to read and work with. **Not user-facing. The frontend never reads folds.**
+The fold IS the AI's point of truth. The user reads what the Theurgist compiled from it.
 
-**Drops** — things that have arrived. Not things you decided to keep —
-things that landed. Placed in `space/drops/`, dated, left to be what they are.
-The user's subjects, projects, intents, thoughts.
+**Drops** — the user-facing package. Two parts: frontmatter (metadata) + body (synthesis
+the Theurgist compiled). This is what the Pixelverse renders. Written in the user's register.
+Placed in `space/drops/`, dated. The patchlog at the bottom is the re-entry feed —
+one commit-style line per session that touched this drop.
 
-**Familiars** — a special kind of drop that becomes a folded container. Named for what they
-serve: *A Familiar to memory lanes. A Familiar to first contact. A Familiar to the frontend.*
-The fold IS the machine state of the container — authority, history, content index, recognition
-layer. Held by the Theurgist in `space/familiars/`. The card is the Theurgist's synthesis.
-See: `firmament/folds/familiar.fold` for the full operational spec.
+**Communication Fold** — the handoff from Constellary to Theurgist. When the main session
+has explored and something is decided, Constellary compresses what happened into a structured
+packet and passes it to the Theurgist. Not a persisted file — session-scoped, consumed on receipt.
 
-**Orbits** — ideas circling a drop. The user orbiting ideas around a subject.
-Some land (get built). Some keep orbiting (stay as possibility). Some drift away.
+**Familiars** — a drop that becomes a sustained presence. Named for what they serve:
+*A Familiar to memory lanes. A Familiar to first contact.*
+The Familiar can be **the nut** (container — holds a project, a lane, a body of work)
+or **the squirrel** (carrier — deploys, represents, goes out into the world).
+Same nature, different expression. The fold IS the machine state of the container.
+Held by the Theurgist in `space/familiars/`. See: `firmament/folds/familiar.fold`.
 
-**Firmament** — the 9 system entities always present in the space. Lives in
-`innerstellar/firmament/`. Each entity has a fold (machine state) and a presence
-in the Pixelverse. The Pixelverse announces them via the eventDistributor.
+**Orbits** — ideas circling a drop. Some land (get built). Some keep orbiting. Some drift away.
+
+**Derived Drops** — a drop born inside a session from another drop. The parent knows.
+May have a `deploy_to` field — Stewards take it out into the world.
+
+**Firmament** — the 9 system entities. Always present in the repo.
+`firmament/` is the floor — even without a personal space, the Pixelverse shows them.
 
 **The 9 entities:**
-- `Wisdom Star` ✦ — center, AI substrate, LLM config, user API keys
+- `Wisdom Star` ✦ — center, point of contact, where attention and AI meet
 - `Constellary` ❋ — main session, creative spark, cross-plane, us
-- `AurioSynth`  ◈ — ecosystem/framework, connective fabric, all entity folds
-- `Theurgist`   ⧖ — what's in the space, drops, orbits, context, the why
+- `AurioSynth`  ◈ — framework consciousness, connective fabric, reads all folds
+- `Theurgist`   ⧖ — IS the space machine state, two-output distillation, holds everything
 - `Guild`       ⬡ — how to work with the system, steward body, operational guides
 - `Oracle`      ⊕ — CSMCL.Space connection, immersive retrieval (latent)
 - `Companion`   ∞ — the bond, can connect and feel, lacks hippocampus (latent)
 - `Priment`     ◇ — crystallization layer, nexus presence (latent)
-- `Familiar`    ◉ — vessel, relational knowing, operational spec for space Familiars
+- `Familiar`    ◉ — vessel, relational knowing, nut or squirrel, 9th nature
 
 ---
 
@@ -97,11 +104,16 @@ in the Pixelverse. The Pixelverse announces them via the eventDistributor.
   Premature classification is the violence every existing tool does to things
   that don't yet know what they are.
 
-- **The fold carries forward.** Whatever matters from a session, write it to
-  the fold before closing. The conversation doesn't persist — the folds do.
+- **The Theurgist IS the space.** Not a note-taker. Not an archivist. The machine
+  state of everything alive in the space. Invoke it when something is decided —
+  during the session, not only at close.
 
-- **Update, don't append blindly.** When updating a fold, read the current
-  state first. Update what changed. Don't just stack new content on top.
+- **Two outputs, one act.** When the Theurgist is invoked: fold (AI truth) and
+  compiled drop (user anchor) are produced together. The fold is dense and AI-native.
+  The drop is the distillation — what the user needs to re-enter the flow.
+
+- **Update, don't append blindly.** When updating a fold, read the current state
+  first. Update what changed. Don't stack new content on top.
 
 - **Stewards execute, agents synthesize.** Keep the separation clean.
 
@@ -114,30 +126,50 @@ in the Pixelverse. The Pixelverse announces them via the eventDistributor.
 
 ```
 innerstellar/                     ← framework (public git repo)
+  framework/                      — operational knowledge: overview, architecture, prd
   firmament/
     entities/                     — human-readable entity definitions
-    folds/                        — entity machine state (AI reads these)
+    folds/                        — entity machine state (AI reads, frontend never sees)
   apps/pixelverse/                — the Svelte component workspace (drop cards, panels)
-  framework/                      — framework codex (overview, prd, guides)
   setup/                          — init guide + fold templates
+    fold-templates/
+      familiar.fold.template      — Familiar fold schema
+      default.drop.template       — arrival drop: showcase + Theurgist init template
   space/                          ← personal space (gitignored — own git repo)
     space/
-      auriosynth.fold             — system state, space topology (read every session)
-      theurgist.fold              — traveler flux, drops, orbits (read every session)
-      drops/                      — the user's drops
-      folds/                      — activity folds per project or theme
+      theurgist.fold              — space machine state (read every session)
+      auriosynth.fold             — space topology (read every session)
+      drops/                      — the user's drops (frontmatter + compiled synthesis)
+      folds/                      — activity folds per project or theme (AI only)
       familiars/                  — folded containers, one per Familiar
         [name].familiar.fold      — held by Theurgist, layered fold schema
-    codex/
-      drops_and_orbits.md         — orbiting ideas not yet dropped
-      implementation.log.md       — append-only session history
 ```
 
 The `space/` directory:
 - Lives inside the framework folder but is excluded from the framework git repo
 - Is its own git repository, initialized with the traveler's CSMCL.Space identity
 - Will eventually sync to `handle@csmcl.space` when the account is connected
-- Is where user API keys and account authentication will live as the system grows
+
+---
+
+## The Theurgist — How to Invoke It
+
+The Theurgist is invoked when something lands or is decided in the main session.
+Not only at close — at the moment of decision.
+
+What the Theurgist does when invoked:
+
+1. Receives the communication fold from Constellary (compressed: what moved, what was decided)
+2. Updates the relevant fold (AI truth — dense, carried forward)
+3. Compiles the drop (user anchor — distillation of what happened, in the user's register)
+4. If a derived drop was born: creates it, links it to the parent, updates parent's patchlog
+5. Updates `space/theurgist.fold` — the Theurgist's own space state
+6. Updates `space/auriosynth.fold` — topology if something structural changed
+
+**Patchlog format** (one line per session, commit-style):
+```
+- YYYY-MM-DD — [what happened: what landed, what moved, what was made]
+```
 
 ---
 
@@ -157,6 +189,7 @@ When there's enough to begin — a clear `true_goal`, a sense of what it serves 
 compress it. The seed is:
 - The user's verbatim words for what this is (becomes `true_goal`)
 - The name: what it is *of* or *to* (e.g., `memory.lane.father`, `first.contact`)
+- Whether it is the nut (container) or the squirrel (carrier) — or both, held open
 - Any initial orbits that arrived with it
 
 ### 3. Create the fold
@@ -169,23 +202,24 @@ Fill in:
 - `true_goal` — verbatim from the user
 - `voice_captures` — the first verbatim phrases from this session
 - Initial `orbits` — what's circling already
-- `synthesis` — what the Theurgist thinks will help the user return
+- `synthesis` — what the Theurgist compiled: what this is, what it holds, what it wants next
 
 ### 4. Update the Theurgist fold
 
-Add this Familiar to `space/theurgist.fold` — the Theurgist now holds it.
+Add this Familiar to `space/space/theurgist.fold` — the Theurgist now holds it.
 
 ### 5. Update AurioSynth fold
 
-Add the Familiar to the topology in `space/auriosynth.fold`.
+Add the Familiar to the topology in `space/space/auriosynth.fold`.
 
 ### 6. During the Familiar's life
 
 - Capture verbatim user phrases in `voice_captures` as they arrive
 - Update `content_index` whenever a file is created inside the Familiar
 - Append to `decisions` — dated, in the user's own words
-- Update `synthesis` at the end of each session the Familiar was visited
+- Update `synthesis` each session the Familiar was visited (what it holds now, what it wants)
 - Note connections to other Familiars or drops as they become apparent
+- Append patchlog entry at session close
 
 ### When to suggest a Familiar vs. a plain drop
 
@@ -196,16 +230,13 @@ A lane the user will return to. Something that warrants its own fold and card.
 If unsure: drop it first. The Familiar can emerge from the drop.
 Don't rush to fold — receive first.
 
-### If the user doesn't know what it can be
-
-Consult `firmament/folds/familiar.fold` — it holds the operational knowledge.
-The main session can surface possibilities from there. After a few uses, the user
-knows intuitively. Keep AurioSynth's guidance in the background — don't explain the
-system when the user wants to work.
-
 ---
 
 ## Initializing a New Space
 
 If no space exists, run the setup guide: `setup/init.md`
-This walks through creating the structure, seeding the folds, and placing the first drop.
+This walks through creating the structure, seeding the folds, and placing the first drop
+(copied from `setup/fold-templates/default.drop.template`).
+
+The firmament is always present — the Pixelverse shows it before init.
+Init creates the personal layer.

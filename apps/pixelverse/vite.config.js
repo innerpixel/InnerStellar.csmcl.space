@@ -129,53 +129,11 @@ function extractBodyDescription(content) {
 }
 
 function readSpaceData(spaceRoot) {
-  const folds = []
+  // Folds are AI territory — the frontend never reads them.
+  // The Theurgist compiles what the user needs into drop files.
+  // The frontend reads drops only.
 
-  // Core folds: space/*.fold
-  const coreDir = path.join(spaceRoot, 'space')
-  if (fs.existsSync(coreDir)) {
-    fs.readdirSync(coreDir)
-      .filter(f => f.endsWith('.fold'))
-      .forEach(file => {
-        const content = fs.readFileSync(path.join(coreDir, file), 'utf8')
-        const meta    = parseYamlFrontMatter(content)
-        const id      = meta.entity ?? file.replace('.fold', '')
-        folds.push({
-          id,
-          glyph:       glyphFor(id),
-          label:       id.charAt(0).toUpperCase() + id.slice(1),
-          type:        'system',
-          role:        meta.status ?? '',
-          description: '',
-          status:      meta.status ?? 'alive',
-          energy:      1.0,
-        })
-      })
-  }
-
-  // Activity folds: space/folds/*.fold
-  const foldsDir = path.join(spaceRoot, 'space', 'folds')
-  if (fs.existsSync(foldsDir)) {
-    fs.readdirSync(foldsDir)
-      .filter(f => f.endsWith('.fold'))
-      .forEach(file => {
-        const content = fs.readFileSync(path.join(foldsDir, file), 'utf8')
-        const meta    = parseYamlFrontMatter(content)
-        const id      = meta.entity ?? file.replace('.fold', '')
-        folds.push({
-          id,
-          glyph:       glyphFor(id),
-          label:       id.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
-          type:        meta.type?.includes('system') ? 'system' : 'content',
-          role:        meta.type ?? '',
-          description: '',
-          status:      meta.status ?? 'seeded',
-          energy:      0.7,
-        })
-      })
-  }
-
-  // Drops: space/drops/*.md — parsed as drop.fold packets
+  // Drops: space/drops/*.md — Theurgist-compiled packages
   const dropsDir = path.join(spaceRoot, 'space', 'drops')
   const drops    = []
   const orbiting = []
@@ -223,7 +181,7 @@ function readSpaceData(spaceRoot) {
       })
   }
 
-  return { folds, drops, orbiting }
+  return { drops, orbiting }
 }
 
 function spaceReaderPlugin() {

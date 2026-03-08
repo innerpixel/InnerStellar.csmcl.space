@@ -159,17 +159,22 @@ Create `space/codex/session.log.md`:
 
 ---
 
-## Step 8 — Update space.js
+## Step 8 — Create the arrival drop
 
-Update `apps/pixelverse/src/data/space.js` to reflect the arrival drop.
+Copy `setup/fold-templates/default.drop.template`
+→ `space/space/drops/YYYY-MM-DD-arrival-first-contact.md`
 
-The arrival drop is the seed. The Pixelverse opens to the space introducing itself.
-One drop card. The 8 entities as orbits. Key concepts as orbits.
+Fill in:
+- `[DATE]` → today's date (in both the filename and the frontmatter)
+- `[HANDLE]` → traveler's chosen name/handle
 
-See: `setup/fold-templates/space.js.seed.md` for the arrival seed structure.
+This is the space's self-introduction. The Pixelverse reads it as a regular drop —
+no special handling needed. The firmament (always present) provides entity data.
+This drop provides the personal layer: what this space is, how to navigate it.
 
-(The Theurgist will keep space.js current after this — updated at session close
-as new drops arrive and Familiars are created.)
+The drop is permanent — `status: alive`, never drifts, never dissolves.
+The Theurgist will compile its synthesis section as the space grows.
+The patchlog records each session that touches it.
 
 ---
 
@@ -216,7 +221,9 @@ Note the connection status in `theurgist.fold`:
 
 - The arrival drop is the introduction — let the space speak first
 - The traveler's theurgist.fold grows from real sessions, not from setup assumptions
-- space.js is a living seed — Theurgist keeps it current, not a static file
+- The firmament is always present — Pixelverse shows entities even before init
 - The `familiars/` directory is empty at init — Familiars grow from drops over time
 - The first user drop comes naturally after the traveler has seen the space
 - Don't introduce all concepts at once — let them surface as the traveler explores
+- The Theurgist is invoked when something is decided, not only at session close
+- The default.drop.template body is the starting synthesis — update it as the space evolves

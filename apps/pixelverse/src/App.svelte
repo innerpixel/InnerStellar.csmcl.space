@@ -1,11 +1,10 @@
 <script>
   import { onMount } from 'svelte'
   import { distributeEvent } from './lib/eventDistributor.js'
-  import { space as seedSpace } from './data/space.js'
   import DropField from './layout/DropField.svelte'
   import WorkspacePanel from './components/WorkspacePanel.svelte'
 
-  let space     = $state({ drops: seedSpace.drops, orbits: seedSpace.orbits, folds: seedSpace.folds ?? [], entities: [] })
+  let space     = $state({ drops: [], orbits: [], entities: [] })
   let loading   = $state(true)
 
   // ── Nexus query (wired when CORS is configured) ────────────────────────────
@@ -45,41 +44,15 @@
       }
     } catch (_) { /* firmament not available */ }
 
-    // ── Load personal space (drops, folds, orbits) ──────────────────────────
+    // ── Load personal space (drops + orbits) ────────────────────────────────
     try {
       const res = await fetch('/api/space')
       if (res.ok) {
         const data = await res.json()
 
-        // Merge drops: API + seed-only (seed may have drops not yet in files)
-        const seedDropMap  = Object.fromEntries(seedSpace.drops.map(d => [d.id, d]))
-        const apiDropIds   = new Set((data.drops ?? []).map(d => d.id))
-        const mergedDrops  = [
-          ...(data.drops ?? []).map(d => {
-            const seed = seedDropMap[d.id] ?? {}
-            return {
-              ...d,
-              description: d.description || seed.description || '',
-              role:        d.role        || seed.role        || '',
-              glyph:       d.glyph !== '∴' ? d.glyph : (seed.glyph ?? d.glyph),
-            }
-          }),
-          // seed-only drops (not yet written as files)
-          ...seedSpace.drops.filter(d => !apiDropIds.has(d.id)),
-        ]
-
-        // Merge orbits: API entries enriched by seed, plus seed-only
-        const apiOrbitIds  = new Set((data.orbiting ?? []).map(o => o.id))
-        const seedOrbitMap = Object.fromEntries(seedSpace.orbits.map(o => [o.id, o]))
-        const mergedOrbits = [
-          ...(data.orbiting ?? []).map(o => ({ ...seedOrbitMap[o.id], ...o })),
-          ...seedSpace.orbits.filter(o => !apiOrbitIds.has(o.id)),
-        ]
-
         space = {
-          drops:    mergedDrops,
-          orbits:   mergedOrbits,
-          folds:    data.folds ?? [],
+          drops:   data.drops    ?? [],
+          orbits:  data.orbiting ?? [],
           entities,
         }
         distributeEvent({ type: 'space.state.updated', payload: space })
@@ -87,7 +60,6 @@
         space = { ...space, entities }
       }
     } catch (_) {
-      // no api — use seed data + whatever firmament loaded
       space = { ...space, entities }
     }
 
