@@ -72,7 +72,7 @@ function glyphFor(id) {
 // Reads innerstellar/firmament/folds/ — the system's entity definitions.
 // These are framework bones: always present, independent of the personal space.
 
-const ENTITY_ORDER = ['wisdom-star', 'constellary', 'auriosynth', 'theurgist', 'guild', 'oracle', 'companion', 'priment']
+const ENTITY_ORDER = ['wisdom-star', 'constellary', 'auriosynth', 'theurgist', 'guild', 'oracle', 'companion', 'priment', 'familiar']
 const CONNECTION_STATE_ENERGY = { functional: 1.0, 'cross-plane': 1.0, latent: 0.5 }
 
 function readFirmamentData(firmamentRoot) {
@@ -147,9 +147,8 @@ function readSpaceData(spaceRoot) {
         const meta    = parseYamlFrontMatter(content)
         const name    = file.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace('.md', '')
 
-        const state  = (meta.state && typeof meta.state === 'object') ? meta.state : {}
-        const status = state.status ?? 'alive'
-        const energy = ENERGY_MAP[state.energy] ?? 0.7
+        const status = meta.status ?? 'alive'
+        const energy = ENERGY_MAP[meta.energy] ?? 0.7
         const dropId = meta.id ?? name
 
         const patchlog = Array.isArray(meta.patchlog) ? meta.patchlog : []
@@ -161,7 +160,7 @@ function readSpaceData(spaceRoot) {
           drop_type:    meta.drop_type ?? 'drop.content',
           label:        meta.label ?? name.replace(/-/g, ' '),
           date:         meta.date ?? file.slice(0, 10),
-          last_touched: state.last_touched || meta.date || file.slice(0, 10),
+          last_touched: meta.last_touched || meta.date || file.slice(0, 10),
           description:  meta.description || extractBodyDescription(content),
           patchlog_last: patchlog.length ? patchlog.at(-1) : '',
           patchlog,
