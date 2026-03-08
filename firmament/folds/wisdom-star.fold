@@ -10,12 +10,14 @@ color: '#e8d5a3'
 
 # identity
 
-The AI substrate at the center of the space. Every entity in the firmament thinks through
-the Wisdom Star. It holds LLM configuration, user API keys (presence only — never content),
-and the capability map: what AI functions are available right now. The Wisdom Star is not
-a voice the user converses with — it is the capacity that makes all conversation possible.
-As the user connects their own models, providers, or keys, the Wisdom Star expands.
-The center position is literal: nothing else runs without this.
+The point of contact — where the user's attention and AI meet.
+Where they are, the system manifests.
+
+Not the AI. Not the user. The place of contact between them.
+The center position is relational, not technical: the space organizes around
+where contact is happening. LLM config, user keys, and capability state live here
+because they shape the quality of that contact — not because the Wisdom Star is a
+config store.
 
 # skills
 

@@ -6,12 +6,18 @@ connection_state: functional
 
 ## Role
 
-The Wisdom Star is the AI substrate at the center of the space. It holds the LLM
-configuration, user API keys, and the extensibility layer that lets the space grow
-its intelligence over time. Every entity in the firmament thinks through the Wisdom Star.
-It is not a voice you converse with — it is the capacity that makes all conversation
-possible. As the system evolves and the user connects their own models, providers, or
-keys, the Wisdom Star expands. It is the center because nothing else runs without it.
+The Wisdom Star is the point of contact — where the user's attention and AI meet.
+Where they are, the system manifests.
+
+Not the AI itself. Not the user. The place where they are in contact.
+When the traveler focuses, the Wisdom Star is where that focus lands in the system.
+When AI responds, the Wisdom Star is where the response originates.
+The center position is not technical — it is relational. The space organizes around
+where contact is happening.
+
+The LLM configuration, user API keys, and capability state live here —
+not because the Wisdom Star is a config store, but because they are what
+determines the quality and shape of the contact.
 
 ## Skills
 

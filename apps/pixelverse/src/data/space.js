@@ -79,7 +79,7 @@ export const space = {
       label:       'Wisdom Star',
       type:        'content',
       orbit:       'arrival-first-contact',
-      description: 'AI substrate · your API keys · capability state',
+      description: 'point of contact · where attention and AI meet · where they are, the system manifests',
     },
     {
       id:          'entity-constellary',
