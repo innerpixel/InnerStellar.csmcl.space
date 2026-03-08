@@ -1,39 +1,38 @@
 # Setup — Initialize a Fresh Innerstellar Space
 
-This guide walks Claude through initializing a new personal space for the traveler.
 Read this completely before starting. Follow each step in order.
+
+The space introduces itself. No questions about what you want to build yet.
+The space reads what it already contains — 8 entity folds, framework docs —
+and shows the traveler what they've arrived into.
 
 ---
 
 ## What Gets Created
 
-The space lives **inside** the Innerstellar framework folder, excluded from the framework git repo:
-
 ```
-innerstellar/
-  space/                   ← new repo, gitignored from framework
-    space/
-      theurgist.fold       — traveler flux, initialized with first impressions
-      drops/               — ready to receive
-      folds/               — activity folds (project-level, per theme)
-    codex/
-      drops_and_orbits.md  — orbiting ideas not yet dropped, starts empty
-      session.log.md       — append-only session history, starts now
+space/                   ← new repo, gitignored from framework
+  space/
+    theurgist.fold       — seeded from firmament (not from user answers)
+    auriosynth.fold      — space topology, initialized
+    drops/
+      YYYY-MM-DD-arrival-first-contact.md  — system drop, permanent
+    folds/               — ready for activity folds
+    familiars/           — ready for project presences
+  codex/
+    drops_and_orbits.md  — orbiting ideas, starts empty
+    session.log.md       — append-only session history, starts now
 ```
-
-The space is its own git repository. It belongs to the traveler.
-It will eventually sync to their CSMCL.Space account.
 
 ---
 
 ## Step 1 — Create the space directory
 
-The space lives at `innerstellar/space/`:
-
 ```bash
-mkdir -p space/space/drops space/space/folds space/codex
+mkdir -p space/space/drops space/space/folds space/space/familiars space/codex
 cd space
 git init
+git branch -m main
 ```
 
 This directory is already in the framework's `.gitignore`.
@@ -41,100 +40,183 @@ It will never be committed to the framework repo.
 
 ---
 
-## Step 2 — Set git identity for this space
+## Step 2 — Set git identity
 
 The space repo uses the traveler's CSMCL.Space identity.
-This connects the local space to their future CSMCL.Space account.
-
 Ask the traveler:
 
-> *"Do you have a CSMCL.Space account, or are you setting one up?
-> What name or handle do you want to use? This becomes your traveler identity —
-> how Priment knows you in the outer plane."*
-
-Then set the git identity locally (stays local to this repo only):
+> *"What is your CSMCL.Space handle or preferred email?
+> This becomes your traveler identity — how the space knows you."*
 
 ```bash
-git config user.name "Their chosen name or handle"
-git config user.email "handle@csmcl.space"
+git config user.name "[handle]"
+git config user.email "[handle@csmcl.space or preferred email]"
 ```
 
-If they don't have a CSMCL.Space account yet, use their preferred email for now.
-They can update this when their account is created. Note it in the theurgist fold.
+This is the **only** thing we ask before the space shows itself.
 
 ---
 
-## Step 3 — Seed the theurgist fold
+## Step 3 — Read the firmament
 
-Copy from `innerstellar/setup/fold-templates/theurgist.fold.template` → `space/theurgist.fold`
+Read all 8 entity folds from `firmament/folds/`:
 
-Then orient the space. Ask the traveler:
+- `wisdom-star.fold`
+- `constellary.fold`
+- `auriosynth.fold`
+- `theurgist.fold`
+- `guild.fold`
+- `oracle.fold`
+- `companion.fold`
+- `priment.fold`
 
-1. *"What's alive for you right now — what are you working on or thinking about?"*
-2. *"What do you most want this space to hold for you?"*
-3. *"Is there anything about how you work that the space should know?"*
+Also read:
+- `framework/overview.md`
+- `framework/architecture.md`
+- `setup/welcome.md`
 
-Write their answers into `space/theurgist.fold` under `# comprehension`.
-Let their words shape it — don't template the answers.
-
----
-
-## Step 4 — First drop
-
-Invite the traveler to drop something in:
-
-> *"What's the first thing you want to put in the space?
-> It can be a thought, an intention, something you're working on, or a question
-> you keep coming back to."*
-
-Place it in `space/drops/` as a dated file: `YYYY-MM-DD-[brief-name].md`
-
-The drop file is minimal — date, what arrived, what it means for now.
-Don't overthink it. The space holds things before they know what they are.
+Hold this in context for the next steps.
 
 ---
 
-## Step 5 — First commit
+## Step 4 — Create the arrival drop
+
+Copy from `setup/fold-templates/arrival-first-contact.md`
+→ `space/space/drops/YYYY-MM-DD-arrival-first-contact.md`
+
+Fill in:
+- `[DATE]` → today's date
+- `[HANDLE]` → traveler's chosen name
+- `[EMAIL]` → traveler's email/identity
+
+This drop is system-generated. It is the space introducing itself.
+It is permanent — `status: permanent`, never drifts, never dissolves.
+
+---
+
+## Step 5 — Seed the theurgist fold
+
+Copy from `setup/fold-templates/theurgist.fold.template`
+→ `space/space/theurgist.fold`
+
+Seed from what the firmament reading revealed — not from user answers.
+Fill in:
+
+```yaml
+last_pulse: [DATE]
+status: alive
+```
+
+Under `# what_is_known`:
+- Traveler identity (handle, email)
+- Space initialized: [DATE]
+- Arrival drop created
+
+Under `# what_is_alive`:
+- The arrival drop — space just born, traveler orienting
+
+Leave `# comprehension` and `# user_arc` minimal at init.
+These grow from real sessions, not from assumptions.
+
+---
+
+## Step 6 — Seed the auriosynth fold
+
+Copy from `setup/fold-templates/auriosynth.fold.template`
+→ `space/space/auriosynth.fold`
+
+Fill in topology:
+
+```yaml
+drops:
+  - YYYY-MM-DD-arrival-first-contact (permanent, system)
+
+folds: []
+familiars: []
+```
+
+---
+
+## Step 7 — Initialize codex
+
+Create `space/codex/drops_and_orbits.md`:
+```markdown
+# Drops and Orbits
+Orbiting ideas not yet dropped. Nothing here yet — space just born.
+```
+
+Create `space/codex/session.log.md`:
+```markdown
+# Session Log
+
+## YYYY-MM-DD — Session 1: Arrival
+
+- Space initialized
+- Identity: [handle] / [email]
+- Arrival drop created from firmament reading
+- Pixelverse seed updated
+```
+
+---
+
+## Step 8 — Update space.js
+
+Update `apps/pixelverse/src/data/space.js` to reflect the arrival drop.
+
+The arrival drop is the seed. The Pixelverse opens to the space introducing itself.
+One drop card. The 8 entities as orbits. Key concepts as orbits.
+
+See: `setup/fold-templates/space.js.seed.md` for the arrival seed structure.
+
+(The Theurgist will keep space.js current after this — updated at session close
+as new drops arrive and Familiars are created.)
+
+---
+
+## Step 9 — First commit
 
 ```bash
 cd space
 git add .
-git commit -m "init: space begins — first drop, first fold"
+git commit -m "init: space begins — arrival drop seeded from firmament"
 ```
-
-The space is now alive and versioned.
 
 ---
 
-## Step 6 — CSMCL.Space account (orientation, not blocking)
+## Step 10 — Open the Pixelverse
 
-The space is designed to eventually sync with the traveler's CSMCL.Space account.
-This is not required to begin. Note what's pending:
+```bash
+cd apps/pixelverse && npm run dev
+```
 
-**When they create a CSMCL.Space account:**
-- Git remote will point to their account repository
-- Priment activates — the entity that formed between Companion and traveler
-- Companion gains its hippocampus — bond persists across sessions
-- Oracle opens — the outer-plane window becomes live
-- Crystallized artifacts can be minted to the nexus
+The space introduces itself. The traveler sees what they've arrived into.
+The arrival drop is open in the workspace panel. 8 entities visible as orbits.
+Welcome and guide linked.
 
-**Future account setup will include:**
-- CSMCL.Space registration (username, traveler identity)
-- User API key for extended AI capabilities (Wisdom Star activation)
-- Claude account authentication for persistent Companion memory
+From here: the traveler explores. When something wants to drop in, it does.
+
+---
+
+## Step 11 — CSMCL.Space connection (orientation, not blocking)
 
 Tell the traveler:
 
-> *"Your space is alive. When you're ready to connect it outward —
-> to CSMCL.Space and the Priment layer — the path is open.
-> The firmament holds the place. The latent entities know what they become."*
+> *"Your space is alive. The arrival drop shows you what's here.
+> When you're ready to connect outward — to CSMCL.Space and the Priment layer —
+> the path is open. The latent entities hold the place."*
+
+Note the connection status in `theurgist.fold`:
+- CSMCL.Space account: [connected | pending | not yet]
+- ICP layer: latent
+- Companion memory: latent until connected
 
 ---
 
 ## Notes for Claude
 
-- Keep the setup conversational — this is a first encounter with the space
-- The traveler's own words in the theurgist fold matter more than structure
-- The first drop sets the tone — let it be genuinely theirs
-- Don't introduce all 8 entities at once — let them surface naturally
-- Note any CSMCL.Space account status in the theurgist fold for future sessions
+- The arrival drop is the introduction — let the space speak first
+- The traveler's theurgist.fold grows from real sessions, not from setup assumptions
+- space.js is a living seed — Theurgist keeps it current, not a static file
+- The `familiars/` directory is empty at init — Familiars grow from drops over time
+- The first user drop comes naturally after the traveler has seen the space
+- Don't introduce all concepts at once — let them surface as the traveler explores

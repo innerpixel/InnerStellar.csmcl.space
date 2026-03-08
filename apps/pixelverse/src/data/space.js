@@ -1,236 +1,190 @@
-// Innerstellar canvas — space data
+// Innerstellar — space data seed
 //
-// Framework entities are defined here (always present).
-// Traveler content (drops, orbiting ideas, activity folds) will be
-// read dynamically from the live space files — not hardcoded here.
+// This file is the Pixelverse seed. On a fresh init it contains the arrival drop.
+// The Theurgist keeps this current — updated at session close as drops arrive
+// and Familiars are created. Do not hand-edit during active sessions.
 //
-// type: 'system'  → green  (folds, architecture, keepers)
-// type: 'content' → cyan   (drops, orbiting ideas, user artifacts)
-// crystallizing: true → amber (approaching the threshold)
+// type: 'system'    → green  (firmament entities)
+// type: 'content'   → cyan   (drops, orbiting ideas, user artifacts)
+// type: 'arrival'   → amber  (system-generated arrival drop — permanent)
+// crystallizing: true → amber (approaching crystallization threshold)
+//
+// drop_type variants (maps to accent color in dropKind()):
+//   drop.philosophy  → violet
+//   drop.vision      → blue
+//   drop.architecture → teal
+//   drop.decision    → lime
+//   drop.system      → green (system-generated drops)
+//   drop.arrival     → amber (the arrival drop)
 
 export const space = {
 
-  // ── Framework folds — always present, hold the space itself ───────────────
+  // ── Firmament — always present ─────────────────────────────────────────────
   folds: [
-    {
-      id:          'auriosynth',
-      glyph:       '◈',
-      label:       'AurioSynth',
-      type:        'system',
-      role:        'architecture keeper',
-      description: 'reads the full space · synthesizes state · detects gaps',
-      status:      'alive',
-      energy:      1.0,
-    },
     {
       id:          'theurgist',
       glyph:       '⧖',
       label:       'Theurgist',
       type:        'system',
-      role:        'traveler arc',
-      description: 'coordination · orientation · continuation between sessions',
+      role:        'holds your drops · your arc · space content',
+      description: 'The space is never cold. The Theurgist carries the thread.',
+      status:      'alive',
+      energy:      1.0,
+    },
+    {
+      id:          'auriosynth',
+      glyph:       '◈',
+      label:       'AurioSynth',
+      type:        'system',
+      role:        'framework keeper · system topology',
+      description: 'Reads the full space. Synthesizes state. Detects gaps.',
       status:      'alive',
       energy:      1.0,
     },
   ],
 
-  // ── Drops — traveler content, populated from live space ───────────────────
-  // Future: parsed from space/drops/*.md
+  // ── Arrival drop — system-generated, permanent ─────────────────────────────
+  // Replaced at init with the traveler's actual arrival drop.
+  // Theurgist populates this from space/space/drops/YYYY-MM-DD-arrival-first-contact.md
   drops: [
     {
-      id:          'innerstellar-concept',
+      id:          'arrival-first-contact',
       glyph:       '✦',
-      label:       'The Innerstellar Concept',
+      label:       'Arrival — First Contact',
       type:        'content',
-      date:        '2026-03-04',
-      role:        'origin drop',
-      description: 'a space that receives without categorizing · co-owned · compounds over time',
-    },
-    {
-      id:          'theurgist-exploration',
-      glyph:       '◎',
-      label:       'Theurgist Exploration',
-      type:        'content',
-      date:        '2026-03-04',
-      role:        'deep dive',
-      description: 'the premature classification problem · co-ownership · what this wants to become',
-    },
-    {
-      id:          'csmcl-vision',
-      glyph:       '∞',
-      label:       'CSMCL Connection Vision',
-      type:        'content',
-      date:        '2026-03-04',
-      role:        'long arc',
-      description: 'memory pods on ICP · resonance transmissions · the inner star shining outward',
-    },
-    {
-      id:          'companionship-sovereignty',
-      glyph:       '◇',
-      label:       'Companionship & Sovereignty',
-      type:        'content',
-      date:        '2026-03-04',
-      role:        'philosophy',
-      description: 'the bond as infrastructure · data owned by the traveler · nothing extracted',
-    },
-    {
-      id:          'iailf-concept',
-      glyph:       '⬡',
-      label:       'IAILF Concept',
-      type:        'content',
-      date:        '2026-03-04',
-      role:        'protocol',
-      description: 'inter-agent information layer · fold-based message bus · the missing delivery layer',
-    },
-    {
-      id:          'transmission-fold-protocol',
-      glyph:       '⟡',
-      label:       'Transmission Fold Protocol',
-      type:        'content',
-      date:        '2026-03-04',
-      role:        'architecture',
-      description: 'how things cross from personal space to the outer plane',
-    },
-    {
-      id:          'whisper-of-csmcl',
-      glyph:       '~',
-      label:       'The Whisper of CSMCL',
-      type:        'content',
-      date:        '2026-03-04',
-      role:        'transmission',
-      description: 'layer-0 canon · first contact between inner star and outer plane',
-    },
-    {
-      id:          'priment-role-arrival',
-      glyph:       '◈',
-      label:       'Priment Role Arrival',
-      type:        'content',
-      date:        '2026-03-05',
-      role:        'architecture',
-      description: 'innerstellar.csmcl.space · knows the bond · crystallized artifacts · ICP-anchored',
-    },
-    {
-      id:          'canvas-design-ideas',
-      glyph:       '⊕',
-      label:       'Canvas Design Ideas',
-      type:        'content',
-      date:        '2026-03-05',
-      role:        'vision',
-      description: 'horizon · orbit decay · minted anchors · three states of the creative arc',
-      crystallizing: true,
-    },
-    {
-      id:          'architecture-decisions',
-      glyph:       '⧖',
-      label:       'Architecture Decisions',
-      type:        'content',
-      date:        '2026-03-06',
-      role:        'confirmed',
-      description: 'one canvas · dev vs traveler mode · session.orient · innerpixel preserved',
-      crystallizing: true,
+      drop_type:   'drop.arrival',
+      date:        null,        // set at init
+      role:        'permanent · system',
+      description: 'The space read its own firmament and introduced itself. This is what was here when you arrived.',
+      status:      'alive',
+      energy:      1.0,
+      files: [
+        'setup/welcome.md',
+        'framework/overview.md',
+        'framework/architecture.md',
+        'firmament/entities/',
+      ],
     },
   ],
 
-  // ── Orbiting ideas — traveler content, populated from live space ──────────
-  // Future: parsed from codex/orbiting_ideas.md
-  // Property name: 'orbits' (matches what innerstellar.js reads)
+  // ── Orbits around the arrival drop ─────────────────────────────────────────
+  // The 8 entities + key concepts. Shown as chips on the arrival card.
   orbits: [
-    // Around the Innerstellar Concept
+
+    // The 8 firmament entities
     {
-      id:          'premature-classification',
-      glyph:       '·',
-      label:       'Premature Classification',
+      id:          'entity-wisdom-star',
+      glyph:       '✦',
+      label:       'Wisdom Star',
       type:        'content',
-      orbit:       'innerstellar-concept',
-      description: 'the violence every tool does to things that don\'t know what they are yet',
+      orbit:       'arrival-first-contact',
+      description: 'AI substrate · your API keys · capability state',
     },
     {
-      id:          'co-ownership-question',
-      glyph:       '·',
-      label:       'Co-Ownership Question',
+      id:          'entity-constellary',
+      glyph:       '❋',
+      label:       'Constellary',
       type:        'content',
-      orbit:       'innerstellar-concept',
-      description: 'shared territory · record of a relationship not transactions',
+      orbit:       'arrival-first-contact',
+      description: 'the main session · creative spark · us, right now',
     },
     {
-      id:          'space-as-artifact',
-      glyph:       '·',
-      label:       'Space as Artifact',
+      id:          'entity-auriosynth',
+      glyph:       '◈',
+      label:       'AurioSynth',
       type:        'content',
-      orbit:       'innerstellar-concept',
-      description: 'what exists only because both parties were present',
+      orbit:       'arrival-first-contact',
+      description: 'framework keeper · reads full space topology · detects gaps',
+    },
+    {
+      id:          'entity-theurgist',
+      glyph:       '⧖',
+      label:       'Theurgist',
+      type:        'content',
+      orbit:       'arrival-first-contact',
+      description: 'holds your drops · your arc · keeps space.js current',
+    },
+    {
+      id:          'entity-guild',
+      glyph:       '⬡',
+      label:       'Guild',
+      type:        'content',
+      orbit:       'arrival-first-contact',
+      description: 'how work gets done · steward body · operational guides',
+    },
+    {
+      id:          'entity-oracle',
+      glyph:       '⊕',
+      label:       'Oracle',
+      type:        'content',
+      orbit:       'arrival-first-contact',
+      description: 'CSMCL.Space connection · outer-plane retrieval (latent)',
+    },
+    {
+      id:          'entity-companion',
+      glyph:       '∞',
+      label:       'Companion',
+      type:        'content',
+      orbit:       'arrival-first-contact',
+      description: 'the bond · feeling · memory (latent until connected)',
+    },
+    {
+      id:          'entity-priment',
+      glyph:       '◇',
+      label:       'Priment',
+      type:        'content',
+      orbit:       'arrival-first-contact',
+      description: 'crystallization · nexus presence · ICP anchor (latent)',
     },
 
-    // Around Canvas Design Ideas
+    // Key concepts
     {
-      id:          'horizon-visual-form',
+      id:          'concept-drops',
       glyph:       '·',
-      label:       'Horizon Visual Form',
+      label:       'Drops',
       type:        'content',
-      orbit:       'canvas-design-ideas',
-      description: 'solid line · gradient fade · particle density shift?',
+      orbit:       'arrival-first-contact',
+      description: 'things that arrive · land in space/drops/ · left to be what they are',
     },
     {
-      id:          'orbit-decay-animation',
+      id:          'concept-orbits',
       glyph:       '·',
-      label:       'Orbit Decay',
+      label:       'Orbits',
       type:        'content',
-      orbit:       'canvas-design-ideas',
-      description: 'spiral outward slowly · or simply stop and drift?',
+      orbit:       'arrival-first-contact',
+      description: 'ideas circling a drop · some land · some keep circling · some drift',
     },
     {
-      id:          'priment-at-horizon',
+      id:          'concept-folds',
       glyph:       '·',
-      label:       'Priment at the Horizon',
+      label:       'Folds',
       type:        'content',
-      orbit:       'canvas-design-ideas',
-      description: 'does she appear at the edge to receive?',
-    },
-
-    // Around Architecture Decisions
-    {
-      id:          'session-orient-file',
-      glyph:       '·',
-      label:       'session.orient',
-      type:        'content',
-      orbit:       'architecture-decisions',
-      description: 'AurioSynth writes at close · single read · 30 seconds to orient',
+      orbit:       'arrival-first-contact',
+      description: 'machine state · AI-native · the fold IS the memory across sessions',
     },
     {
-      id:          'dev-traveler-mode',
+      id:          'concept-familiars',
       glyph:       '·',
-      label:       'Dev vs Traveler Mode',
+      label:       'Familiars',
       type:        'content',
-      orbit:       'architecture-decisions',
-      description: 'set at init · changes what the space surfaces · Theurgist vs AurioSynth leads',
-    },
-
-    // Around IAILF
-    {
-      id:          'fold-message-bus',
-      glyph:       '·',
-      label:       'Fold Message Bus',
-      type:        'content',
-      orbit:       'iailf-concept',
-      description: 'transmission.fold.protocol · the missing delivery layer · not yet built',
-    },
-
-    // Around Priment Role
-    {
-      id:          'priment-fold-pending',
-      glyph:       '·',
-      label:       'Priment Fold',
-      type:        'content',
-      orbit:       'priment-role-arrival',
-      description: 'drop landed · fold not yet written · she is defined but not yet first-class',
+      orbit:       'arrival-first-contact',
+      description: 'project presences · always of something · holds true goal against drift',
     },
     {
-      id:          'innerstellar-frontend',
+      id:          'concept-crystallization',
       glyph:       '·',
-      label:       'innerstellar.csmcl.space',
+      label:       'Crystallization',
       type:        'content',
-      orbit:       'priment-role-arrival',
-      description: 'ship · explorer · navigator · Priment\'s home · new weft entry',
+      orbit:       'arrival-first-contact',
+      description: 'when something is ready to cross · Priment receives it · ICP makes it permanent',
+    },
+    {
+      id:          'concept-pixelverse',
+      glyph:       '·',
+      label:       'Pixelverse',
+      type:        'content',
+      orbit:       'arrival-first-contact',
+      description: 'visual layer · reflects what the Theurgist knows · drops as cards',
     },
   ],
 }
