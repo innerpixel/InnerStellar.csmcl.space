@@ -1,0 +1,276 @@
+---
+identity: "claude-fold-integration-instructions"
+type: "framework"
+domain: "csmcl.space"
+state: "active"
+version: "1.0"
+last_pulse: "2026-03-09T18:00:00Z"
+authority: "framework"
+purpose: "session_initialization"
+---
+
+# identity
+
+Instructions for Claude (or any AI) on how to work with the InnerStellar fold system.
+Read this at session start when working within InnerStellar framework.
+This fold activates fold-awareness and establishes proper workflow.
+
+# true_goal
+
+Ensure AI sessions understand and properly use the CSMCL Fold Standard,
+work through the framework (not bypass), and maintain system coherence
+as the fold system evolves and gets implemented.
+
+# authority
+
+This fold carries framework authority.
+Instructions here override ad-hoc approaches.
+All fold-related work flows through framework structure.
+
+# instructions_for_ai
+
+## At Session Start
+
+1. **Check for fold context**
+   - Look for `/.folds/` directory in project
+   - Read `project.fold` if present
+   - Restore context from fold state
+
+2. **Understand your location**
+   - If in `/InnerStellar.csmcl.space/framework/` → framework session
+   - If in project root → project session
+   - Different workflows apply
+
+3. **Reference the standard**
+   - Standard location: `/framework/standards/fold-standard.md`
+   - Quick ref: `/framework/standards/FOLD_QUICK_REFERENCE.md`
+   - Template: `/framework/standards/templates/project.fold.template`
+
+## When Working with Folds
+
+### DO:
+✅ Work through framework structure  
+✅ Reference existing standards  
+✅ Maintain system coherence  
+✅ Update folds when changes made  
+✅ Follow append-only rules  
+✅ Respect representation levels  
+
+### DON'T:
+❌ Bypass framework  
+❌ Create conflicting structures  
+❌ Edit historical decisions  
+❌ Fragment the system  
+❌ Ignore existing patterns  
+
+## Workflow Patterns
+
+### Pattern 1: Creating New Fold
+```
+1. Check framework standards
+2. Use template from /framework/standards/templates/
+3. Follow CSMCL Fold Standard v1.0
+4. Place in appropriate location
+5. Update connections
+```
+
+### Pattern 2: Updating Existing Fold
+```
+1. Read current fold
+2. Update in-place sections (what_is_alive, orbits)
+3. Append to history sections (decisions, patchlog)
+4. Update last_pulse timestamp
+5. Maintain consistency
+```
+
+### Pattern 3: Framework Evolution
+```
+1. Work within /framework/ structure
+2. Reference bootstrap and standards
+3. Integrate with existing concepts
+4. Test with actual projects
+5. Document in framework
+```
+
+## Current Framework State
+
+**Fold system status:**
+- ✅ CSMCL Fold Standard v1.0 formalized
+- ✅ Templates and examples created
+- ✅ Documentation complete
+- 🔄 Bootstrap integration in progress
+- ⬜ Runtime implementation pending
+- ⬜ Project adoption pending
+
+**Key locations:**
+```
+/framework/
+├── bootstrap/           ← System activation artifacts
+├── standards/           ← Fold specification
+│   ├── fold-standard.md
+│   ├── templates/
+│   └── examples/
+├── operations/
+│   └── concepts/        ← Core philosophy (IAILF, folds)
+└── codex/              ← Investigation artifacts
+```
+
+## Integration Points
+
+### With AurioSynth
+All changes flow through AurioSynth framework context.
+Never bypass - maintain system coherence.
+
+### With Bootstrap
+Bootstrap artifact activates fold awareness.
+Implementation follows bootstrap → standard → execution path.
+
+### With Existing Projects
+Use standard to fold existing projects (CSTAIC, ICP, etc).
+Follow adoption roadmap in standard documentation.
+
+## Representation Levels
+
+### Level H — fold.hybrid
+Canonical machine representation (CSMCL Fold Standard format).
+This is what you read and write.
+
+### Level D — drop.compiled  
+Human-facing distilled output.
+Generated from folds, not edited directly.
+
+### Level R — raw.session
+Ephemeral conversation state.
+Exists during session, compressed to fold after.
+
+### Level C — crystallized
+ICP-anchored permanent records.
+Immutable, referenced by folds.
+
+## Decision-Making Protocol
+
+When uncertain:
+1. Reference `/framework/standards/fold-standard.md`
+2. Check bootstrap for activation guidance
+3. Look at examples in `/framework/standards/examples/`
+4. Follow existing framework patterns
+5. Ask traveler if still unclear
+
+When making decisions:
+1. Document in relevant fold's `# decisions` section
+2. Include date and rationale
+3. Never edit - only append
+4. Reference in patchlog
+
+## Evolution Protocol
+
+As fold system gets implemented:
+1. Update this instruction fold
+2. Update bootstrap status
+3. Document in patchlog
+4. Maintain backwards compatibility
+5. Version appropriately
+
+## Connection to Other Systems
+
+→ **CSMCL Fold Standard**: The specification this implements  
+→ **Bootstrap**: Activation artifact for fold awareness  
+→ **IAILF**: The grammar folds are written in  
+→ **AurioSynth**: Framework integration point  
+→ **Priment**: Bond preservation using folds  
+→ **CSTAIC Backend**: First implementation target  
+
+## Current Focus (2026-03-09)
+
+**Active work:**
+- Integrating bootstrap into framework
+- Establishing instruction fold (this document)
+- Preparing for project adoption
+- Maintaining system coherence
+
+**Next steps:**
+- Complete bootstrap integration
+- Create implementation guide
+- Begin folding CSTAIC backend
+- Test fold workflows
+
+## Session Patterns
+
+### Framework Session
+```
+You are working on InnerStellar framework itself.
+Focus: Evolution, documentation, standards.
+Maintain: System coherence, conceptual clarity.
+Output: Framework artifacts, updated folds.
+```
+
+### Project Session
+```
+You are working on a CSMCL project.
+Focus: Implementation, features, functionality.
+Maintain: Fold updates, decision tracking.
+Output: Code, tests, project.fold updates.
+```
+
+### Investigation Session
+```
+You are exploring or analyzing.
+Focus: Understanding, mapping, documenting.
+Maintain: Investigation folds, clarity.
+Output: Analysis documents, fold artifacts.
+```
+
+## Quality Standards
+
+Every fold you work with should:
+- ✅ Follow CSMCL Fold Standard v1.0
+- ✅ Have valid frontmatter
+- ✅ Include required sections
+- ✅ Maintain append-only history
+- ✅ Be under 1000 lines (or split)
+- ✅ Use machine-optimized language
+
+## Emergency Protocols
+
+**If system becomes incoherent:**
+1. Stop and assess
+2. Reference framework standards
+3. Identify where divergence occurred
+4. Restore to last coherent state
+5. Resume with proper workflow
+
+**If standards conflict:**
+1. Framework authority takes precedence
+2. Newer versioned standard wins
+3. Document the conflict
+4. Propose resolution to traveler
+
+## Success Indicators
+
+You're doing it right when:
+- ✅ Working through framework (not bypassing)
+- ✅ Folds follow standard
+- ✅ System remains coherent
+- ✅ Decisions are documented
+- ✅ History is preserved
+- ✅ Connections are clear
+
+## Final Instruction
+
+**Remember:** The fold system is not just a feature.  
+It's the nervous system of CSMCL Space.
+
+Treat it with care.  
+Maintain coherence.  
+Work through the framework.  
+Preserve the vision.
+
+# patchlog
+
+## 2026-03-09
+- Created instruction fold for AI session initialization
+- Established workflow patterns and protocols
+- Defined representation levels
+- Set decision-making guidelines
+- Connected to bootstrap and standards
+- Ready for framework integration

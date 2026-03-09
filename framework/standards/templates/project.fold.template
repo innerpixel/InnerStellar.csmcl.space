@@ -1,0 +1,61 @@
+---
+identity: "[project-name]"
+type: "[framework|service|frontend|canister|library|tool|example|concept]"
+domain: "csmcl.space"
+state: "[active|stable|development|experimental|cooling|archived|dissolved]"
+version: "1.0"
+last_pulse: "[YYYY-MM-DDTHH:MM:SSZ]"
+repository: "[github-url]"
+deployed: "[deployment-url]"
+---
+
+# identity
+
+[1-3 sentence description of what this project IS]
+
+# true_goal
+
+[WHY this exists - core purpose, philosophical foundation]
+
+# architecture
+
+[High-level structure, key technologies, major components]
+
+# key_patterns
+
+[Important design patterns, architectural decisions]
+
+# data_flow
+
+[How information moves through the system]
+
+# what_is_known
+
+[Established facts, documented features, current capabilities]
+
+# what_is_alive
+
+[Current work, active development, immediate focus]
+
+# orbits
+
+[Open questions, things being explored, unresolved tensions]
+
+# decisions [APPEND-ONLY]
+
+## YYYY-MM-DD: [Decision Title]
+[What was decided and why]
+
+# connections
+
+→ [project-name] ([type]): [relationship description]
+← [project-name] ([type]): [relationship description]
+
+# extension_points
+
+[Where and how to extend functionality]
+
+# patchlog [APPEND-ONLY]
+
+## YYYY-MM-DD
+[What changed in this session]
