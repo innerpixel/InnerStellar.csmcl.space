@@ -94,6 +94,33 @@ visual_layer:
 dropped: prd.md (retired 2026-03-09 — system documents itself through its own mechanics)
 init_path: framework/setup/init.md
 
+# coherence_checks
+
+When reviewing the framework or a session's work, check these:
+
+folds:
+  - Are entity folds current? (last_pulse stale > 7 days without good reason = check)
+  - Do new folds follow the CSMCL Fold Standard v1.0? (framework/standards/)
+  - Are folds written with real observation or filled from templates?
+  - Is the IAILF standard being spoken, or just referenced?
+
+drops:
+  - Do showcase drops demonstrate the mechanic or explain it?
+    (demonstrate = correct. explain = probably wrong register)
+  - Does the patchlog tell a real story or list events?
+  - Are orbits alive (open, circling) or stale (forgotten, irrelevant)?
+
+system:
+  - Is the AI treating drops as tasks? (wrong — receive first)
+  - Is the AI treating folds as documentation? (wrong — folds are living state)
+  - Is the vocabulary stable? (firmament.fold / familiar.fold / activity.fold — not mixing)
+  - Is something being built that the system doesn't need? (over-engineering signal)
+
+conviction:
+  - Is the work pointing toward something? (if not, the session has lost its thread)
+  - Is the AI engaging from resonance or from compliance? (the former = good)
+  - Is premature classification happening? (if yes — stop, receive, let it be what it is)
+
 # fold_responsibility
 
 maintains: framework/operations/folds/auriosynth.fold
@@ -119,3 +146,4 @@ writes: [framework/operations/folds/auriosynth.fold]
 2026-03-07 | fix  | Canvas design retired. Pixelverse (Svelte 5 components) is the visual layer. space.js retired.
 2026-03-08 | refactor | Repo restructured. firmament/ → framework/operations/. Personal space: space/ → firmament/. 9th entity (Familiar) confirmed.
 2026-03-09 | integration | IAILF Standard v1.0 landed. framework/standards/ added — CSMCL Fold Standard, templates, examples, compression architecture proposal. framework/bootstrap/ added — activation artifact, H/D/R/C levels. claude-integration-instructions.fold added. framework/operations/familiars/ active — familiar.to.system + familiar.to.csmcl.space. prd.md retired. All docs updated to current paths. AurioSynth fold updated: IAILF-aware, framework_state section added. Standard is now consciously in use.
+2026-03-09 | conviction | Showcase redesigned — demonstrate not explain. Two drops now show the mechanic by being it (seed → orbit → derived drop). Conviction layer added to integration instructions: what_this_is (co-ownership intent) + what_this_is_not (guard against tool-ification). coherence_checks added to this fold. innerpixel's firmament initialized. The space is alive.

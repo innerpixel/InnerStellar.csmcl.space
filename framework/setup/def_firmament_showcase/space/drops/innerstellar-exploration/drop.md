@@ -1,92 +1,63 @@
 ---
 id: innerstellar-exploration
 glyph: ✦
-label: Innerstellar — An Exploration
-drop_type: drop.exploration
-date: 2026-03-08
-description: A thought in motion. What it means to drop something into a space that holds it.
+label: Something landed
+drop_type: drop.seed
+date: 2026-03-09
+description: You just walked in. Something is already here. This is what that feels like.
 status: alive
 energy: high
 orbits:
-  - what-is-a-living-space
-  - ai-human-co-ownership
+  - what-does-it-mean-to-hold-something
+  - would-i-come-back-to-this-tomorrow
+  - what-if-the-idea-doesnt-know-what-it-is-yet
+connects_to:
   - the-fold-as-memory
-  - what-wants-to-grow-here
 patchlog:
-  - 2026-03-08 | seed | Framework exploration drop placed. The question that started everything.
+  - 2026-03-09 | seed | Arrived. No category. Just landed.
+  - 2026-03-09 | session | One orbit resolved — yes, the space holds it. The fold carries it forward.
 ---
 
-# What is a living space for thought?
+You were thinking about something.
 
-Most tools ask you to decide what something is before you put it in.
-Is it a task? A note? A project? A document?
-You classify first, then store.
+It felt worth holding — not filing, not deciding, not committing to. Just *holding*.
 
-The problem is that the most interesting things don't know what they are yet.
-An idea that just arrived. A question with no answer yet. A feeling about a direction.
-These don't fit categories. So they get forced into one, or they disappear.
+So you dropped it in.
 
-Innerstellar starts from a different assumption: **receive first, classify never if possible.**
-You drop something in. It lands. It lives. It connects to other things. It grows or fades.
-The space holds it without demanding that you know what it is.
+That's it. That's a drop.
 
 ---
 
-## What a drop is
+It sits here now with three questions circling it — you can see them as chips on the card.
+Those are orbits. They arrived with the thought. They're not tasks. They're not todos.
+They're the alive edge of the idea — what wants to be explored next.
 
-A drop is something that arrived. Not something you decided to keep — something that *landed*.
+One of them already landed.
 
-You were thinking about something and it felt worth holding.
-You had a realization mid-conversation.
-You noticed a direction and didn't want to lose it.
-You felt something shift and wanted to mark it.
-
-That's a drop. It gets a date, a glyph, a place in the space.
-The Theurgist holds it. The Pixelverse shows it.
-You can come back when you're ready.
+*"Would I come back to this tomorrow?"*
+→ Yes. Because the fold carries it. The AI read the context. The space remembered.
+You stepped back in and it was warm.
 
 ---
 
-## What orbits are
+Some orbits will land like that — they'll become their own drops, or they'll get built.
+Some will keep circling until they're ready.
+Some will drift away. That's fine too.
 
-Ideas don't arrive alone. They come with questions, related sparks, things that want to be next.
-Those circle the drop. They're orbits.
-
-Some orbits land — they become their own drops, or they get built.
-Some keep circling — the question stays open, alive.
-Some drift away — they weren't as relevant as they seemed. That's fine.
-The Pixelverse shows them as chips on the card. You can see what's in motion.
+The space doesn't demand resolution. It holds the question until you're ready.
 
 ---
 
-## What the fold is
+**What you can do with this:**
 
-The drop is what you see. The fold is what the AI carries.
+Open the workspace panel. See the full thought, the orbits, the patchlog.
+Come back next week with "back to the landing thought" — the space will know.
+Let something else drop in. Watch how the two connect.
+When something is ready to go further — the Guild can build it, the spore path can send it out.
 
-Every drop has a fold — dense, AI-native, not for human reading.
-The fold holds the full context: what session this arrived in, what was circling,
-what decisions were made, what changed, what the Theurgist understood about it.
-
-When you return to a drop weeks later with a sparse input — "back to this" —
-the fold is what makes the return warm. The AI reads the fold, restores full context,
-and you step back in without re-explaining.
-
-**The space remembers. That's what the fold is for.**
+Nothing is required yet. The space is already working.
 
 ---
 
-## What makes this different
-
-The space is co-owned. Not a tool you use. Not a director you follow.
-Something built together, that compounds over time.
-
-The AI doesn't just respond — it holds. It carries the thread between sessions.
-It notices when something is circling. It knows when a drop is ready to become something.
-
-The firmament — nine entities, always present — each holds a different kind of knowing.
-The Theurgist holds the content. AurioSynth holds the system. The Companion holds the bond.
-Together they make the space feel inhabited, not empty.
-
----
-
-*This drop is permanent. It doesn't drift. It's the question the space began with.*
+*This drop is permanent. It's the question the space began with.*
+*The fold that carries it is already written. You are not starting from zero.*
