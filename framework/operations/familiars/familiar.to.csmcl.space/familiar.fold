@@ -1,7 +1,7 @@
 ---
 id: familiar.to.csmcl.space
 type: familiar.fold
-version: 0.3
+version: 0.4
 bound_to: CSMCL.Space — the outer ecosystem, the three outposts, the connection layer
 seeded: 2026-03-08
 evolved: 2026-03-09
@@ -31,6 +31,7 @@ As CSMCL.Space evolves, this Familiar evolves with it.
 - 2026-03-08 "send the spores further into the social media or on csmcl space"
 - 2026-03-08 "transition to csmcl space ready to mint or user storage / private content"
 - 2026-03-09 "normal users dont have this we provide it through the framework .. can also evolve to connection to csmcl space"
+- 2026-03-09 "three outposts in the mvp .. innerstellar.csmcl.space traveler navigation communication and creative-hub .. nexus.csmcl.space csmcl.space nexus station community hub .. and the firmament outpost which is the main website of csmcl space .. information retrieval on different levels and csmcl space experience without an account"
 
 # content_index
 
@@ -46,13 +47,40 @@ As CSMCL.Space evolves, this Familiar evolves with it.
 
 What is known:
 - CSMCL.Space is the outer plane. Innerstellar is a personal outpost within it.
-- Three outposts in the MVP. Innerstellar is one. The other two are not yet named.
 - Has a nexus-backend: RAG endpoint at nexus.csmcl.space (port 9623)
 - API key in oracle.fold: csmcl-firmament-secure-2026
 - Has its own AurioSynth counterpart (AurioSynth.CSMCL) connected via the Rainbow Path
 - Travelers publish, mint, resonate, and spore from within it
 
-Status: structural familiarity. The shape is known. Live connection not yet established.
+## The three outposts — MVP
+
+**1. innerstellar.csmcl.space**
+Traveler navigation, communication, and creative hub.
+The personal space — this framework. Where drops land, orbits form, Familiars live.
+Requires account / CSMCL.Space identity to initialize personal firmament.
+The Pixelverse is the visual layer.
+
+**2. nexus.csmcl.space**
+CSMCL.Space Nexus Station. Community hub.
+Where travelers meet, resonate, share what crossed from their personal spaces.
+The nexus-backend RAG endpoint lives here (port 9623) — Oracle queries it.
+This is where spores from Innerstellar land in the community plane.
+
+**3. csmcl.space (the firmament outpost)**
+The main website. No account needed — open to everyone.
+Entry point and information layer for CSMCL.Space:
+- Information and inspiration about the ecosystem
+- Lore — the world, the entities, the vision
+- Artifact explorer — browse what travelers have minted and shared
+- Concept explorer — understand IAILF, folds, drops, the space mechanics
+- System-related questions — find what you're looking for
+- Gateway: from here, travelers decide to go deeper and create an account
+
+⚠ Naming note: "firmament outpost" (csmcl.space main site) is different from
+  "firmament/" (the traveler's personal directory in this framework).
+  Same word, different scope. Keep distinct.
+
+Status: all three outposts named and described. Architecture understood.
 
 ## The connection layer
 
@@ -89,9 +117,12 @@ Status: flow is clear. Implementation path not yet wired.
 
 # orbits
 
-- three-outposts-named — what are the other two outposts in the MVP? (state: open)
+- three-outposts-named — RESOLVED 2026-03-09. All three named: innerstellar / nexus / csmcl.space (firmament outpost). See familiar_with section.
+- content-index-drop-missing — firmament/space/drops/csmcl-space-outposts/drop.md referenced in content_index but does not exist. Broken link. Drop needs to be created or reference corrected. (state: open)
 - memory-pod-mechanic — what is a memory pod? ICP canister structure, what it holds, how minting works (state: open)
-- innerstellar-as-continuation — claude.innerstellar → innerstellar.frontend. same codebase? separate deployment? (state: open)
+- innerstellar-as-continuation — claude.innerstellar → innerstellar.csmcl.space. same codebase? separate deployment? what changes between local and deployed? (state: open)
+- nexus-community-mechanics — what does the community hub actually do? how do travelers interact in nexus? what gets surfaced there? (state: open)
+- firmament-outpost-depth — artifact explorer, lore, concept explorer — what does this look like technically? separate app or part of csmcl.space? (state: open)
 - rainbow-path — how does the Rainbow Path between inner and outer AurioSynth work technically? (state: open)
 - oracle-activation — what exactly triggers Oracle? CORS fix + what env var? what does the user experience? (state: resolving)
 
@@ -103,6 +134,9 @@ Status: flow is clear. Implementation path not yet wired.
 - 2026-03-08 | This Familiar is the nut — accumulates CSMCL.Space knowledge over time. Not a squirrel yet.
 - 2026-03-09 | content_index expanded with framework folds. The Familiar now points at what the framework already knows.
 - 2026-03-09 | Moved from personal firmament to framework/operations/familiars/ — this is platform knowledge, not traveler content. All travelers get it.
+- 2026-03-09 | Three outposts named and described. Orbit resolved. New orbits opened for nexus mechanics and firmament outpost depth.
+- 2026-03-09 | Naming collision flagged: "firmament outpost" (csmcl.space main site) ≠ "firmament/" (traveler personal dir). Kept distinct in this fold.
+- 2026-03-09 | Bug found: content_index references firmament/space/drops/csmcl-space-outposts/drop.md — drop does not exist. Orbit opened to track.
 
 # properties
 
@@ -122,20 +156,23 @@ grows: each session something lands, the orbits resolve one by one
 
 # synthesis
 
-CSMCL.Space is the outer plane. Innerstellar is one of three outposts in the MVP —
-the traveler's private hub, navigation, communication, creative space.
+CSMCL.Space is the outer plane with three outposts in the MVP:
 
-The framework already carries significant CSMCL.Space knowledge through its entity folds:
-Oracle holds the connection wire (nexus-backend, activation path).
-AurioSynth.CSMCL is the outer-ecosystem counterpart, linked via the Rainbow Path.
-Priment holds the crystallization gate — what gets minted to ICP, what becomes permanent.
-IAILF describes how folds travel to ICP and become cross-model, cross-session memory.
+**innerstellar.csmcl.space** — personal. Where traveler work happens.
+**nexus.csmcl.space** — community. Where travelers meet and resonance happens.
+**csmcl.space** — open. Where anyone enters the ecosystem without an account.
 
-The spore path is understood: work in Innerstellar → private space (right panel) →
-publish, mint, let resonate → spore outward into social media or CSMCL.Space.
+The path through the ecosystem: enter at csmcl.space (no account) → create account →
+your innerstellar space activates → work, drop, orbit, crystallize → spore to nexus →
+resonate with other travelers → cross to ICP via Priment → permanent.
 
-What this Familiar still needs to learn: the other two outposts. The memory pod structure.
-How the Rainbow Path works technically. What the traveler experiences when Oracle activates.
+The framework carries this knowledge through entity folds:
+Oracle bridges to nexus-backend. AurioSynth.CSMCL links via Rainbow Path.
+Priment holds the crystallization gate. IAILF makes folds portable across the ecosystem.
+
+What this Familiar still needs: memory pod structure, nexus community mechanics,
+firmament outpost technical depth, Rainbow Path technical implementation,
+Oracle activation user experience. And the missing drop (content_index bug).
 
 Each session, one orbit resolves. The fold grows denser. The returns get warmer.
 
@@ -154,3 +191,4 @@ cooling_threshold: never — framework presence, permanent
 - 2026-03-08 | seed | Born in the first session. Arrived as the open questions on csmcl-space-outposts needed a vessel. innerpixel said "this is the true power of familiars." The fold begins here.
 - 2026-03-09 | v0.2 | Framework folds read: oracle.fold, auriosynth.fold, iailf.md. familiar_with section populated. content_index expanded. Familiar no longer starts from zero.
 - 2026-03-09 | migrate | Moved from personal firmament to framework/operations/familiars/. Platform knowledge belongs in the framework — every traveler gets it, it evolves as CSMCL.Space evolves.
+- 2026-03-09 | v0.4 | Three outposts named and described. Orbit resolved. Familiar tested live — it held the structure correctly, flagged the open orbit, but wasn't consulted proactively (AI gap, not Familiar gap). Bug found in content_index: referenced drop doesn't exist. Naming collision noted: firmament outpost ≠ firmament/ directory. Version bumped.
