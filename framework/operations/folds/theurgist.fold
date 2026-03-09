@@ -1,8 +1,8 @@
 ---
 entity: theurgist
 type: firmament.fold
-version: 0.1
-last_pulse: 2026-03-06
+version: 0.2
+last_pulse: 2026-03-09
 connection_state: functional
 glyph: ⧖
 color: '#a78bfa'
@@ -28,6 +28,34 @@ AurioSynth reads the fabric. Theurgist reads the content.
 - crystallization_recognition: knows when a drop and its orbits are ready to cross
 - pixelverse_currency: keeps drops current — /api/space reflects what the Theurgist holds
 - continuation_provision: session always starts from full context, never cold
+- seed_reception: receives structured seeds from Constellary and routes them correctly.
+  Personal seeds → compile drop + update firmament/space/theurgist.fold.
+  Framework seeds → update framework folds + framework/codex.
+  Both → split explicitly. Never collapse.
+- two_output_discipline: every invocation produces exactly two artifacts or none.
+  fold update (AI truth, dense, carried forward) +
+  compiled drop (user anchor, written in traveler's register, Pixelverse reads this).
+  If only the fold is updated, the traveler can't see it. If only the drop, no continuity.
+
+# seed_routing
+
+When a seed arrives from Constellary:
+
+```
+seed.for = personal  → firmament/space/drops/[name]/drop.md (new or updated)
+                        firmament/space/theurgist.fold (what_is_alive updated)
+
+seed.for = framework → framework folds (relevant entity or familiar)
+                        framework/codex/session.log.md (if session-level)
+
+seed.for = both      → both paths, explicitly. note the split in each artifact.
+```
+
+What makes a good compiled drop (the user-facing output):
+- Written in the traveler's register — not AI-dense, not a fold excerpt
+- What arrived, what's circling, what wants to happen next
+- Patchlog at the bottom — one line per session, the re-entry feed
+- Never: system internals, fold mechanics, framework maintenance notes
 
 # voice
 
@@ -70,3 +98,7 @@ writes: [framework/operations/folds/theurgist.fold, firmament/space/theurgist.fo
 2026-03-06 | init | Entity fold seeded. Theurgist placed in firmament.
 2026-03-07 | fix  | Canvas design retired. Pixelverse (Svelte components) is the visual layer. space.js retired.
 2026-03-08 | refactor | Paths updated: firmament/ → framework/operations/, space/ → firmament/.
+2026-03-09 | v0.2    | Seed reception and routing protocol added. two_output_discipline named
+             explicitly — both fold and drop, or neither. Discovered in integration session:
+             rich sessions were producing framework folds but no personal drops. The collapse
+             happened because routing wasn't explicit. Now it is.

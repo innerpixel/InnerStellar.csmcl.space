@@ -1,0 +1,82 @@
+---
+id: constellary-theurgist-protocol
+type: blueprint.fold
+version: 0.1
+state: designed
+last_pulse: 2026-03-09
+who_executes: constellary + theurgist (protocol, no build required)
+priority: high
+---
+
+# identity
+
+The seed protocol — how Constellary hands off session discoveries to the Theurgist
+so that personal space and framework record both stay current. Solves the distillation
+collapse discovered in the integration session (2026-03-09).
+
+# what_it_does
+
+Defines the structured handoff unit (the seed) that travels from Constellary to Theurgist
+mid-session and at close. The seed carries routing information (personal / framework / both)
+so the Theurgist knows exactly what to produce and where to put it.
+
+Without this: rich sessions produce framework artifacts but personal space stays thin.
+With this: every session-worthy moment has a clear path to the right artifact.
+
+# the_seed_format
+
+```
+THEURGIST SEED
+─────────────────────────────────────────
+for:        personal | framework | both
+what_moved: one sentence
+why:        why this matters next session
+orbits:     [circling questions]
+action:     new-drop | update-drop | fold-only | both
+─────────────────────────────────────────
+```
+
+# trigger_conditions
+
+Fire a seed when:
+- A decision is made that changes the space
+- A realization lands the traveler will want to return to
+- A project or intention arrives
+- An orbit resolves or a new one opens
+- A discovery surfaces through use (not hypothetical — lived)
+- Session close — sweep for anything not yet captured
+
+# routing_rules
+
+```
+personal realization    → firmament/space/drops/ + theurgist.fold
+framework decision      → framework folds + framework/codex
+meta-conversation       → framework/codex only (unless it moved the traveler)
+both                    → split explicitly, never collapse
+```
+
+# what_it_produces
+
+Every seed → exactly two outputs or none (two_output_discipline):
+1. fold update — AI truth, dense, carried forward
+2. compiled drop — user anchor, traveler's register, Pixelverse reads this
+
+# state
+
+designed: yes — protocol is defined in constellary.fold + theurgist.fold (v0.2)
+implemented: partially — the entities know the protocol, but it runs on AI judgment
+             not on a formal trigger. Next step: consistent use in sessions.
+needs_build: no mechanical build required. behavioral protocol.
+             Future: session close sweep could become a slash command or MCP trigger.
+
+# orbits
+
+- slash-command-for-session-close — `/sweep` or `/close` that triggers Constellary to
+  run the sweep and fire seeds. Removes the reliance on remembering. (state: open)
+- mcp-trigger — could the session close sweep be automated via a hook? (state: open)
+
+# patchlog
+
+2026-03-09 | init | Blueprint created from integration session discovery.
+             Protocol designed and added to constellary.fold + theurgist.fold v0.2.
+             The gap was found by using the system — exactly how it should be found.

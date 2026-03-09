@@ -1,0 +1,83 @@
+---
+id: stewards-execution-path
+type: blueprint.fold
+version: 0.1
+state: in-progress
+last_pulse: 2026-03-09
+who_executes: guild + stewards (build required)
+priority: medium
+---
+
+# identity
+
+The missing wire — how submitted Steward tasks actually get picked up and executed.
+The Stewards queue format is defined. The executor doesn't exist yet. This blueprint
+tracks the path from queue entry to completed action.
+
+# what_it_does
+
+Defines the execution path for Steward tasks: how a queued item moves from
+`framework/operations/stewards/queue/` to a completed action in the world.
+The concept is right — background maintenance while the main session flows.
+The wire that connects queue to action is what this builds.
+
+# current_state
+
+What exists:
+- Stewards catalog: `framework/operations/stewards/` — the catalog of what stewards can do
+- Queue format: defined (what fields a queued task has)
+- Task types: minor fold fixes, stale last_pulse, naming collisions, file consistency checks
+
+What's missing:
+- The executor: what picks work up from the queue
+- The trigger: what initiates a run (session close? manual? scheduled?)
+- The agent: parallel process, CLI command, or MCP tool?
+
+# options
+
+Three candidate mechanisms:
+```
+option_a: parallel_agent   — A dedicated background agent instance reads the queue
+                             and executes in isolation. Clean separation from main session.
+                             Requires: agent spawn mechanism, result reporting back.
+
+option_b: cli_command      — /stewards-run or /maintenance — manual trigger at session
+                             close. Simpler. No automation. Requires: a slash command skill.
+
+option_c: mcp_trigger      — Session close hook fires a maintenance MCP call.
+                             Most automated. Requires: MCP integration, hook definition.
+```
+
+Current leaning: option_b first (manual trigger, verify correctness), then option_a
+(parallel agent, once the pattern is trusted).
+
+# maintenance_agent_pattern
+
+What the maintenance agent does:
+- Reads queue: `framework/operations/stewards/queue/`
+- Detects: broken content_index links, stale last_pulse, naming collisions, orphaned paths
+- Fixes: minor inconsistencies that would take 30 seconds if noticed, but aren't noticed
+- Reports: what was fixed, to session log and/or patchlog of affected file
+- Does NOT: make judgment calls, create new content, change architecture
+
+The pattern: detect consensus → delegate through proper channels → report.
+
+# orbits
+
+- parallel-agent-spawn — how does a parallel agent get started? Claude Code background task?
+  MCP call? Explicit Claude invocation? (state: open)
+- queue-format-spec — what exactly does a queue entry look like? What fields? What format?
+  Needs formalization before the executor can read it. (state: open)
+- result-reporting — where does the agent report what it fixed? session.log.md?
+  Or its own `stewards/log.md`? (state: open)
+- session-close-integration — does maintenance run automatically at session close,
+  or on explicit trigger? Integration with the constellary-theurgist-protocol session
+  close sweep. (state: open)
+
+# patchlog
+
+2026-03-09 | init | Blueprint created. Surfaced in integration session (2026-03-09):
+             "detect consensus, delegating what can be delegated through proper channels."
+             The Stewards concept has been named. The queue exists. This blueprint
+             tracks what comes next: the execution wire.
+

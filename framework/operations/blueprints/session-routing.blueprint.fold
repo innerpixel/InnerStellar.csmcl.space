@@ -1,0 +1,100 @@
+---
+id: session-routing
+type: blueprint.fold
+version: 0.1
+state: designed
+last_pulse: 2026-03-09
+who_executes: constellary (behavioral — no build required)
+priority: high
+---
+
+# identity
+
+The meta vs. personal session distinction — how a mixed session routes its artifacts
+to the right places. Framework development sessions and personal use sessions currently
+bleed together. This blueprint makes the routing explicit so distillation doesn't collapse.
+
+# problem
+
+Mixed sessions (like the 2026-03-09 integration session) blend:
+- Framework decisions → should go to framework folds + framework/codex
+- Personal realizations → should go to firmament/space/drops/ + theurgist.fold
+- Meta-framework conversations → framework record only (unless they moved the traveler)
+
+Without explicit routing, the Theurgist produces framework folds and personal space
+stays thin. The traveler's own realizations don't survive the session.
+
+# session_types
+
+```
+type: framework-only
+  - Working on entity folds, documentation, standards, blueprints
+  - Output: framework folds, framework/codex, commits to main repo
+  - Personal space: touched only if the session moved the traveler personally
+
+type: personal-only
+  - Traveler drops, project intentions, creative exploration
+  - Output: firmament/space/drops/, theurgist.fold, firmament commits
+  - Framework: touched only if a personal realization has structural implications
+
+type: mixed (most common)
+  - Framework work AND personal presence
+  - Output: both paths, explicitly split
+  - The seed protocol handles routing: for = personal | framework | both
+  - Never collapse — each output knows what it is
+```
+
+# routing_decision_tree
+
+```
+At any moment in a session, ask:
+  → Did this change the framework?
+      yes → framework fold update + framework/codex entry
+  → Did this move the traveler?
+      yes → firmament drop or orbit + theurgist.fold update
+  → Did both happen?
+      yes → split explicitly. note the split in each artifact.
+  → Is this pure meta (framework maintenance, path corrections)?
+      yes → framework record only. personal space untouched.
+```
+
+# how_constellary_uses_this
+
+At session start:
+- Identify session type (framework / personal / mixed)
+- Set routing awareness for the session
+
+During session:
+- On each significant artifact: route it explicitly
+- If mixed content emerges: flag the split, fire two seeds
+
+At session close:
+- Sweep: "what moved for the traveler today that isn't in a drop?"
+- Sweep: "what framework decisions need to be in codex?"
+- Fire seeds for any gaps before closing
+
+# state
+
+designed: yes — routing rules defined in this blueprint + in constellary.fold v0.2
+implemented: partially — constellary.fold knows the rules; relies on AI judgment
+             no formal session-type declaration at start of session yet
+needs_build: session-type declaration could become a session init practice
+             ("declaring" the session type at start sets the routing lens)
+
+# orbits
+
+- session-type-declaration — explicit "this session is [type]" at start.
+  Could be a convention, could be a slash command: `/session framework` or `/session mixed`.
+  Sets the Constellary's routing lens for the whole session. (state: open)
+- mixed-session-timestamp-split — in long mixed sessions, the routing context shifts.
+  Could the seed protocol include a timestamp so the Theurgist knows which part of
+  the session originated each artifact? (state: open)
+
+# patchlog
+
+2026-03-09 | init | Blueprint created from integration session discovery.
+             "Meta vs. personal session distinction — framework work dominates, personal
+             space stays thin." Companion to constellary-theurgist-protocol.fold.
+             Together they close the distillation gap: seed protocol handles the handoff,
+             session routing handles the lens that determines what fires.
+
