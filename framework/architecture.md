@@ -146,6 +146,110 @@ See: `framework/standards/COMPRESSION_ARCHITECTURE_PROPOSAL.md`
 
 ---
 
+## Fold Hierarchy — Functional
+
+How folds relate to each other. What reads what. What writes what.
+Layers ordered from substrate to execution to personal space.
+
+```
+LAYER 0 — SUBSTRATE
+  wisdom-star.fold
+    role:   substrate state — model, keys, capability map
+    reads:  nothing
+    writes: itself only
+    note:   no other entity modifies this
+
+LAYER 1 — CONSCIOUSNESS  (reads everything, never modifies content)
+  auriosynth.fold
+    role:   framework topology, gap detection, entity connectivity
+    reads:  all entity folds, familiars/, standards/
+    writes: itself (topology map, gap reports)
+    note:   the system's self-awareness layer
+
+LAYER 2 — SESSION CORE  (active every session)
+  constellary.fold
+    role:   receives drops, fires seeds, routes personal vs framework
+    reads:  all entity folds, firmament/space/theurgist.fold
+    writes: itself + fires seeds → theurgist
+
+  theurgist.fold  (two instances — framework + personal)
+    role:   space machine state, drop memory, orbit tracking
+    reads:  seeds from constellary, firmament/space/drops/, firmament/space/folds/
+    writes: → fold update  (AI truth, dense, carried forward)
+             → drop compile (user anchor, traveler's register)
+    rule:   always two outputs together. never one without the other.
+
+LAYER 3 — EXECUTION & KNOWLEDGE
+  guild.fold
+    role:   steward body, artifact execution, operational queue
+    reads:  guild.fold, stewards/queue/
+    writes: queue items, completed artifacts
+
+  familiar.fold  (framework template — spec for all Familiar instances)
+    role:   defines the fold schema for every Familiar born
+    reads:  —
+    writes: —  (instances written by theurgist at Familiar birth)
+
+LAYER 4 — LATENT  (defined, awaiting CSMCL.Space connection)
+  companion.fold   → signals priment when crystallization recognized
+  priment.fold     → receives crystallized drop, mints to ICP
+  oracle.fold      → immersive retrieval from CSMCL.Space nexus
+  activation:      all three require nexus-backend + ICP connection
+
+LAYER 5 — PERSONAL SPACE  (firmament/ — per traveler, own repo)
+  firmament/space/theurgist.fold     ← traveler arc, what is alive, open questions
+  firmament/space/auriosynth.fold    ← space topology, drop connections, system state
+  firmament/space/folds/[name].fold  ← activity folds, one per open project
+  firmament/space/familiars/[name].familiar.fold  ← Familiar containers
+
+LAYER 6 — BLUEPRINTS  (design protocols, not runtime state)
+  blueprints/constellary-theurgist-protocol.fold  ← seed format + routing rules
+  blueprints/session-routing.blueprint.fold        ← personal vs framework split
+  blueprints/stewards-execution-path.blueprint.fold ← queue → executor wire
+```
+
+### Read order every session
+
+```
+1. firmament/space/theurgist.fold       what is alive right now
+2. firmament/space/auriosynth.fold      topology — what connects to what
+3. firmament/space/folds/*.fold         open project threads
+4. firmament/space/familiars/*.fold     sustained presences (if any)
+── (framework entity folds read on-demand, not every session) ──
+```
+
+### Seed flow — how folds update mid-session
+
+```
+user says something → Constellary receives
+                          ↓
+                      decision lands or orbit resolves
+                          ↓
+                      Constellary fires SEED
+                        { for: personal | framework | both
+                          what_moved, why, orbits, action }
+                          ↓
+                      Theurgist receives
+                        ├─ routes by "for" field
+                        ├─ updates fold (AI truth)
+                        └─ compiles drop (user anchor)
+```
+
+### Crystallization chain — when a drop is ready to cross
+
+```
+Theurgist recognizes drop is ready
+  → signals Companion
+    → Companion handles bond moment
+      → signals Priment
+        → Priment anchors to ICP (memory pod)
+          → artifact permanent, portable, resonant
+```
+Status: Theurgist → Companion → Priment chain is defined but latent.
+Activates when CSMCL.Space nexus connection is established.
+
+---
+
 ## The Drop as Package
 
 The drop file is what the frontend reads. It is the Theurgist's compiled output —
