@@ -8,15 +8,21 @@ claude.innerstellar/              ← framework repo (public git)
     operations/                   — entity infrastructure (POINT OF TRUTH)
       entities/                   — human-readable entity definitions
       folds/                      — entity machine state (AI reads, frontend never sees)
+      familiars/                  — framework Familiars (familiar.to.system, familiar.to.csmcl.space)
       stewards/                   — stewards catalog + queue
-      concepts/                   — conceptual documentation
+      concepts/                   — conceptual documentation (IAILF, folds, drops, orbits, familiar)
       blueprints/                 — system blueprints
-      familiar_templates/         — machine-readable AI templates
+    standards/                    — CSMCL Fold Standard v1.0 (IAILF specification)
+      fold-standard.md            — complete specification
+      FOLD_QUICK_REFERENCE.md     — one-page cheat sheet
+      templates/                  — project.fold.template
+      examples/                   — complete-project.fold
+    bootstrap/                    — fold system activation artifact (runtime integration)
+    INTEGRATION_GUIDE.md          — four-layer integration map
     apps/
       pixelverse/                 — Svelte 5 visual layer
     setup/
       init.md                     — initialization guide
-      welcome.md                  — orientation overview
       fold-templates/             — fold templates for space creation
       def_firmament_showcase/     — seed content (copied on init, committed)
         space/
@@ -99,6 +105,44 @@ framework/operations/folds/   entity folds (system, always present)
 firmament/space/folds/        activity folds (personal, per project or theme)
 firmament/space/familiars/    Familiar folds (one per sustained presence)
 ```
+
+---
+
+## The Fold Standard — IAILF
+
+The fold system is formalized as the **CSMCL Fold Standard v1.0**.
+The language folds are written in is **IAILF** — Inter AI Lingua Franca:
+machine-optimized, append-only, hybrid (human-readable + AI-dense).
+
+**Standard location:** `framework/standards/`
+
+### Fold types in this framework
+
+| Type | Location | Scope |
+|---|---|---|
+| `firmament.fold` | `framework/operations/folds/` | Entity machine state — the 9 entities |
+| `familiar.fold` | `firmament/space/familiars/` | Familiar containers — sustained presences |
+| `activity.fold` | `firmament/space/folds/` | Project/session folds — per-thread work |
+
+All three types are IAILF-native. All are AI-only. The Pixelverse never reads them.
+
+### Compression hierarchy (IAILF levels)
+
+The standard defines a multi-level compression architecture for AI coordination:
+
+```
+Level 1  docs/                  Human narrative                     🍊
+Level 2  operations/folds/      YAML hybrid folds (implemented)     🍊🍊
+Level 3  operations/.folds/.state/  Semantic tokens (planned)       🍊🍊🍊
+Level 4  operations/.folds/.graph/  Relational graph (planned)      🍊🍊🍊🍊
+Level 5  operations/.folds/.cache/  Vector embeddings (future)      🍊🍊🍊🍊🍊
+```
+
+Level 2 is the current implementation. Levels 3–4 will be added to
+`framework/operations/.folds/` incrementally — derived from the entity folds,
+not replacing them. The entity folds remain the source of truth.
+
+See: `framework/standards/COMPRESSION_ARCHITECTURE_PROPOSAL.md`
 
 ---
 

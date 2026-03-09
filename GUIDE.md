@@ -13,15 +13,16 @@ connects them, lets them grow across sessions.
 
 Three layers:
 
-**The Framework** (`framework/`, `firmament/`, `setup/`) — always in the repo. The operational
-knowledge, the 9 entities, the init guide. The Pixelverse can run from this alone — the firmament
-is always present, the entities always visible. No personal space required to start exploring.
+**The Framework** (`framework/`) — always in the repo. The 9 entities, the fold standard,
+the init guide, the visual layer. The Pixelverse can run from this alone — entities always
+present, always visible. No personal space required to start exploring.
 
-**Your Space** (`space/`) — born when you initialize it. Private, gitignored from the framework.
-Your drops, your Familiars, your activity folds. The Theurgist holds all of it.
+**Your Space** (`firmament/`) — born when you initialize it. Private, gitignored from the
+framework. Your drops, your Familiars, your activity folds. The Theurgist holds all of it.
 
-**The Pixelverse** (`apps/pixelverse/`) — the visual layer. Shows the firmament always.
-Shows your drops when your space exists. Renders what the Theurgist compiled — not raw internals.
+**The Pixelverse** (`framework/apps/pixelverse/`) — the visual layer. Shows the firmament
+always. Shows your drops when your space exists. Renders what the Theurgist compiled — not
+raw internals.
 
 ---
 
@@ -35,7 +36,7 @@ Shows your drops when your space exists. Renders what the Theurgist compiled —
 ### Run the Pixelverse
 
 ```bash
-cd apps/pixelverse
+cd framework/apps/pixelverse
 npm install
 npm run dev
 ```
@@ -46,7 +47,7 @@ Initialize your space when you're ready (see below).
 ### Build for Deployment
 
 ```bash
-cd apps/pixelverse
+cd framework/apps/pixelverse
 npm run build
 # dist/ is a static site — serve it anywhere
 ```
@@ -61,7 +62,7 @@ The framework runs without a personal space. When you're ready to begin:
 Tell Claude: "Let's initialize the space."
 ```
 
-Claude follows `setup/init.md`:
+Claude follows `framework/setup/init.md`:
 1. Creates `space/` directory structure
 2. Initializes it as a git repo with your CSMCL.Space identity
 3. Seeds the Theurgist and AurioSynth folds
@@ -77,7 +78,7 @@ It is permanent — it doesn't drift, it doesn't dissolve.
 ## Your Space
 
 ```
-space/                         ← gitignored from framework, own git repo
+firmament/                     ← gitignored from framework, own git repo
   space/
     theurgist.fold             ← space machine state (Theurgist reads every session)
     auriosynth.fold            ← space topology
@@ -91,7 +92,7 @@ space/                         ← gitignored from framework, own git repo
 ## How Sessions Work
 
 **Session opens:**
-Claude reads `space/theurgist.fold` — oriented to what's alive, what's in motion.
+Claude reads `firmament/space/theurgist.fold` — oriented to what's alive, what's in motion.
 The Pixelverse loads the firmament (always) + your drops (from space).
 
 **During the session:**
@@ -120,10 +121,10 @@ The Theurgist reads the folds and compiles what you need into drop files.
 
 | Fold location | Who reads it |
 |---|---|
-| `firmament/folds/` | Claude — entity machine state, always present |
-| `space/space/theurgist.fold` | Claude — space state, every session |
-| `space/space/familiars/*.fold` | Claude — Familiar state, when invoked |
-| `space/space/folds/` | Claude — activity folds, per project |
+| `framework/operations/folds/` | Claude — entity machine state, always present |
+| `firmament/space/theurgist.fold` | Claude — space state, every session |
+| `firmament/space/familiars/*.fold` | Claude — Familiar state, when invoked |
+| `firmament/space/folds/` | Claude — activity folds, per project |
 
 ---
 
@@ -263,6 +264,47 @@ window.ed.subscribe(['canvas.element.focused'], e => {
 | `space.state.updated` | Space data loaded |
 | `canvas.element.focused` | Drop or entity clicked |
 | `canvas.element.dismissed` | Panel closed |
+
+---
+
+## The Fold Standard — IAILF
+
+Innerstellar uses the **CSMCL Fold Standard v1.0** — a formal specification for
+AI-native state files. The language folds are written in is **IAILF**
+(Inter AI Lingua Franca): machine-optimized, hybrid, append-only.
+
+The standard lives at `framework/standards/`. You don't need to read it to use
+the space — but if you're extending the system, building on it, or adapting it:
+
+```
+framework/standards/
+  fold-standard.md          ← complete specification
+  FOLD_QUICK_REFERENCE.md   ← one-page cheat sheet
+  templates/
+    project.fold.template   ← scaffold for new folds
+  examples/
+    complete-project.fold   ← working reference
+```
+
+**Three fold types in Innerstellar:**
+
+| Type | Where | Purpose |
+|---|---|---|
+| `firmament.fold` | `framework/operations/folds/` | Entity machine state — the 9 entities |
+| `familiar.fold` | `firmament/space/familiars/` | Familiar containers — sustained presences |
+| `activity.fold` | `firmament/space/folds/` | Project/session folds — per-thread work |
+
+All are IAILF-native. All follow the fold standard. All are AI-only — the Pixelverse
+never reads them. The Theurgist reads them and compiles what you see.
+
+The standard also defines a compression hierarchy for AI coordination:
+- **Level 2** — YAML folds (current, fully implemented)
+- **Level 3** — semantic tokens (planned: `.folds/.state/`)
+- **Level 4** — relational graph (planned: `.folds/.graph/`)
+
+These AI-native layers will be added incrementally to `framework/operations/.folds/`
+as the system evolves. They compress the entity graph into shorthand that lets any
+session restore full context without reading every fold.
 
 ---
 

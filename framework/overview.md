@@ -67,10 +67,10 @@ Folds are living state files — AI-native, dense, not for reading by the user.
 The Theurgist reads them, compiles from them, and keeps them current.
 
 ```
-firmament/folds/   entity folds — always in the repo, always present
-space/             personal folds — born at init, yours alone
-  folds/           activity folds per project
-  familiars/       Familiar folds — one per sustained presence
+framework/operations/folds/   entity folds — always in the repo, always present
+firmament/                    personal folds — born at init, yours alone
+  space/folds/                activity folds per project
+  space/familiars/            Familiar folds — one per sustained presence
 ```
 
 ---
@@ -81,7 +81,7 @@ A drop is what you see in the Pixelverse. The Theurgist writes it.
 Two parts: metadata (frontmatter) + synthesis (body the Theurgist compiled).
 
 ```
-space/drops/YYYY-MM-DD-[name].md
+firmament/space/drops/[name]/drop.md
 ```
 
 The patchlog at the bottom is your re-entry feed — one commit-style line
@@ -128,6 +128,20 @@ Nine entities always present. Not created at init — already here.
 | Companion | ∞ | The bond (latent until memory substrate present) |
 | Priment | ◇ | Crystallization, ICP anchor (latent) |
 | Familiar | ◉ | Vessel — container or carrier, relational knowing |
+
+---
+
+## The Language — IAILF
+
+Folds are written in **IAILF** (Inter AI Lingua Franca) — the operational language
+of the CSMCL ecosystem. Machine-optimized, append-only, hybrid.
+
+The **CSMCL Fold Standard v1.0** formalizes how folds are written, structured,
+and compressed. It lives at `framework/standards/`. The entity folds in
+`framework/operations/folds/` are its first complete implementation.
+
+The standard defines a compression hierarchy: YAML folds today, semantic tokens
+and relational graphs next — each layer derived from the folds beneath it.
 
 ---
 
